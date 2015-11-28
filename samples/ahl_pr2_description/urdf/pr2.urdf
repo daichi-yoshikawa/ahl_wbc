@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<robot xmlns:sensor="http://playerstage.sourceforge.net/gazebo/xmlschema/#sensor"
+       xmlns:controller="http://playerstage.sourceforge.net/gazebo/xmlschema/#controller"
+       xmlns:interface="http://playerstage.sourceforge.net/gazebo/xmlschema/#interface"
+       xmlns:xacro="http://playerstage.sourceforge.net/gazebo/xmlschema/#interface"
+       name="pr2">
+
+  <xacro:include filename="$(find ahl_pr2_description)/urdf/base/base.urdf"/>
+  <xacro:include filename="$(find ahl_pr2_description)/urdf/arm/arm.urdf"/>
+  <xacro:include filename="$(find ahl_pr2_description)/urdf/gripper/gripper.urdf"/>
+  <xacro:include filename="$(find ahl_pr2_description)/urdf/head/head.urdf"/>
+  <xacro:include filename="$(find ahl_pr2_description)/urdf/controller/ros_controller.urdf"/>
+
+  <xacro:pr2_base/>
+  <xacro:pr2_arm/>
+  <xacro:pr2_gripper/>
+  <xacro:pr2_head/>
+</robot>

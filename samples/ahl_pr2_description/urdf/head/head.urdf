@@ -1,0 +1,85 @@
+<?xml version="1.0"?>
+<robot xmlns:sensor="http://playerstage.sourceforge.net/gazebo/xmlschema/#sensor"
+       xmlns:controller="http://playerstage.sourceforge.net/gazebo/xmlschema/#controller"
+       xmlns:interface="http://playerstage.sourceforge.net/gazebo/xmlschema/#interface"
+       xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <xacro:include filename="$(find ahl_pr2_description)/urdf/head/head.property.xacro"/>
+  <xacro:include filename="$(find ahl_pr2_description)/urdf/head/head.gazebo.xacro"/>
+  <xacro:include filename="$(find ahl_pr2_description)/urdf/head/head.transmission.xacro"/>
+
+  <xacro:macro name="pr2_head">
+
+    <joint name="tilting_hokuyo_joint" type="revolute">
+      <origin xyz="${tilting_hokuyo_x} ${tilting_hokuyo_y} ${tilting_hokuyo_z}" rpy="0 0 0"/>
+      <parent link="torso_link"/>
+      <child link="tilting_hokuyo_link"/>
+      <axis xyz="0 1 0"/>
+      <limit effort="${tilting_hokuyo_effort}" velocity="${tilting_hokuyo_velocity}" lower="${tilting_hokuyo_lower}" upper="${tilting_hokuyo_upper}"/>
+      <dynamics damping="${tilting_hokuyo_damping}" friction="${tilting_hokuyo_friction}"/>
+    </joint>
+
+    <link name="tilting_hokuyo_link">
+      <xacro:tilting_hokuyo_inertial/>
+      <visual>
+        <geometry>
+          <mesh filename="package://ahl_pr2_description/meshes/head/tilting_hokuyo.dae"/>
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="package://ahl_pr2_description/meshes/head/tilting_hokuyo.stl"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <joint name="head_pan_joint" type="revolute">
+      <origin xyz="${head_pan_x} ${head_pan_y} ${head_pan_z}" rpy="0 0 0"/>
+      <parent link="torso_link"/>
+      <child link="head_pan_link"/>
+      <axis xyz="0 0 1"/>
+      <limit effort="${head_pan_effort}" velocity="${head_pan_velocity}" lower="${head_pan_lower}" upper="${head_pan_upper}"/>
+      <dynamics damping="${head_pan_damping}" friction="${head_pan_friction}"/>
+    </joint>
+
+    <link name="head_pan_link">
+      <xacro:head_pan_inertial/>
+      <visual>
+        <geometry>
+          <mesh filename="package://ahl_pr2_description/meshes/head/head_pan.dae"/>
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="package://ahl_pr2_description/meshes/head/head_pan.stl"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <joint name="head_tilt_joint" type="revolute">
+      <origin xyz="${head_tilt_x} ${head_tilt_y} ${head_tilt_z}" rpy="0 0 0"/>
+      <parent link="head_pan_link"/>
+      <child link="head_tilt_link"/>
+      <axis xyz="0 1 0"/>
+      <limit effort="${head_tilt_effort}" velocity="${head_tilt_velocity}" lower="${head_tilt_lower}" upper="${head_tilt_upper}"/>
+      <dynamics damping="${head_tilt_damping}" friction="${head_tilt_friction}"/>
+    </joint>
+
+    <link name="head_tilt_link">
+      <xacro:head_tilt_inertial/>
+      <visual>
+        <geometry>
+          <mesh filename="package://ahl_pr2_description/meshes/head/head_tilt.dae"/>
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="package://ahl_pr2_description/meshes/head/head_tilt.stl"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <xacro:pr2_head_gazebo/>
+    <xacro:pr2_head_transmission/>
+  </xacro:macro>
+</robot>

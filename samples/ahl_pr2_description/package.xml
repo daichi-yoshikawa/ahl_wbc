@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<package>
+  <name>ahl_pr2_description</name>
+  <version>0.0.0</version>
+  <description>The ahl_pr2_description package</description>
+  <maintainer email="daichi.yoshikawa@gmail.com">Daichi Yoshikawa</maintainer>
+  <license>BSD</license>
+  <!-- <url type="website">http://wiki.ros.org/ahl_pr2_description</url> -->
+  <author email="daichi.yoshikawa@gmail.com">Daichi Yoshikawa</author>
+  <buildtool_depend>catkin</buildtool_depend>
+</package>

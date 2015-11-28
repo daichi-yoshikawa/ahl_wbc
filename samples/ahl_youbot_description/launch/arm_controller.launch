@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<launch>
+  <rosparam file="$(find ahl_youbot_description)/yaml/arm_controller.yaml" command="load" ns="youbot"/>
+  <node pkg="controller_manager" type="spawner" name="arm_controller"
+   args="youbot/arm_controller/joint1_controller
+         youbot/arm_controller/joint2_controller
+         youbot/arm_controller/joint3_controller
+         youbot/arm_controller/joint4_controller
+         youbot/arm_controller/joint5_controller"
+   respawn="false" output="screen"/>
+  <node pkg="controller_manager" type="spawner" name="gripper_controller" args="youbot/gripper_controller" respawn="false" output="screen"/>
+</launch>

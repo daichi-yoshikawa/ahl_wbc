@@ -1,0 +1,266 @@
+<?xml version="1.0"?>
+<robot xmlns:sensor="http://playerstage.sourceforge.net/gazebo/xmlschema/#sensor"
+       xmlns:controller="http://playerstage.sourceforge.net/gazebo/xmlschema/#controller"
+       xmlns:interface="http://playerstage.sourceforge.net/gazebo/xmlschema/#interface"
+       xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <xacro:include filename="$(find ahl_pr2_description)/urdf/base/base.property.xacro"/>
+  <xacro:include filename="$(find ahl_pr2_description)/urdf/base/base.gazebo.xacro"/>
+  <xacro:include filename="$(find ahl_pr2_description)/urdf/base/base.transmission.xacro"/>
+
+  <xacro:macro name="pr2_base">
+
+    <link name="world"/>
+
+    <joint name="world_joint" type="fixed">
+      <origin xyz="0 0 0.045" rpy="0 0 0"/>
+      <parent link="world"/>
+      <child link="base_x"/>
+    </joint>
+
+    <link name="base_x">
+      <xacro:base_x_inertial/>
+      <xacro:base_x_visual/>
+    </link>
+
+    <joint name="base_x_joint" type="prismatic">
+      <parent link="base_x"/>
+      <child link="base_y"/>
+      <axis xyz="1 0 0"/>
+      <limit effort="${base_x_effort}" velocity="${base_x_velocity}" lower="${base_x_lower}" upper="${base_x_upper}"/>
+      <dynamics damping="${base_x_damping}" friction="${base_x_friction}"/>
+    </joint>
+
+    <link name="base_y">
+      <xacro:base_y_inertial/>
+      <xacro:base_y_visual/>
+    </link>
+
+    <joint name="base_y_joint" type="prismatic">
+      <parent link="base_y"/>
+      <child link="base_yaw"/>
+      <axis xyz="0 1 0"/>
+      <limit effort="${base_y_effort}" velocity="${base_y_velocity}" lower="${base_y_lower}" upper="${base_y_upper}"/>
+      <dynamics damping="${base_y_damping}" friction="${base_y_friction}"/>
+    </joint>
+
+    <link name="base_yaw">
+      <xacro:base_yaw_inertial/>
+      <xacro:base_yaw_visual/>
+    </link>
+
+    <joint name="base_yaw_joint" type="revolute">
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <parent link="base_yaw"/>
+      <child link="base_link"/>
+      <axis xyz="0 0 1"/>
+      <limit effort="${base_yaw_effort}" velocity="${base_yaw_velocity}" lower="${base_yaw_lower}" upper="${base_yaw_upper}"/>
+      <dynamics damping="${base_yaw_damping}" friction="${base_yaw_friction}"/>
+    </joint>
+
+    <link name="base_link">
+      <xacro:base_link_inertial/>
+      <visual>
+        <geometry>
+          <mesh filename="package://ahl_pr2_description/meshes/base/base.dae"/>
+        </geometry>
+        <material name="base_link_material">
+          <texture filename="package://ahl_pr2_description/materials/textures/base_link_color.png"/>
+          <normal filename="package://ahl_pr2_description/materials/textures/base_link_normals.png"/>
+	</material>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="package://ahl_pr2_description/meshes/base/base.stl"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <!-- front left -->
+
+    <joint name="caster_fl_joint" type="continuous">
+      <origin xyz="${caster_x} ${caster_y} ${caster_z}" rpy="0 0 0"/>
+      <parent link="base_link"/>
+      <child link="caster_fl_link"/>
+      <axis xyz="0 0 1"/>
+      <limit effort="${caster_effort}" velocity="${caster_velocity}" lower="${caster_lower}" upper="${caster_upper}"/>
+      <dynamics damping="${caster_damping}" friction="${caster_friction}"/>
+    </joint>
+
+    <link name="caster_fl_link">
+      <xacro:caster_inertial/>
+      <xacro:caster_visual/>
+    </link>
+
+    <joint name="wheel_fl_joint" type="continuous">
+      <origin xyz="0 0 ${wheel_z}" rpy="0 0 0"/>
+      <parent link="caster_fl_link"/>
+      <child link="wheel_fl_link"/>
+      <axis xyz="0 1 0"/>
+      <limit effort="${wheel_effort}" velocity="${wheel_velocity}" lower="${wheel_lower}" upper="${wheel_upper}"/>
+      <dynamics damping="${wheel_damping}" friction="${wheel_friction}"/>
+    </joint>
+
+    <link name="wheel_fl_link">
+      <xacro:wheel_inertial/>
+      <visual>
+        <geometry>
+          <mesh filename="package://ahl_pr2_description/meshes/base/wheels.dae"/>
+        </geometry>
+      </visual>
+      <collision>
+        <origin xyz="0 0 0" rpy="${M_PI / 2} 0 0"/>
+        <geometry>
+          <cylinder length="${wheel_length}" radius="${wheel_radius}"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <!-- front right -->
+
+    <joint name="caster_fr_joint" type="continuous">
+      <origin xyz="${caster_x} ${-caster_y} ${caster_z}" rpy="0 0 0"/>
+      <parent link="base_link"/>
+      <child link="caster_fr_link"/>
+      <axis xyz="0 0 1"/>
+      <limit effort="${caster_effort}" velocity="${caster_velocity}" lower="${caster_lower}" upper="${caster_upper}"/>
+      <dynamics damping="${caster_damping}" friction="${caster_friction}"/>
+    </joint>
+
+    <link name="caster_fr_link">
+      <xacro:caster_inertial/>
+      <xacro:caster_visual/>
+    </link>
+
+    <joint name="wheel_fr_joint" type="continuous">
+      <origin xyz="0 0 ${wheel_z}" rpy="0 0 0"/>
+      <parent link="caster_fr_link"/>
+      <child link="wheel_fr_link"/>
+      <axis xyz="0 1 0"/>
+      <limit effort="${wheel_effort}" velocity="${wheel_velocity}" lower="${wheel_lower}" upper="${wheel_upper}"/>
+      <dynamics damping="${wheel_damping}" friction="${wheel_friction}"/>
+    </joint>
+
+    <link name="wheel_fr_link">
+      <xacro:wheel_inertial/>
+      <visual>
+        <geometry>
+          <mesh filename="package://ahl_pr2_description/meshes/base/wheels.dae"/>
+        </geometry>
+      </visual>
+      <collision>
+        <origin xyz="0 0 0" rpy="${M_PI / 2} 0 0"/>
+        <geometry>
+          <cylinder length="${wheel_length}" radius="${wheel_radius}"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <!-- back left -->
+
+    <joint name="caster_bl_joint" type="continuous">
+      <origin xyz="${-caster_x} ${caster_y} ${caster_z}" rpy="0 0 0"/>
+      <parent link="base_link"/>
+      <child link="caster_bl_link"/>
+      <axis xyz="0 0 1"/>
+      <limit effort="${caster_effort}" velocity="${caster_velocity}" lower="${caster_lower}" upper="${caster_upper}"/>
+      <dynamics damping="${caster_damping}" friction="${caster_friction}"/>
+    </joint>
+
+    <link name="caster_bl_link">
+      <xacro:caster_inertial/>
+      <xacro:caster_visual/>
+    </link>
+
+    <joint name="wheel_bl_joint" type="continuous">
+      <origin xyz="0 0 ${wheel_z}" rpy="0 0 0"/>
+      <parent link="caster_bl_link"/>
+      <child link="wheel_bl_link"/>
+      <axis xyz="0 1 0"/>
+      <limit effort="${wheel_effort}" velocity="${wheel_velocity}" lower="${wheel_lower}" upper="${wheel_upper}"/>
+      <dynamics damping="${wheel_damping}" friction="${wheel_friction}"/>
+    </joint>
+
+    <link name="wheel_bl_link">
+      <xacro:wheel_inertial/>
+      <visual>
+        <geometry>
+          <mesh filename="package://ahl_pr2_description/meshes/base/wheels.dae"/>
+        </geometry>
+      </visual>
+      <collision>
+        <origin xyz="0 0 0" rpy="${M_PI / 2} 0 0"/>
+        <geometry>
+          <cylinder length="${wheel_length}" radius="${wheel_radius}"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <!-- back right -->
+
+    <joint name="caster_br_joint" type="continuous">
+      <origin xyz="${-caster_x} ${-caster_y} ${caster_z}" rpy="0 0 0"/>
+      <parent link="base_link"/>
+      <child link="caster_br_link"/>
+      <axis xyz="0 0 1"/>
+      <limit effort="${caster_effort}" velocity="${caster_velocity}" lower="${caster_lower}" upper="${caster_upper}"/>
+      <dynamics damping="${caster_damping}" friction="${caster_friction}"/>
+    </joint>
+
+    <link name="caster_br_link">
+      <xacro:caster_inertial/>
+      <xacro:caster_visual/>
+    </link>
+
+    <joint name="wheel_br_joint" type="continuous">
+      <origin xyz="0 0 ${wheel_z}" rpy="0 0 0"/>
+      <parent link="caster_br_link"/>
+      <child link="wheel_br_link"/>
+      <axis xyz="0 1 0"/>
+      <limit effort="${wheel_effort}" velocity="${wheel_velocity}" lower="${wheel_lower}" upper="${wheel_upper}"/>
+      <dynamics damping="${wheel_damping}" friction="${wheel_friction}"/>
+    </joint>
+
+    <link name="wheel_br_link">
+      <xacro:wheel_inertial/>
+      <visual>
+        <geometry>
+          <mesh filename="package://ahl_pr2_description/meshes/base/wheels.dae"/>
+        </geometry>
+      </visual>
+      <collision>
+        <origin xyz="0 0 0" rpy="${M_PI / 2} 0 0"/>
+        <geometry>
+          <cylinder length="${wheel_length}" radius="${wheel_radius}"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <!-- torso -->
+    <joint name="torso_joint" type="prismatic">
+      <origin xyz="${torso_x} ${torso_y} ${torso_z}" rpy="0 0 0"/>
+      <parent link="base_link"/>
+      <child link="torso_link"/>
+      <axis xyz="0 0 1"/>
+      <limit effort="${torso_effort}" velocity="${torso_velocity}" lower="${torso_lower}" upper="${torso_upper}"/>
+      <dynamics damping="${torso_damping}" friction="${torso_friction}"/>
+    </joint>
+
+    <link name="torso_link">
+      <xacro:torso_inertial/>
+      <visual>
+        <geometry>
+          <mesh filename="package://ahl_pr2_description/meshes/base/torso.dae"/>
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="package://ahl_pr2_description/meshes/base/torso.stl"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <xacro:pr2_base_gazebo/>
+    <xacro:pr2_base_transmission/>
+  </xacro:macro>
+</robot>

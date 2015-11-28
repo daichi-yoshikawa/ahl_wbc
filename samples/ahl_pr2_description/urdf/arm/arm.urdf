@@ -1,0 +1,365 @@
+<?xml version="1.0"?>
+<robot xmlns:sensor="http://playerstage.sourceforge.net/gazebo/xmlschema/#sensor"
+       xmlns:controller="http://playerstage.sourceforge.net/gazebo/xmlschema/#controller"
+       xmlns:interface="http://playerstage.sourceforge.net/gazebo/xmlschema/#interface"
+       xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <xacro:include filename="$(find ahl_pr2_description)/urdf/arm/arm.property.xacro"/>
+  <xacro:include filename="$(find ahl_pr2_description)/urdf/arm/arm.gazebo.xacro"/>
+  <xacro:include filename="$(find ahl_pr2_description)/urdf/arm/arm.sensor.gazebo.xacro"/>
+  <xacro:include filename="$(find ahl_pr2_description)/urdf/arm/arm.transmission.xacro"/>
+
+  <xacro:macro name="pr2_arm">
+
+    <!-- left arm -->
+
+    <joint name="shoulder_pan_l_joint" type="revolute">
+      <origin xyz="${shoulder_pan_x} ${shoulder_pan_y} ${shoulder_pan_z}" rpy="0 0 0"/>
+      <parent link="torso_link"/>
+      <child link="shoulder_pan_l_link"/>
+      <axis xyz="0 0 1"/>
+      <limit effort="${shoulder_pan_effort}" velocity="${shoulder_pan_velocity}" lower="${shoulder_pan_lower}" upper="${shoulder_pan_upper}"/>
+      <dynamics damping="${shoulder_pan_damping}" friction="${shoulder_pan_friction}"/>
+    </joint>
+
+    <link name="shoulder_pan_l_link">
+      <xacro:shoulder_pan_inertial/>
+      <visual>
+        <geometry>
+          <mesh filename="package://ahl_pr2_description/meshes/arm/shoulder_pan.dae"/>
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="package://ahl_pr2_description/meshes/arm/shoulder_pan.stl"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <joint name="shoulder_lift_l_joint" type="revolute">
+      <origin xyz="${shoulder_lift_x} ${shoulder_lift_y} ${shoulder_lift_z}" rpy="0 0 0"/>
+      <parent link="shoulder_pan_l_link"/>
+      <child link="shoulder_lift_l_link"/>
+      <axis xyz="0 1 0"/>
+      <limit effort="${shoulder_lift_effort}" velocity="${shoulder_lift_velocity}" lower="${shoulder_lift_lower}" upper="${shoulder_lift_upper}"/>
+      <dynamics damping="${shoulder_lift_damping}" friction="${shoulder_lift_friction}"/>
+    </joint>
+
+    <link name="shoulder_lift_l_link">
+      <xacro:shoulder_lift_inertial/>
+      <visual>
+        <geometry>
+          <mesh filename="package://ahl_pr2_description/meshes/arm/shoulder_lift.dae"/>
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="package://ahl_pr2_description/meshes/arm/shoulder_lift.stl"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <joint name="upper_arm_l_joint" type="revolute">
+      <origin xyz="${upper_arm_x} ${upper_arm_y} ${upper_arm_z}" rpy="0 0 0"/>
+      <parent link="shoulder_lift_l_link"/>
+      <child link="upper_arm_l_link"/>
+      <axis xyz="1 0 0"/>
+      <limit effort="${upper_arm_effort}" velocity="${upper_arm_velocity}" lower="${upper_arm_lower}" upper="${upper_arm_upper}"/>
+      <dynamics damping="${upper_arm_damping}" friction="${upper_arm_friction}"/>
+    </joint>
+
+    <link name="upper_arm_l_link">
+      <xacro:upper_arm_inertial/>
+      <visual>
+        <geometry>
+          <mesh filename="package://ahl_pr2_description/meshes/arm/upper_arm.dae"/>
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="package://ahl_pr2_description/meshes/arm/upper_arm.stl"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <joint name="elbow_l_joint" type="revolute">
+      <origin xyz="${elbow_x} ${elbow_y} ${elbow_z}" rpy="0 0 0"/>
+      <parent link="upper_arm_l_link"/>
+      <child link="elbow_l_link"/>
+      <axis xyz="0 1 0"/>
+      <limit effort="${elbow_effort}" velocity="${elbow_velocity}" lower="${elbow_lower}" upper="${elbow_upper}"/>
+      <dynamics damping="${elbow_damping}" friction="${elbow_friction}"/>
+    </joint>
+
+    <link name="elbow_l_link">
+      <xacro:elbow_inertial/>
+      <visual>
+        <geometry>
+          <mesh filename="package://ahl_pr2_description/meshes/arm/elbow.dae"/>
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="package://ahl_pr2_description/meshes/arm/elbow.stl"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <joint name="forearm_l_joint" type="revolute">
+      <origin xyz="${forearm_x} ${forearm_y} ${forearm_z}" rpy="0 0 0"/>
+      <parent link="elbow_l_link"/>
+      <child link="forearm_l_link"/>
+      <axis xyz="1 0 0"/>
+      <limit effort="${forearm_effort}" velocity="${forearm_velocity}" lower="${forearm_lower}" upper="${forearm_upper}"/>
+      <dynamics damping="${forearm_damping}" friction="${forearm_friction}"/>
+    </joint>
+
+    <link name="forearm_l_link">
+      <xacro:forearm_inertial/>
+      <visual>
+        <geometry>
+          <mesh filename="package://ahl_pr2_description/meshes/arm/forearm.dae"/>
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="package://ahl_pr2_description/meshes/arm/forearm.stl"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <joint name="wrist_flex_l_joint" type="revolute">
+      <origin xyz="${wrist_flex_x} ${wrist_flex_y} ${wrist_flex_z}" rpy="0 0 0"/>
+      <parent link="forearm_l_link"/>
+      <child link="wrist_flex_l_link"/>
+      <axis xyz="0 1 0"/>
+      <limit effort="${wrist_flex_effort}" velocity="${wrist_flex_velocity}" lower="${wrist_flex_lower}" upper="${wrist_flex_upper}"/>
+      <dynamics damping="${wrist_flex_damping}" friction="${wrist_flex_friction}"/>
+    </joint>
+
+    <link name="wrist_flex_l_link">
+      <xacro:wrist_flex_inertial/>
+      <visual>
+        <geometry>
+          <mesh filename="package://ahl_pr2_description/meshes/arm/wrist_flex.dae"/>
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="package://ahl_pr2_description/meshes/arm/wrist_flex.stl"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <joint name="wrist_roll_l_joint" type="revolute">
+      <origin xyz="${wrist_roll_x} ${wrist_roll_y} ${wrist_roll_z}" rpy="0 0 0"/>
+      <parent link="wrist_flex_l_link"/>
+      <child link="wrist_roll_l_link"/>
+      <axis xyz="1 0 0"/>
+      <limit effort="${wrist_roll_effort}" velocity="${wrist_roll_velocity}" lower="${wrist_roll_lower}" upper="${wrist_roll_upper}"/>
+      <dynamics damping="${wrist_roll_damping}" friction="${wrist_roll_friction}"/>
+    </joint>
+
+    <link name="wrist_roll_l_link">
+      <xacro:wrist_roll_inertial/>
+      <visual>
+        <geometry>
+          <mesh filename="package://ahl_pr2_description/meshes/arm/wrist_roll.dae"/>
+        </geometry>
+      </visual>
+    </link>
+
+    <joint name="gripper_l_joint" type="revolute">
+      <xacro:gripper_joint_origin/>
+      <parent link="wrist_roll_l_link"/>
+      <child link="gripper_l_link"/>
+      <xacro:gripper_joint_property/>
+    </joint>
+
+    <link name="gripper_l_link">
+      <xacro:gripper_link_inertial/>
+      <xacro:gripper_link_visual/>
+      <xacro:gripper_link_collision/>
+    </link>
+
+    <!-- right arm -->
+
+    <joint name="shoulder_pan_r_joint" type="revolute">
+      <origin xyz="${shoulder_pan_x} ${-shoulder_pan_y} ${shoulder_pan_z}" rpy="0 0 0"/>
+      <parent link="torso_link"/>
+      <child link="shoulder_pan_r_link"/>
+      <axis xyz="0 0 1"/>
+      <limit effort="${shoulder_pan_effort}" velocity="${shoulder_pan_velocity}" lower="${-shoulder_pan_upper}" upper="${-shoulder_pan_lower}"/>
+      <dynamics damping="${shoulder_pan_damping}" friction="${shoulder_pan_friction}"/>
+    </joint>
+
+    <link name="shoulder_pan_r_link">
+      <xacro:shoulder_pan_inertial/>
+      <visual>
+        <geometry>
+          <mesh filename="package://ahl_pr2_description/meshes/arm/shoulder_pan.dae"/>
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="package://ahl_pr2_description/meshes/arm/shoulder_pan.stl"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <joint name="shoulder_lift_r_joint" type="revolute">
+      <origin xyz="${shoulder_lift_x} ${shoulder_lift_y} ${shoulder_lift_z}" rpy="0 0 0"/>
+      <parent link="shoulder_pan_r_link"/>
+      <child link="shoulder_lift_r_link"/>
+      <axis xyz="0 1 0"/>
+      <limit effort="${shoulder_lift_effort}" velocity="${shoulder_lift_velocity}" lower="${shoulder_lift_lower}" upper="${shoulder_lift_upper}"/>
+      <dynamics damping="${shoulder_lift_damping}" friction="${shoulder_lift_friction}"/>
+    </joint>
+
+    <link name="shoulder_lift_r_link">
+      <xacro:shoulder_lift_inertial/>
+      <visual>
+        <geometry>
+          <mesh filename="package://ahl_pr2_description/meshes/arm/shoulder_lift.dae"/>
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="package://ahl_pr2_description/meshes/arm/shoulder_lift.stl"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <joint name="upper_arm_r_joint" type="revolute">
+      <origin xyz="${upper_arm_x} ${upper_arm_y} ${upper_arm_z}" rpy="0 0 0"/>
+      <parent link="shoulder_lift_r_link"/>
+      <child link="upper_arm_r_link"/>
+      <axis xyz="1 0 0"/>
+      <limit effort="${upper_arm_effort}" velocity="${upper_arm_velocity}" lower="${-upper_arm_upper}" upper="${-upper_arm_lower}"/>
+      <dynamics damping="${upper_arm_damping}" friction="${upper_arm_friction}"/>
+    </joint>
+
+    <link name="upper_arm_r_link">
+      <xacro:upper_arm_inertial/>
+      <visual>
+        <geometry>
+          <mesh filename="package://ahl_pr2_description/meshes/arm/upper_arm.dae"/>
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="package://ahl_pr2_description/meshes/arm/upper_arm.stl"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <joint name="elbow_r_joint" type="revolute">
+      <origin xyz="${elbow_x} ${elbow_y} ${elbow_z}" rpy="0 0 0"/>
+      <parent link="upper_arm_r_link"/>
+      <child link="elbow_r_link"/>
+      <axis xyz="0 1 0"/>
+      <limit effort="${elbow_effort}" velocity="${elbow_velocity}" lower="${elbow_lower}" upper="${elbow_upper}"/>
+      <dynamics damping="${elbow_damping}" friction="${elbow_friction}"/>
+    </joint>
+
+    <link name="elbow_r_link">
+      <xacro:elbow_inertial/>
+      <visual>
+        <geometry>
+          <mesh filename="package://ahl_pr2_description/meshes/arm/elbow.dae"/>
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="package://ahl_pr2_description/meshes/arm/elbow.stl"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <joint name="forearm_r_joint" type="revolute">
+      <origin xyz="${forearm_x} ${forearm_y} ${forearm_z}" rpy="0 0 0"/>
+      <parent link="elbow_r_link"/>
+      <child link="forearm_r_link"/>
+      <axis xyz="1 0 0"/>
+      <limit effort="${forearm_effort}" velocity="${forearm_velocity}" lower="${forearm_lower}" upper="${forearm_upper}"/>
+      <dynamics damping="${forearm_damping}" friction="${forearm_friction}"/>
+    </joint>
+
+    <link name="forearm_r_link">
+      <xacro:forearm_inertial/>
+      <visual>
+        <geometry>
+          <mesh filename="package://ahl_pr2_description/meshes/arm/forearm.dae"/>
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="package://ahl_pr2_description/meshes/arm/forearm.stl"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <joint name="wrist_flex_r_joint" type="revolute">
+      <origin xyz="${wrist_flex_x} ${wrist_flex_y} ${wrist_flex_z}" rpy="0 0 0"/>
+      <parent link="forearm_r_link"/>
+      <child link="wrist_flex_r_link"/>
+      <axis xyz="0 1 0"/>
+      <limit effort="${wrist_flex_effort}" velocity="${wrist_flex_velocity}" lower="${wrist_flex_lower}" upper="${wrist_flex_upper}"/>
+      <dynamics damping="${wrist_flex_damping}" friction="${wrist_flex_friction}"/>
+    </joint>
+
+    <link name="wrist_flex_r_link">
+      <xacro:wrist_flex_inertial/>
+      <visual>
+        <geometry>
+          <mesh filename="package://ahl_pr2_description/meshes/arm/wrist_flex.dae"/>
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="package://ahl_pr2_description/meshes/arm/wrist_flex.stl"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <joint name="wrist_roll_r_joint" type="revolute">
+      <origin xyz="${wrist_roll_x} ${wrist_roll_y} ${wrist_roll_z}" rpy="0 0 0"/>
+      <parent link="wrist_flex_r_link"/>
+      <child link="wrist_roll_r_link"/>
+      <axis xyz="1 0 0"/>
+      <limit effort="${wrist_roll_effort}" velocity="${wrist_roll_velocity}" lower="${wrist_roll_lower}" upper="${wrist_roll_upper}"/>
+      <dynamics damping="${wrist_roll_damping}" friction="${wrist_roll_friction}"/>
+    </joint>
+
+    <link name="wrist_roll_r_link">
+      <xacro:wrist_roll_inertial/>
+      <visual>
+        <geometry>
+          <mesh filename="package://ahl_pr2_description/meshes/arm/wrist_roll.dae"/>
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="package://ahl_pr2_description/meshes/arm/wrist_roll.stl"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <joint name="gripper_r_joint" type="revolute">
+      <xacro:gripper_joint_origin/>
+      <parent link="wrist_roll_r_link"/>
+      <child link="gripper_r_link"/>
+      <xacro:gripper_joint_property/>
+    </joint>
+
+    <link name="gripper_r_link">
+      <xacro:gripper_link_inertial/>
+      <xacro:gripper_link_visual/>
+      <xacro:gripper_link_collision/>
+    </link>
+
+    <xacro:pr2_arm_gazebo/>
+    <xacro:pr2_arm_sensor_gazebo/>
+    <xacro:pr2_arm_transmission/>
+  </xacro:macro>
+</robot>

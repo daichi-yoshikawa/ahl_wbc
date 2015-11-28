@@ -1,0 +1,53 @@
+!!python/object/new:dynamic_reconfigure.encoding.Config
+dictitems:
+  groups: !!python/object/new:dynamic_reconfigure.encoding.Config
+    dictitems:
+      groups: !!python/object/new:dynamic_reconfigure.encoding.Config
+        state: []
+      gx: 0.0
+      gy: 0.0
+      gz: -0.98
+      id: 0
+      joint_error_max: 1.0
+      kp_joint: 2.1
+      kp_joint_macro: 1.0
+      kp_limit: 3.0
+      kp_task_ori: 1.0
+      kp_task_pos: 1.0
+      kp_wheel: 0.01
+      kv_damp: 0.01
+      kv_joint: 0.1
+      kv_joint_macro: 0.1
+      kv_limit: 1.0
+      kv_task_ori: 0.1
+      kv_task_pos: 0.1
+      kv_wheel: 0.01
+      name: Default
+      ori_error_max: 0.785
+      parameters: !!python/object/new:dynamic_reconfigure.encoding.Config
+        state: []
+      parent: 0
+      pos_error_max: 0.1
+      state: true
+      type: ''
+    state: []
+  gx: 0.0
+  gy: 0.0
+  gz: -0.98
+  joint_error_max: 1.0
+  kp_joint: 2.1
+  kp_joint_macro: 1.0
+  kp_limit: 3.0
+  kp_task_ori: 1.0
+  kp_task_pos: 1.0
+  kp_wheel: 0.01
+  kv_damp: 0.01
+  kv_joint: 0.1
+  kv_joint_macro: 0.1
+  kv_limit: 1.0
+  kv_task_ori: 0.1
+  kv_task_pos: 0.1
+  kv_wheel: 0.01
+  ori_error_max: 0.785
+  pos_error_max: 0.1
+state: []

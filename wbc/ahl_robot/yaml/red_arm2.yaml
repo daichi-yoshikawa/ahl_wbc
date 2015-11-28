@@ -1,0 +1,247 @@
+name: red_arm2
+xyz: [0, 0, 0]
+rpy: [0, 0, 0]
+world_frame: map
+
+differentiator:
+  update_rate: 0.001
+  cutoff_frequency: 20.0
+
+manipulators:
+
+  - name: mnp
+    links:
+
+    - name: link1
+      parent: map
+      joint_type: revolute_z
+
+      xyz_in_parent: [0, 0, 0.1]
+      rpy_in_parent: [0, 0, 0]
+
+      mass: 2.5
+      inertia_matrix_in_com:
+        [0.9773,        0,        0,
+                0, 0.9773,        0,
+                0,        0, 0.2880]
+      com_in_link: [0, 0, 0.1]
+
+      q_min: -3.141590
+      q_max:  3.141590
+      dq_max: 10000.0
+      tau_max: 10000.0
+      init_q: 0
+
+    - name: link2
+      parent: link1
+      joint_type: revolute_y
+
+      xyz_in_parent: [0, 0.02, 0.2]
+      rpy_in_parent: [0, 0, 0]
+
+      mass: 2.5
+      inertia_matrix_in_com:
+        [0.9773,        0,        0,
+                0, 0.9773,        0,
+                0,        0, 0.2880]
+      com_in_link: [0, 0, 0.1]
+
+      q_min: -3.141590
+      q_max:  3.141590
+      dq_max: 10000.0
+      tau_max: 10000.0
+      init_q: 0
+
+    - name: link3
+      parent: link2
+      joint_type: revolute_z
+
+      xyz_in_parent: [0, 0, 0.2]
+      rpy_in_parent: [0, 0, 0]
+
+      mass: 2.5
+      inertia_matrix_in_com:
+        [0.9773,        0,        0,
+                0, 0.9773,        0,
+                0,        0, 0.2880]
+      com_in_link: [0, 0, 0.1]
+
+      q_min: -3.141590
+      q_max:  3.141590
+      dq_max: 10000.0
+      tau_max: 10000.0
+      init_q: 0
+
+    - name: link4
+      parent: link3
+      joint_type: revolute_y
+
+      xyz_in_parent: [0, -0.02, 0.2]
+      rpy_in_parent: [0, 0, 3.1415926535]
+
+      mass: 2.5
+      inertia_matrix_in_com:
+        [0.9773,        0,        0,
+                0, 0.9773,        0,
+                0,        0, 0.2880]
+      com_in_link: [0, 0, 0.1]
+
+      q_min: -3.141590
+      q_max:  3.141590
+      dq_max: 1.5
+      tau_max: 10000.0
+      init_q: 0
+
+    - name: link5
+      parent: link4
+      joint_type: revolute_z
+
+      xyz_in_parent: [0, 0, 0.2]
+      rpy_in_parent: [0, 0, -3.1415926535]
+
+      mass: 2.5
+      inertia_matrix_in_com:
+        [0.9773,        0,        0,
+                0, 0.9773,        0,
+                0,        0, 0.2880]
+      com_in_link: [0, 0, 0.1]
+
+      q_min: -3.141590
+      q_max:  3.141590
+      dq_max: 10000.0
+      tau_max: 10000.0
+      init_q: 0
+
+    - name: link6
+      parent: link5
+      joint_type: revolute_y
+
+      xyz_in_parent: [0, 0.02, 0.2]
+      rpy_in_parent: [0, 0, 0]
+
+      mass: 2.5
+      inertia_matrix_in_com:
+        [0.9773,        0,        0,
+                0, 0.9773,        0,
+                0,        0, 0.2880]
+      com_in_link: [0, 0, 0.1]
+
+      q_min: -3.141590
+      q_max:  3.141590
+      dq_max: 10000.0
+      tau_max: 10000.0
+      init_q: 0
+
+    - name: link7
+      parent: link6
+      joint_type: revolute_z
+
+      xyz_in_parent: [0, 0, 0.2]
+      rpy_in_parent: [0, 0, 0]
+
+      mass: 2.5
+      inertia_matrix_in_com:
+        [0.9773,        0,        0,
+                0, 0.9773,        0,
+                0,        0, 0.2880]
+      com_in_link: [0, 0, 0.1]
+
+      q_min: -3.141590
+      q_max:  3.141590
+      dq_max: 10000.0
+      tau_max: 10000.0
+      init_q: 0
+
+    - name: link8
+      parent: link7
+      joint_type: revolute_y
+
+      xyz_in_parent: [0, -0.02, 0.2]
+      rpy_in_parent: [0, 0, 3.1415926535]
+
+      mass: 2.5
+      inertia_matrix_in_com:
+        [0.9773,        0,        0,
+                0, 0.9773,        0,
+                0,        0, 0.2880]
+      com_in_link: [0, 0, 0.1]
+
+      q_min: -3.141590
+      q_max:  3.141590
+      dq_max: 1.5
+      tau_max: 10000.0
+      init_q: 0
+
+    - name: link9
+      parent: link8
+      joint_type: revolute_z
+
+      xyz_in_parent: [0, 0, 0.2]
+      rpy_in_parent: [0, 0, -3.1415926535]
+
+      mass: 2.0
+      inertia_matrix_in_com:
+        [0.3333,        0,        0,
+                0, 0.3333,        0,
+                0,        0, 0.3333]
+      com_in_link: [0, -0.04, 0.05]
+
+      q_min: -3.141590
+      q_max:  3.141590
+      dq_max: 10000.0
+      tau_max: 10000.0
+      init_q: 0
+
+    - name: link10
+      parent: link9
+      joint_type: revolute_y
+
+      xyz_in_parent: [0, -0.045, 0.1]
+      rpy_in_parent: [0, 0, 0]
+
+      mass: 1.8
+      inertia_matrix_in_com:
+        [0.3000,        0,        0,
+                0, 0.3000,        0,
+                0,        0, 0.3000]
+      com_in_link: [0, 0.045, 0.015]
+
+      q_min: -3.141590
+      q_max:  3.141590
+      dq_max: 10000.0
+      tau_max: 10000.0
+      init_q: 0
+
+    - name: link11
+      parent: link10
+      joint_type: revolute_z
+
+      xyz_in_parent: [0, 0.045, 0.0725]
+      rpy_in_parent: [0, 0, 0]
+
+      mass: 0.8
+      inertia_matrix_in_com:
+        [0.487,        0,        0,
+                0, 0.487,        0,
+                0,        0, 0.922]
+      com_in_link: [0, 0, 0.015]
+
+      q_min: -3.141590
+      q_max:  3.141590
+      dq_max: 10000.0
+      tau_max: 10000.0
+      init_q: 0
+
+    - name: gripper
+      parent: link11
+      joint_type: fixed
+
+      xyz_in_parent: [0, 0, 0.06750]
+      rpy_in_parent: [0, 0, 0]
+
+      mass: 0.0
+      inertia_matrix_in_com:
+        [0, 0, 0,
+         0, 0, 0,
+         0, 0, 0]
+      com_in_link: [0, 0, 0]

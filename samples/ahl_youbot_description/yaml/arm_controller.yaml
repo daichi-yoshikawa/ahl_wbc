@@ -1,0 +1,25 @@
+arm_controller:
+  joint1_controller:
+    type: effort_controllers/JointEffortController
+    joint: joint1
+  joint2_controller:
+    type: effort_controllers/JointEffortController
+    joint: joint2
+  joint3_controller:
+    type: effort_controllers/JointEffortController
+    joint: joint3
+  joint4_controller:
+    type: effort_controllers/JointEffortController
+    joint: joint4
+  joint5_controller:
+    type: effort_controllers/JointEffortController
+    joint: joint5
+
+gripper_controller:
+  type: effort_controllers/JointTrajectoryController
+  joints:
+    - finger_joint_l
+    - finger_joint_r
+  gains:
+    finger_joint_l: {p: 40.0, d: 1.0}
+    finger_joint_r: {p: 40.0, d: 1.0}

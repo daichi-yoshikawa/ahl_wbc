@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro">>
+
+  <!-- common properties -->
+  <property name="M_PI" value="3.14159265358979323846"/>
+  <property name="threshold" value="0.01"/>
+
+  <!-- arm limits positions (deg) -->
+
+  <property name="joint1_lower_limit" value="-${M_PI * 169 / 180}"/>
+  <property name="joint1_upper_limit" value= "${M_PI * 169 / 180}"/>
+  <property name="joint2_lower_limit" value="-${M_PI *  65 / 180}"/>
+  <property name="joint2_upper_limit" value= "${M_PI *  90 / 180}"/>
+  <property name="joint3_lower_limit" value="-${M_PI * 151 / 180}"/>
+  <property name="joint3_upper_limit" value= "${M_PI * 146 / 180}"/>
+  <property name="joint4_lower_limit" value="-${M_PI * 102.5 / 180}"/>
+  <property name="joint4_upper_limit" value= "${M_PI * 102.5 / 180}"/>
+  <property name="joint5_lower_limit" value="-${M_PI * 165 / 180}"/>
+  <property name="joint5_upper_limit" value= "${M_PI * 165 / 180}"/>
+
+  <!-- dynamic properties : mass (kg) Alu data sheet -->
+  <property name="link1_mass" value="1.390"/>
+  <property name="link2_mass" value="1.318"/>
+  <property name="link3_mass" value="0.821"/>
+  <property name="link4_mass" value="0.769"/>
+  <property name="link5_mass" value="0.906"/>
+
+  <xacro:macro name="link1_inertia_tensor">
+    <origin xyz="-0.010838 0.006337 0.034345" rpy="0 0 0"/>
+    <inertia ixx="0.003003" ixy="0" ixz="0" iyy="0.003003" iyz="0" izz="0.004904"/>
+  </xacro:macro>
+
+  <xacro:macro name="link2_inertia_tensor">
+    <origin xyz="0.001377 -0.029369 0.086325" rpy="0 0 0"/>
+    <inertia ixx="0.0031631" ixy="0" ixz="0" iyy="0.0031145" iyz="0" izz="0.0005843"/>
+  </xacro:macro>
+
+  <xacro:macro name="link3_inertia_tensor">
+    <origin xyz="0.000130 0.028599 0.079400" rpy="0 0 0"/>
+    <inertia ixx="0.0018468" ixy="0" ixz="0" iyy="0.00172767" iyz="0" izz="0.0005843"/>
+  </xacro:macro>
+
+  <xacro:macro name="link4_inertia_tensor">
+    <origin xyz="0.000124 -0.005595 0.040469" rpy="0 0 0"/>
+    <inertia ixx="0.0010573" ixy="0" ixz="0" iyy="0.0006764" iyz="0" izz="0.0006610"/>
+  </xacro:macro>
+
+  <xacro:macro name="link5_inertia_tensor">
+    <origin xyz="-0.000635 0.000445 0.027971" rpy="0 0 0"/>
+    <inertia ixx="0.001229" ixy="0" ixz="0" iyy="0.000856" iyz="0" izz="0.000692"/>
+
+  </xacro:macro>
+</robot>

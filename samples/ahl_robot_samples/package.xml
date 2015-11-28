@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<package>
+  <name>ahl_robot_samples</name>
+  <version>0.0.0</version>
+  <description>The ahl_robot_samples package</description>
+  <maintainer email="daichi.yoshikawa@gmail.com">Daichi Yoshikawa</maintainer>
+  <license>BSD</license>
+  <!-- <url type="website">http://wiki.ros.org/ahl_robot_samples</url> -->
+  <author email="daichi.yoshikawa@gmail.com">Daichi Yoshikawa</author>
+
+  <buildtool_depend>catkin</buildtool_depend>
+  <build_depend>ahl_gazebo_interface</build_depend>
+  <build_depend>ahl_robot</build_depend>
+  <build_depend>ahl_robot_controller</build_depend>
+  <build_depend>dynamic_reconfigure</build_depend>
+  <build_depend>gazebo_msgs</build_depend>
+  <build_depend>roscpp</build_depend>
+  <build_depend>rospy</build_depend>
+  <build_depend>visualization_msgs</build_depend>
+
+  <run_depend>ahl_gazebo_interface</run_depend>
+  <run_depend>ahl_robot</run_depend>
+  <run_depend>ahl_robot_controller</run_depend>
+  <run_depend>dynamic_reconfigure</run_depend>
+  <run_depend>gazebo_msgs</run_depend>
+  <run_depend>roscpp</run_depend>
+  <run_depend>rospy</run_depend>
+  <run_depend>visualization_msgs</run_depend>
+</package>

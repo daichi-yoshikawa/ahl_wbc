@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<robot xmlns:sensor="http://playerstage.sourceforge.net/gazebo/xmlschema/#sensor"
+       xmlns:controller="http://playerstage.sourceforge.net/gazebo/xmlschema/#controller"
+       xmlns:interface="http://playerstage.sourceforge.net/gazebo/xmlschema/#interface"
+       xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <xacro:macro name="youbot_gripper_gazebo" params="name">
+    <gazebo reference="finger_link_l">
+      <gravity>1</gravity>
+      <maxVel>-1</maxVel>
+      <minDepth>0</minDepth>
+      <mu1>0.5</mu1>
+      <mu2>0</mu2>
+      <kp>10000000000.0</kp>
+      <kd>100000000.0</kd>
+      <selfCollide>1</selfCollide>
+    </gazebo>
+
+    <gazebo reference="finger_link_r">
+      <gravity>1</gravity>
+      <maxVel>-1</maxVel>
+      <minDepth>0</minDepth>
+      <mu1>0.5</mu1>
+      <mu2>0</mu2>
+      <kp>10000000000.0</kp>
+      <kd>100000000.0</kd>
+      <selfCollide>1</selfCollide>
+    </gazebo>
+
+  </xacro:macro>
+</robot>

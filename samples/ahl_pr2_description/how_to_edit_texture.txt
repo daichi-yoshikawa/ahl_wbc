@@ -1,0 +1,30 @@
+1. Launch blender and import ***.dae.
+2. Select all faces in edit mode.
+3. If needed, edit name of object in top-right window.
+4. Select triangle icon in right side, and add UV Maps with "+" button.
+5. Rename UVMap to ***_uv_map or something like that.
+6. In menu bar on the top, change mode from "Default" to "UV Editing".
+7. Click top left icon and select "UV/Image Editor".
+8. Open image and select proper image.
+9. Just in case, select "Image" -> "Save Image".
+10. Click top left icon again and select "Info".
+11. In menu bar on the top, change mode from "UV Editing" to "Default".
+12. Select all faces in edit mode.
+13. In right side, select material. It's circular-shaped icon.
+14. If there is no material, add "+" button and rename it to """_material or some thing like that.
+15. Press "Assign" button.
+16. In right side, select texture. It's square-shaped icon.
+17. Click "New".
+18. Rename "Texture" to ***_texture or something like that.
+19. Change Type From "Clouds" to "Image or Movie".
+20. In Image section, select "Open" and select image that you used at procedure 8.
+21. In Mapping section, change Coordinat from "Generated" to "UV".
+22. In Mapping section, change Map from empty to "***_uv_map". This should be the same as the name you used at procedure 5.
+23. Change mode from edit mode to texture mode. And confirm that texture is proper.
+24. Save .blend file wherever you like.
+25. Export .dae file. You need to unchedk "Only Active UV layer", and check "Include UV Textures", "Include Material Textures", and "Copy".
+26. Open .dae file and change "emission", "ambient", "specular", and "shiness" if needed. For example, the following combinations are not bad.
+    emission = 0.4 0.4 0.4 1
+    ambient  = 0.5 0.5 0.5 1
+    specular =   1   1   1 1
+    shiness  = 50

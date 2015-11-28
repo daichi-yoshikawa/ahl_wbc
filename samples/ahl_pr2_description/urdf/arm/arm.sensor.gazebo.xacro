@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<robot xmlns:sensor="http://playerstage.sourceforge.net/gazebo/xmlschema/#sensor"
+       xmlns:controller="http://playerstage.sourceforge.net/gazebo/xmlschema/#controller"
+       xmlns:interface="http://playerstage.sourceforge.net/gazebo/xmlschema/#interface"
+       xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <xacro:macro name="pr2_arm_sensor_gazebo">
+
+  <gazebo reference="gripper_l_joint">
+    <provideFeedback>true</provideFeedback>
+    <sensor type="force_torque" name="force_sensor_l">
+      <always_on>1</always_on>
+      <update_rate>1000</update_rate>
+      <visualize>1</visualize>
+      <topic>force_sensor</topic>
+    </sensor>
+  </gazebo>
+
+  <gazebo reference="gripper_r_joint">
+    <provideFeedback>true</provideFeedback>
+    <sensor type="force_torque" name="force_sensor_r">
+      <always_on>1</always_on>
+      <update_rate>1000</update_rate>
+      <visualize>1</visualize>
+      <topic>force_sensor</topic>
+    </sensor>
+  </gazebo>
+
+  </xacro:macro>
+</robot>

@@ -1,0 +1,498 @@
+name: personal_robot
+xyz: [0, 0, 0]
+rpy: [0, 0, 0]
+world_frame: map
+
+differentiator:
+  update_rate: 0.001
+  cutoff_frequency: 30.0
+
+macro_manipulator_dof: 4
+
+manipulators:
+
+  - name: left_mnp
+    links:
+
+    - name: base_x
+      parent: map
+      joint_type: prismatic_x
+
+      xyz_in_parent: [0, 0, 0.045]
+      rpy_in_parent: [0, 0, 0]
+
+      mass: 0
+      inertia_matrix_in_com:
+        [0, 0, 0,
+         0, 0, 0,
+         0, 0, 0]
+      com_in_link: [0, 0, 0]
+
+      q_min: -100000.0
+      q_max:  100000.0
+      dq_max: 0.8
+      tau_max: 50.0
+      init_q: 0
+
+    - name: base_y
+      parent: base_x
+      joint_type: prismatic_y
+
+      xyz_in_parent: [0, 0, 0]
+      rpy_in_parent: [0, 0, 0]
+
+      mass: 0
+      inertia_matrix_in_com:
+        [0, 0, 0,
+         0, 0, 0,
+         0, 0, 0]
+      com_in_link: [0, 0, 0]
+
+      q_min: -100000.0
+      q_max:  100000.0
+      dq_max: 0.8
+      tau_max: 50.0
+      init_q: 0
+
+    - name: base_yaw
+      parent: base_y
+      joint_type: revolute_z
+
+      xyz_in_parent: [0, 0, 0]
+      rpy_in_parent: [0, 0, 0]
+
+      mass: 118.0
+      inertia_matrix_in_com:
+        [8.431730,        0,        0,
+                0, 8.533050,        0,
+                0,        0, 3.787470]
+      com_in_link: [-0.062, 0, 0.201]
+
+      q_min: -100000.0
+      q_max:  100000.0
+      dq_max: 1.04719
+      tau_max: 50.0
+      init_q: 0
+
+    - name: torso_link
+      parent: base_yaw
+      joint_type: prismatic_z
+
+      xyz_in_parent: [-0.255, 0, 0.66]
+      rpy_in_parent: [0, 0, 0]
+
+      mass: 36.449
+      inertia_matrix_in_com:
+        [2.792330,        0,        0,
+                0, 2.521060,        0,
+                0,        0, 0.536551]
+      com_in_link: [-0.100, 0, -0.087]
+
+      q_min: 0
+      q_max: 0.33
+      dq_max: 10000
+      tau_max: 10000
+      init_q: 0
+
+    - name: shoulder_pan_l_link
+      parent: torso_link
+      joint_type: revolute_z
+
+      xyz_in_parent: [0.21, 0.188, 0.195]
+      rpy_in_parent: [0, 0, 0]
+
+      mass: 25.799
+      inertia_matrix_in_com:
+        [0.866179,        0,        0,
+                0, 0.874217,        0,
+                0,        0, 0.273538]
+      com_in_link: [-0.001, 0, -0.098]
+
+      q_min: -0.714602
+      q_max: 2.285404
+      dq_max: 10000
+      tau_max: 10000
+      init_q: 0
+
+    - name: shoulder_lift_l_link
+      parent: shoulder_pan_l_link
+      joint_type: revolute_y
+
+      xyz_in_parent: [0.1, 0, -0.142]
+      rpy_in_parent: [0, 0, 0]
+
+      mass: 2.750
+      inertia_matrix_in_com:
+      [0.021056,        0,        0,
+              0, 0.021272,        0,
+              0,        0, 0.019758]
+      com_in_link: [0.02195, 0, -0.03127]
+
+      q_min: -0.523601
+      q_max: 1.396300
+      dq_max: 10000
+      tau_max: 10000
+      init_q: 0
+
+    - name: upper_arm_l_link
+      parent: shoulder_lift_l_link
+      joint_type: revolute_x
+
+      xyz_in_parent: [0.12, 0, 0]
+      rpy_in_parent: [0, 0, 0]
+
+      mass: 6.118
+      inertia_matrix_in_com:
+        [0.025306,        0,        0,
+                0, 0.084737,        0,
+		   0,        0, 0.086016]
+      com_in_link: [0.211, 0, -0.001]
+
+      q_min: -3.14
+      q_max: 3.14
+      dq_max: 10000
+      tau_max: 10000
+      init_q: 0
+
+    - name: elbow_l_link
+      parent: upper_arm_l_link
+      joint_type: revolute_y
+
+      xyz_in_parent: [0.28, 0, 0]
+      rpy_in_parent: [0, 0, 0]
+
+      mass: 1.903
+      inertia_matrix_in_com:
+        [0.003465,        0,        0,
+                0, 0.004416,        0,
+                0,        0, 0.003592]
+      com_in_link: [0.010, 0, -0.012]
+
+      q_min: -2.321305
+      q_max: 0
+      dq_max: 10000
+      tau_max: 10000
+      init_q: 0
+
+    - name: forearm_l_link
+      parent: elbow_l_link
+      joint_type: revolute_x
+
+      xyz_in_parent: [0.09, 0, 0]
+      rpy_in_parent: [0, 0, 0]
+
+      mass: 2.690
+      inertia_matrix_in_com:
+        [0.014668,        0,        0,
+                0, 0.026279,        0,
+                0,        0, 0.027775]
+      com_in_link: [0.181, 0, -0.009]
+
+      q_min: -3.14
+      q_max: 3.14
+      dq_max: 10000
+      tau_max: 10000
+      init_q: 0
+
+    - name: wrist_flex_l_link
+      parent: forearm_l_link
+      joint_type: revolute_y
+
+      xyz_in_parent: [0.23, 0, 0]
+      rpy_in_parent: [0, 0, 0]
+
+      mass: 0.614
+      inertia_matrix_in_com:
+        [0.000652,        0,        0,
+                0, 0.000198,        0,
+                0,        0, 0.000645]
+      com_in_link: [-0.002, 0, -0.001]
+
+      q_min: -2.180004
+      q_max: 0
+      dq_max: 10000
+      tau_max: 10000
+      init_q: 0
+
+    - name: wrist_roll_l_link
+      parent: wrist_flex_l_link
+      joint_type: revolute_x
+
+      xyz_in_parent: [0.03, 0, 0]
+      rpy_in_parent: [0, 0, 0]
+
+      mass: 0.681
+      inertia_matrix_in_com:
+      [0.011352,        0,        0,
+              0, 0.011677,        0,
+              0,        0, 0.011866]
+      com_in_link: [0.056, 0, -0.001]
+
+      q_min: -3.14
+      q_max: 3.14
+      dq_max: 10000
+      tau_max: 10000
+      init_q: 0
+
+    - name: gripper_l_link
+      parent: wrist_roll_l_link
+      joint_type: fixed
+
+      xyz_in_parent: [0.05, 0, 0]
+      rpy_in_parent: [0, 0, 0]
+
+      mass: 0.430
+      inertia_matrix_in_com:
+        [0.000110,        0,        0,
+                0, 0.000207,        0,
+                0,        0, 0.000191]
+      com_in_link: [0.036, 0, 0]
+
+      q_min: 0
+      q_max: 0
+      dq_max: 0
+      tau_max: 0
+      init_q: 0
+
+  - name: right_mnp
+    links:
+
+    - name: base_x
+      parent: map
+      joint_type: prismatic_x
+
+      xyz_in_parent: [0, 0, 0.045]
+      rpy_in_parent: [0, 0, 0]
+
+      mass: 0
+      inertia_matrix_in_com:
+        [0, 0, 0,
+         0, 0, 0,
+         0, 0, 0]
+      com_in_link: [0, 0, 0]
+
+      q_min: -100000.0
+      q_max:  100000.0
+      dq_max: 0.8
+      tau_max: 50.0
+      init_q: 0
+
+    - name: base_y
+      parent: base_x
+      joint_type: prismatic_y
+
+      xyz_in_parent: [0, 0, 0]
+      rpy_in_parent: [0, 0, 0]
+
+      mass: 0
+      inertia_matrix_in_com:
+        [0, 0, 0,
+         0, 0, 0,
+         0, 0, 0]
+      com_in_link: [0, 0, 0]
+
+      q_min: -100000.0
+      q_max:  100000.0
+      dq_max: 0.8
+      tau_max: 50.0
+      init_q: 0
+
+    - name: base_yaw
+      parent: base_y
+      joint_type: revolute_z
+
+      xyz_in_parent: [0, 0, 0]
+      rpy_in_parent: [0, 0, 0]
+
+      mass: 118.0
+      inertia_matrix_in_com:
+        [8.431730,        0,        0,
+                0, 8.533050,        0,
+                0,        0, 3.787470]
+      com_in_link: [-0.062, 0, 0.201]
+
+      q_min: -100000.0
+      q_max:  100000.0
+      dq_max: 1.04719
+      tau_max: 50.0
+      init_q: 0
+
+    - name: torso_link
+      parent: base_yaw
+      joint_type: prismatic_z
+
+      xyz_in_parent: [-0.255, 0, 0.66]
+      rpy_in_parent: [0, 0, 0]
+
+      mass: 36.449
+      inertia_matrix_in_com:
+        [2.792330,        0,        0,
+                0, 2.521060,        0,
+                0,        0, 0.536551]
+      com_in_link: [-0.100, 0, -0.087]
+
+      q_min: 0
+      q_max: 0.33
+      dq_max: 10000
+      tau_max: 10000
+      init_q: 0
+
+    - name: shoulder_pan_r_link
+      parent: torso_link
+      joint_type: revolute_z
+
+      xyz_in_parent: [0.21, -0.188, 0.195]
+      rpy_in_parent: [0, 0, 0]
+
+      mass: 25.799
+      inertia_matrix_in_com:
+        [0.866179,        0,        0,
+                0, 0.874217,        0,
+                0,        0, 0.273538]
+      com_in_link: [-0.001, 0, -0.098]
+
+      q_min: -2.285404
+      q_max: 0.714602
+      dq_max: 10000
+      tau_max: 10000
+      init_q: 0
+
+    - name: shoulder_lift_r_link
+      parent: shoulder_pan_r_link
+      joint_type: revolute_y
+
+      xyz_in_parent: [0.1, 0, -0.142]
+      rpy_in_parent: [0, 0, 0]
+
+      mass: 2.750
+      inertia_matrix_in_com:
+      [0.021056,        0,        0,
+              0, 0.021272,        0,
+              0,        0, 0.019758]
+      com_in_link: [0.02195, 0, -0.03127]
+
+      q_min: -0.523601
+      q_max: 1.396300
+      dq_max: 10000
+      tau_max: 10000
+      init_q: 0
+
+    - name: upper_arm_r_link
+      parent: shoulder_lift_r_link
+      joint_type: revolute_x
+
+      xyz_in_parent: [0.12, 0, 0]
+      rpy_in_parent: [0, 0, 0]
+
+      mass: 6.118
+      inertia_matrix_in_com:
+        [0.025306,        0,        0,
+                0, 0.084737,        0,
+		   0,        0, 0.086016]
+      com_in_link: [0.211, 0, -0.001]
+
+      q_min: -3.900008
+      q_max: 0.800000
+      dq_max: 10000
+      tau_max: 10000
+      init_q: 0
+
+    - name: elbow_r_link
+      parent: upper_arm_r_link
+      joint_type: revolute_y
+
+      xyz_in_parent: [0.28, 0, 0]
+      rpy_in_parent: [0, 0, 0]
+
+      mass: 1.903
+      inertia_matrix_in_com:
+        [0.003465,        0,        0,
+                0, 0.004416,        0,
+                0,        0, 0.003592]
+      com_in_link: [0.010, 0, -0.012]
+
+      q_min: -2.321305
+      q_max: 0
+      dq_max: 10000
+      tau_max: 10000
+      init_q: 0
+
+    - name: forearm_r_link
+      parent: elbow_r_link
+      joint_type: revolute_x
+
+      xyz_in_parent: [0.09, 0, 0]
+      rpy_in_parent: [0, 0, 0]
+
+      mass: 2.690
+      inertia_matrix_in_com:
+        [0.014668,        0,        0,
+                0, 0.026279,        0,
+                0,        0, 0.027775]
+      com_in_link: [0.181, 0, -0.009]
+
+      q_min: -3.14
+      q_max: 3.14
+      dq_max: 10000
+      tau_max: 10000
+      init_q: 0
+
+    - name: wrist_flex_r_link
+      parent: forearm_r_link
+      joint_type: revolute_y
+
+      xyz_in_parent: [0.23, 0, 0]
+      rpy_in_parent: [0, 0, 0]
+
+      mass: 0.614
+      inertia_matrix_in_com:
+        [0.000652,        0,        0,
+                0, 0.000198,        0,
+                0,        0, 0.000645]
+      com_in_link: [-0.002, 0, -0.001]
+
+      q_min: -2.180004
+      q_max: 0
+      dq_max: 10000
+      tau_max: 10000
+      init_q: 0
+
+    - name: wrist_roll_r_link
+      parent: wrist_flex_r_link
+      joint_type: revolute_x
+
+      xyz_in_parent: [0.03, 0, 0]
+      rpy_in_parent: [0, 0, 0]
+
+      mass: 0.681
+      inertia_matrix_in_com:
+      [0.011352,        0,        0,
+              0, 0.011677,        0,
+              0,        0, 0.011866]
+      com_in_link: [0.056, 0, -0.001]
+
+      q_min: -3.14
+      q_max: 3.14
+      dq_max: 10000
+      tau_max: 10000
+      init_q: 0
+
+    - name: gripper_r_link
+      parent: wrist_roll_r_link
+      joint_type: fixed
+
+      xyz_in_parent: [0.05, 0, 0]
+      rpy_in_parent: [0, 0, 0]
+
+      mass: 0.430
+      inertia_matrix_in_com:
+        [0.000110,        0,        0,
+                0, 0.000207,        0,
+                0,        0, 0.000191]
+      com_in_link: [0.036, 0, 0]
+
+      q_min: 0
+      q_max: 0
+      dq_max: 0
+      tau_max: 0
+      init_q: 0

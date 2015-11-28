@@ -1,0 +1,167 @@
+<?xml version="1.0"?>
+<robot xmlns:sensor="http://playerstage.sourceforge.net/gazebo/xmlschema/#sensor"
+       xmlns:controller="http://playerstage.sourceforge.net/gazebo/xmlschema/#controller"
+       xmlns:interface="http://playerstage.sourceforge.net/gazebo/xmlschema/#interface"
+       xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <xacro:macro name="pr2_arm_transmission">
+
+    <!-- left arm -->
+
+    <transmission name="shoulder_pan_l_trans">
+      <type>transmission_interface/SimpleTransmission</type>
+      <actuator name="shoulder_pan_l_motor">
+        <hardwareInterface>EffortJointInterface</hardwareInterface>
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+      <joint name="shoulder_pan_l_joint">
+        <hardwareInterface>EffortJointInterface</hardwareInterface>
+      </joint>
+    </transmission>
+
+    <transmission name="shoulder_lift_l_trans">
+      <type>transmission_interface/SimpleTransmission</type>
+      <actuator name="shoulder_lift_l_motor">
+        <hardwareInterface>EffortJointInterface</hardwareInterface>
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+      <joint name="shoulder_lift_l_joint">
+        <hardwareInterface>EffortJointInterface</hardwareInterface>
+      </joint>
+    </transmission>
+
+    <transmission name="upper_arm_l_trans">
+      <type>transmission_interface/SimpleTransmission</type>
+      <actuator name="upper_arm_l_motor">
+        <hardwareInterface>EffortJointInterface</hardwareInterface>
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+      <joint name="upper_arm_l_joint">
+        <hardwareInterface>EffortJointInterface</hardwareInterface>
+      </joint>
+    </transmission>
+
+    <transmission name="elbow_l_trans">
+      <type>transmission_interface/SimpleTransmission</type>
+      <actuator name="elbow_l_motor">
+        <hardwareInterface>EffortJointInterface</hardwareInterface>
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+      <joint name="elbow_l_joint">
+        <hardwareInterface>EffortJointInterface</hardwareInterface>
+      </joint>
+    </transmission>
+
+    <transmission name="forearm_l_trans">
+      <type>transmission_interface/SimpleTransmission</type>
+      <actuator name="forearm_l_motor">
+        <hardwareInterface>EffortJointInterface</hardwareInterface>
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+      <joint name="forearm_l_joint">
+        <hardwareInterface>EffortJointInterface</hardwareInterface>
+      </joint>
+    </transmission>
+
+    <transmission name="wrist_flex_l_trans">
+      <type>transmission_interface/SimpleTransmission</type>
+      <actuator name="wrist_flex_l_motor">
+        <hardwareInterface>EffortJointInterface</hardwareInterface>
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+      <joint name="wrist_flex_l_joint">
+        <hardwareInterface>EffortJointInterface</hardwareInterface>
+      </joint>
+    </transmission>
+
+    <transmission name="wrist_roll_l_trans">
+      <type>transmission_interface/SimpleTransmission</type>
+      <actuator name="wrist_roll_l_motor">
+        <hardwareInterface>EffortJointInterface</hardwareInterface>
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+      <joint name="wrist_roll_l_joint">
+        <hardwareInterface>EffortJointInterface</hardwareInterface>
+      </joint>
+    </transmission>
+
+    <!-- right arm -->
+
+    <transmission name="shoulder_pan_r_trans">
+      <type>transmission_interface/SimpleTransmission</type>
+      <actuator name="shoulder_pan_r_motor">
+        <hardwareInterface>EffortJointInterface</hardwareInterface>
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+      <joint name="shoulder_pan_r_joint">
+        <hardwareInterface>EffortJointInterface</hardwareInterface>
+      </joint>
+    </transmission>
+
+    <transmission name="shoulder_lift_r_trans">
+      <type>transmission_interface/SimpleTransmission</type>
+      <actuator name="shoulder_lift_r_motor">
+        <hardwareInterface>EffortJointInterface</hardwareInterface>
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+      <joint name="shoulder_lift_r_joint">
+        <hardwareInterface>EffortJointInterface</hardwareInterface>
+      </joint>
+    </transmission>
+
+    <transmission name="upper_arm_r_trans">
+      <type>transmission_interface/SimpleTransmission</type>
+      <actuator name="upper_arm_r_motor">
+        <hardwareInterface>EffortJointInterface</hardwareInterface>
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+      <joint name="upper_arm_r_joint">
+        <hardwareInterface>EffortJointInterface</hardwareInterface>
+      </joint>
+    </transmission>
+
+    <transmission name="elbow_r_trans">
+      <type>transmission_interface/SimpleTransmission</type>
+      <actuator name="elbow_r_motor">
+        <hardwareInterface>EffortJointInterface</hardwareInterface>
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+      <joint name="elbow_r_joint">
+        <hardwareInterface>EffortJointInterface</hardwareInterface>
+      </joint>
+    </transmission>
+
+    <transmission name="forearm_r_trans">
+      <type>transmission_interface/SimpleTransmission</type>
+      <actuator name="forearm_r_motor">
+        <hardwareInterface>EffortJointInterface</hardwareInterface>
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+      <joint name="forearm_r_joint">
+        <hardwareInterface>EffortJointInterface</hardwareInterface>
+      </joint>
+    </transmission>
+
+    <transmission name="wrist_flex_r_trans">
+      <type>transmission_interface/SimpleTransmission</type>
+      <actuator name="wrist_flex_r_motor">
+        <hardwareInterface>EffortJointInterface</hardwareInterface>
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+      <joint name="wrist_flex_r_joint">
+        <hardwareInterface>EffortJointInterface</hardwareInterface>
+      </joint>
+    </transmission>
+
+    <transmission name="wrist_roll_r_trans">
+      <type>transmission_interface/SimpleTransmission</type>
+      <actuator name="wrist_roll_r_motor">
+        <hardwareInterface>EffortJointInterface</hardwareInterface>
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+      <joint name="wrist_roll_r_joint">
+        <hardwareInterface>EffortJointInterface</hardwareInterface>
+      </joint>
+    </transmission>
+  </xacro:macro>
+</robot>

@@ -1,0 +1,3 @@
+joint1_torque_controller:
+  type: effort_controllers/JointEffortController
+  joint: joint1

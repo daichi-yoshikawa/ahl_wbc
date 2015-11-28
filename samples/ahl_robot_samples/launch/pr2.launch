@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<launch>
+  <node pkg="ahl_robot_samples" type="pr2_sample" name="pr2_sample" output="screen">
+    <param name="pr2/yaml" value="$(find ahl_robot_samples)/yaml/pr2.yaml"/>
+  </node>
+  <node pkg="rqt_reconfigure" type="rqt_reconfigure" name="pr2_rqt_reconfigure" output="screen"/>
+  <node pkg="dynamic_reconfigure" type="dynparam" name="pr2_dynparam" output="screen" args="load /pr2_sample $(find ahl_robot_samples)/yaml/pr2_ctrl.yaml"/>
+</launch>

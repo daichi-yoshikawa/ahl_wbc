@@ -1,0 +1,204 @@
+<?xml version="1.0"?>
+<robot xmlns:sensor="http://playerstage.sourceforge.net/gazebo/xmlschema/#sensor"
+       xmlns:controller="http://playerstage.sourceforge.net/gazebo/xmlschema/#controller"
+       xmlns:interface="http://playerstage.sourceforge.net/gazebo/xmlschema/#interface"
+       xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <xacro:include filename="$(find ahl_pr2_description)/urdf/gripper/gripper.property.xacro"/>
+  <xacro:include filename="$(find ahl_pr2_description)/urdf/gripper/gripper.gazebo.xacro"/>
+  <xacro:include filename="$(find ahl_pr2_description)/urdf/gripper/gripper.transmission.xacro"/>
+
+  <xacro:macro name="pr2_gripper">
+
+    <!-- left gripper -->
+
+    <joint name="finger_ll_joint" type="revolute">
+      <origin xyz="${finger_x} ${finger_y} ${finger_z}" rpy="0 0 0"/>
+      <parent link="wrist_roll_l_link"/>
+      <child link="finger_ll_link"/>
+      <axis xyz="0 0 1"/>
+      <limit effort="${finger_effort}" velocity="${finger_velocity}" lower="${finger_lower}" upper="${finger_upper}"/>
+      <dynamics damping="${finger_damping}" friction="${finger_friction}"/>
+    </joint>
+
+    <link name="finger_ll_link">
+      <xacro:finger_inertial/>
+      <visual>
+        <geometry>
+          <mesh filename="package://ahl_pr2_description/meshes/gripper/finger_l.dae"/>
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="package://ahl_pr2_description/meshes/gripper/finger_l.stl"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <joint name="finger_tip_ll_joint" type="revolute">
+      <origin xyz="${finger_tip_x} ${finger_tip_y} ${finger_tip_z}" rpy="0 0 0"/>
+      <parent link="finger_ll_link"/>
+      <child link="finger_tip_ll_link"/>
+      <axis xyz="0 0 1"/>
+      <limit effort="${finger_tip_effort}" velocity="${finger_tip_velocity}" lower="${finger_tip_lower}" upper="${finger_tip_upper}"/>
+      <dynamics damping="${finger_tip_damping}" friction="${finger_tip_friction}"/>
+    </joint>
+
+    <link name="finger_tip_ll_link">
+      <xacro:finger_tip_inertial/>
+      <visual>
+        <geometry>
+          <mesh filename="package://ahl_pr2_description/meshes/gripper/finger_tip_l.dae"/>
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="package://ahl_pr2_description/meshes/gripper/finger_tip_l.stl"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <joint name="finger_lr_joint" type="revolute">
+      <origin xyz="${finger_x} ${-finger_y} ${finger_z}" rpy="0 0 0"/>
+      <parent link="wrist_roll_l_link"/>
+      <child link="finger_lr_link"/>
+      <axis xyz="0 0 1"/>
+      <limit effort="${finger_effort}" velocity="${finger_velocity}" lower="${-finger_upper}" upper="${-finger_lower}"/>
+      <dynamics damping="${finger_damping}" friction="${finger_friction}"/>
+    </joint>
+
+    <link name="finger_lr_link">
+      <xacro:finger_inertial/>
+      <visual>
+        <geometry>
+          <mesh filename="package://ahl_pr2_description/meshes/gripper/finger_r.dae"/>
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="package://ahl_pr2_description/meshes/gripper/finger_r.stl"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <joint name="finger_tip_lr_joint" type="revolute">
+      <origin xyz="${finger_tip_x} ${-finger_tip_y} ${finger_tip_z}" rpy="0 0 0"/>
+      <parent link="finger_lr_link"/>
+      <child link="finger_tip_lr_link"/>
+      <axis xyz="0 0 1"/>
+      <limit effort="${finger_tip_effort}" velocity="${finger_tip_velocity}" lower="${-finger_tip_upper}" upper="${-finger_tip_lower}"/>
+      <dynamics damping="${finger_tip_damping}" friction="${finger_tip_friction}"/>
+    </joint>
+
+    <link name="finger_tip_lr_link">
+      <xacro:finger_tip_inertial/>
+      <visual>
+        <geometry>
+          <mesh filename="package://ahl_pr2_description/meshes/gripper/finger_tip_r.dae"/>
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="package://ahl_pr2_description/meshes/gripper/finger_tip_r.stl"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <!-- right gripper -->
+
+    <joint name="finger_rl_joint" type="revolute">
+      <origin xyz="${finger_x} ${finger_y} ${finger_z}" rpy="0 0 0"/>
+      <parent link="wrist_roll_r_link"/>
+      <child link="finger_rl_link"/>
+      <axis xyz="0 0 1"/>
+      <limit effort="${finger_effort}" velocity="${finger_velocity}" lower="${finger_lower}" upper="${finger_upper}"/>
+      <dynamics damping="${finger_damping}" friction="${finger_friction}"/>
+    </joint>
+
+    <link name="finger_rl_link">
+      <xacro:finger_inertial/>
+      <visual>
+        <geometry>
+          <mesh filename="package://ahl_pr2_description/meshes/gripper/finger_l.dae"/>
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="package://ahl_pr2_description/meshes/gripper/finger_l.stl"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <joint name="finger_tip_rl_joint" type="revolute">
+      <origin xyz="${finger_tip_x} ${finger_tip_y} ${finger_tip_z}" rpy="0 0 0"/>
+      <parent link="finger_rl_link"/>
+      <child link="finger_tip_rl_link"/>
+      <axis xyz="0 0 1"/>
+      <limit effort="${finger_tip_effort}" velocity="${finger_tip_velocity}" lower="${finger_tip_lower}" upper="${finger_tip_upper}"/>
+      <dynamics damping="${finger_tip_damping}" friction="${finger_tip_friction}"/>
+    </joint>
+
+    <link name="finger_tip_rl_link">
+      <xacro:finger_tip_inertial/>
+      <visual>
+        <geometry>
+          <mesh filename="package://ahl_pr2_description/meshes/gripper/finger_tip_l.dae"/>
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="package://ahl_pr2_description/meshes/gripper/finger_tip_l.stl"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <joint name="finger_rr_joint" type="revolute">
+      <origin xyz="${finger_x} ${-finger_y} ${finger_z}" rpy="0 0 0"/>
+      <parent link="wrist_roll_r_link"/>
+      <child link="finger_rr_link"/>
+      <axis xyz="0 0 1"/>
+      <limit effort="${finger_effort}" velocity="${finger_velocity}" lower="${-finger_upper}" upper="${-finger_lower}"/>
+      <dynamics damping="${finger_damping}" friction="${finger_friction}"/>
+    </joint>
+
+    <link name="finger_rr_link">
+      <xacro:finger_inertial/>
+      <visual>
+        <geometry>
+          <mesh filename="package://ahl_pr2_description/meshes/gripper/finger_r.dae"/>
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="package://ahl_pr2_description/meshes/gripper/finger_r.stl"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <joint name="finger_tip_rr_joint" type="revolute">
+      <origin xyz="${finger_tip_x} ${-finger_tip_y} ${finger_tip_z}" rpy="0 0 0"/>
+      <parent link="finger_rr_link"/>
+      <child link="finger_tip_rr_link"/>
+      <axis xyz="0 0 1"/>
+      <limit effort="${finger_tip_effort}" velocity="${finger_tip_velocity}" lower="${-finger_tip_upper}" upper="${-finger_tip_lower}"/>
+      <dynamics damping="${finger_tip_damping}" friction="${finger_tip_friction}"/>
+    </joint>
+
+    <link name="finger_tip_rr_link">
+      <xacro:finger_tip_inertial/>
+      <visual>
+        <geometry>
+          <mesh filename="package://ahl_pr2_description/meshes/gripper/finger_tip_r.dae"/>
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="package://ahl_pr2_description/meshes/gripper/finger_tip_r.stl"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <xacro:pr2_gripper_gazebo/>
+    <xacro:pr2_gripper_transmission/>
+  </xacro:macro>
+</robot>

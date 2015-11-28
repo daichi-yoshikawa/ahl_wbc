@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<package>
+  <name>ahl_robot</name>
+  <version>0.0.0</version>
+  <description>The ahl_robot package</description>
+  <maintainer email="daichi.yoshikawa@gmail.com">Daichi Yoshikawa</maintainer>
+  <license>BSD</license>
+  <!-- <url type="website">http://wiki.ros.org/ahl_robot</url> -->
+  <!-- <author email="daichi.yoshikawa@gmail.com">Daichi Yoshikawa</author> -->
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <build_depend>cmake_modules</build_depend>
+  <build_depend>ahl_digital_filter</build_depend>
+  <build_depend>ahl_utils</build_depend>
+  <build_depend>roscpp</build_depend>
+  <build_depend>tf2</build_depend>
+  <build_depend>tf2_ros</build_depend>
+  <build_depend>yaml-cpp</build_depend>
+
+  <run_depend>cmake_modules</run_depend>
+  <run_depend>ahl_digital_filter</run_depend>
+  <run_depend>ahl_utils</run_depend>
+  <run_depend>roscpp</run_depend>
+  <run_depend>tf2</run_depend>
+  <run_depend>tf2_ros</run_depend>
+  <run_depend>yaml-cpp</run_depend>
+</package>

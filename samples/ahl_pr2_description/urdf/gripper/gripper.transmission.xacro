@@ -1,0 +1,102 @@
+<?xml version="1.0"?>
+<robot xmlns:sensor="http://playerstage.sourceforge.net/gazebo/xmlschema/#sensor"
+       xmlns:controller="http://playerstage.sourceforge.net/gazebo/xmlschema/#controller"
+       xmlns:interface="http://playerstage.sourceforge.net/gazebo/xmlschema/#interface"
+       xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <xacro:macro name="pr2_gripper_transmission">
+
+    <!-- left gripper -->
+
+    <transmission name="finger_ll_trans">
+      <type>transmission_interface/SimpleTransmission</type>
+      <actuator name="finger_ll_motor">
+        <hardwareInterface>EffortJointInterface</hardwareInterface>
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+      <joint name="finger_ll_joint">
+        <hardwareInterface>EffortJointInterface</hardwareInterface>
+      </joint>
+    </transmission>
+
+    <transmission name="finger_tip_ll_trans">
+      <type>transmission_interface/SimpleTransmission</type>
+      <actuator name="finger_tip_ll_motor">
+        <hardwareInterface>EffortJointInterface</hardwareInterface>
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+      <joint name="finger_tip_ll_joint">
+        <hardwareInterface>EffortJointInterface</hardwareInterface>
+      </joint>
+    </transmission>
+
+    <transmission name="finger_lr_trans">
+      <type>transmission_interface/SimpleTransmission</type>
+      <actuator name="finger_lr_motor">
+        <hardwareInterface>EffortJointInterface</hardwareInterface>
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+      <joint name="finger_lr_joint">
+        <hardwareInterface>EffortJointInterface</hardwareInterface>
+      </joint>
+    </transmission>
+
+    <transmission name="finger_tip_lr_trans">
+      <type>transmission_interface/SimpleTransmission</type>
+      <actuator name="finger_tip_lr_motor">
+        <hardwareInterface>EffortJointInterface</hardwareInterface>
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+      <joint name="finger_tip_lr_joint">
+        <hardwareInterface>EffortJointInterface</hardwareInterface>
+      </joint>
+    </transmission>
+
+    <!-- right gripper -->
+
+    <transmission name="finger_rl_trans">
+      <type>transmission_interface/SimpleTransmission</type>
+      <actuator name="finger_rl_motor">
+        <hardwareInterface>EffortJointInterface</hardwareInterface>
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+      <joint name="finger_rl_joint">
+        <hardwareInterface>EffortJointInterface</hardwareInterface>
+      </joint>
+    </transmission>
+
+    <transmission name="finger_tip_rl_trans">
+      <type>transmission_interface/SimpleTransmission</type>
+      <actuator name="finger_tip_rl_motor">
+        <hardwareInterface>EffortJointInterface</hardwareInterface>
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+      <joint name="finger_tip_rl_joint">
+        <hardwareInterface>EffortJointInterface</hardwareInterface>
+      </joint>
+    </transmission>
+
+    <transmission name="finger_rr_trans">
+      <type>transmission_interface/SimpleTransmission</type>
+      <actuator name="finger_rr_motor">
+        <hardwareInterface>EffortJointInterface</hardwareInterface>
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+      <joint name="finger_rr_joint">
+        <hardwareInterface>EffortJointInterface</hardwareInterface>
+      </joint>
+    </transmission>
+
+    <transmission name="finger_tip_rr_trans">
+      <type>transmission_interface/SimpleTransmission</type>
+      <actuator name="finger_tip_rr_motor">
+        <hardwareInterface>EffortJointInterface</hardwareInterface>
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+      <joint name="finger_tip_rr_joint">
+        <hardwareInterface>EffortJointInterface</hardwareInterface>
+      </joint>
+    </transmission>
+
+  </xacro:macro>
+</robot>

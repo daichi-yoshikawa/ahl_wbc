@@ -1,0 +1,101 @@
+<?xml version="1.0"?>
+<robot xmlns:sensor="http://playerstage.sourceforge.net/gazebo/xmlschema/#sensor"
+       xmlns:controller="http://playerstage.sourceforge.net/gazebo/xmlschema/#controller"
+       xmlns:interface="http://playerstage.sourceforge.net/gazebo/xmlschema/#interface"
+       xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <xacro:macro name="pr2_gripper_gazebo">
+    <!-- left gripper -->
+
+    <gazebo reference="finger_ll_link">
+      <gravity>1</gravity>
+      <maxVel>-1</maxVel>
+      <minDepth>0</minDepth>
+      <mu1>0.7</mu1>
+      <mu2>0</mu2>
+      <kp>10000000000.0</kp>
+      <kd>100000000.0</kd>
+      <selfCollide>0</selfCollide>
+    </gazebo>
+
+    <gazebo reference="finger_tip_ll_link">
+      <gravity>1</gravity>
+      <maxVel>-1</maxVel>
+      <minDepth>0</minDepth>
+      <mu1>0.7</mu1>
+      <mu2>0</mu2>
+      <kp>10000000000.0</kp>
+      <kd>100000000.0</kd>
+      <selfCollide>0</selfCollide>
+    </gazebo>
+
+    <gazebo reference="finger_lr_link">
+      <gravity>1</gravity>
+      <maxVel>-1</maxVel>
+      <minDepth>0</minDepth>
+      <mu1>0.7</mu1>
+      <mu2>0</mu2>
+      <kp>10000000000.0</kp>
+      <kd>100000000.0</kd>
+      <selfCollide>0</selfCollide>
+    </gazebo>
+
+    <gazebo reference="finger_tip_lr_link">
+      <gravity>1</gravity>
+      <maxVel>-1</maxVel>
+      <minDepth>0</minDepth>
+      <mu1>0.7</mu1>
+      <mu2>0</mu2>
+      <kp>10000000000.0</kp>
+      <kd>100000000.0</kd>
+      <selfCollide>0</selfCollide>
+    </gazebo>
+
+    <!-- left gripper -->
+
+    <gazebo reference="finger_rl_link">
+      <gravity>1</gravity>
+      <maxVel>-1</maxVel>
+      <minDepth>0</minDepth>
+      <mu1>0.7</mu1>
+      <mu2>0</mu2>
+      <kp>10000000000.0</kp>
+      <kd>100000000.0</kd>
+      <selfCollide>0</selfCollide>
+    </gazebo>
+
+    <gazebo reference="finger_tip_rl_link">
+      <gravity>1</gravity>
+      <maxVel>-1</maxVel>
+      <minDepth>0</minDepth>
+      <mu1>0.7</mu1>
+      <mu2>0</mu2>
+      <kp>10000000000.0</kp>
+      <kd>100000000.0</kd>
+      <selfCollide>0</selfCollide>
+    </gazebo>
+
+    <gazebo reference="finger_rr_link">
+      <gravity>1</gravity>
+      <maxVel>-1</maxVel>
+      <minDepth>0</minDepth>
+      <mu1>0.7</mu1>
+      <mu2>0</mu2>
+      <kp>10000000000.0</kp>
+      <kd>100000000.0</kd>
+      <selfCollide>0</selfCollide>
+    </gazebo>
+
+    <gazebo reference="finger_tip_rr_link">
+      <gravity>1</gravity>
+      <maxVel>-1</maxVel>
+      <minDepth>0</minDepth>
+      <mu1>0.7</mu1>
+      <mu2>0</mu2>
+      <kp>10000000000.0</kp>
+      <kd>100000000.0</kd>
+      <selfCollide>0</selfCollide>
+    </gazebo>
+
+  </xacro:macro>
+</robot>

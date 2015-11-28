@@ -1,0 +1,62 @@
+name: rr_robot
+xyz: [0, 0, 0]
+rpy: [0, 0, 0]
+world_frame: map
+manipulators:
+
+  - name: mnp
+    links:
+
+    - name: link1
+      parent: map
+      joint_type: revolute_z
+
+      xyz_in_parent: [0, 0, 0]
+      rpy_in_parent: [0, 0, 0]
+
+      mass: 3.0
+      inertia_matrix_in_com:
+        [0.001,    0,    0,
+             0, 0.05,    0,
+             0,    0, 0.05]
+      com_in_link: [0.5, 0, 0]
+
+      q_min: -3.1415926535897932
+      q_max:  3.1415926535897932
+      dq_max: 1000.0
+      tau_max: 1000.0
+      init_q: 0
+
+    - name: link2
+      parent: link1
+      joint_type: revolute_z
+
+      xyz_in_parent: [0.5, 0, 0]
+      rpy_in_parent: [0, 0, 0]
+
+      mass: 1.5
+      inertia_matrix_in_com:
+        [0.0003, 0, 0,
+         0, 0.025, 0,
+         0, 0, 0.025]
+      com_in_link: [0.4, 0, 0]
+
+      q_min: -3.1415926535897932
+      q_max:  3.1415926535897932
+      dq_max: 1000.0
+      tau_max: 1000.0
+      init_q: 0
+
+    - name: gripper
+      parent: link2
+      joint_type: fixed
+
+      xyz_in_parent: [0.4, 0, 0]
+      rpy_in_parent: [0, 0, 0]
+
+      mass: 0
+      inertia_matrix_in_com:
+        [0, 0, 0,
+         0, 0, 0,
+         0, 0, 0]
+      com_in_link: [0, 0, 0]
