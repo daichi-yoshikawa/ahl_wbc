@@ -144,10 +144,6 @@ void YouBot::updateModel(const ros::TimerEvent&)
   {
     ROS_ERROR_STREAM(e.what());
   }
-  catch(ahl_ctrl::Exception& e)
-  {
-    ROS_ERROR_STREAM(e.what());
-  }
 }
 
 void YouBot::control(const ros::TimerEvent&)
@@ -173,10 +169,6 @@ void YouBot::control(const ros::TimerEvent&)
     controller_->simulate(0.001, tau, qd, dqd_, ddqd);
   }
   catch(ahl_utils::Exception& e)
-  {
-    ROS_ERROR_STREAM(e.what());
-  }
-  catch(ahl_ctrl::Exception& e)
   {
     ROS_ERROR_STREAM(e.what());
   }
@@ -210,10 +202,6 @@ void YouBot::updateWheels(const ros::TimerEvent& e)
     gazebo_interface_wheel_->rotateLink(quat_wheel);
   }
   catch(ahl_utils::Exception& e)
-  {
-    ROS_ERROR_STREAM(e.what());
-  }
-  catch(ahl_ctrl::Exception& e)
   {
     ROS_ERROR_STREAM(e.what());
   }

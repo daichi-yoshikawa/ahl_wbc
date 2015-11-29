@@ -47,7 +47,7 @@
 #include <ahl_gazebo_interface/gazebo_interface.hpp>
 #include <ahl_gazebo_interface/exception.hpp>
 #include <ahl_robot/ahl_robot.hpp>
-#include <ahl_robot_controller/exception.hpp>
+#include <ahl_utils/exception.hpp>
 #include <ahl_robot_controller/robot_controller.hpp>
 #include <ahl_robot_controller/tasks.hpp>
 

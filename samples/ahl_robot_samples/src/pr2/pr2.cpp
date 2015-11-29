@@ -151,10 +151,6 @@ void PR2::updateModel(const ros::TimerEvent&)
   {
     ROS_ERROR_STREAM(e.what());
   }
-  catch(ahl_ctrl::Exception& e)
-  {
-    ROS_ERROR_STREAM(e.what());
-  }
 }
 
 void PR2::control(const ros::TimerEvent&)
@@ -180,10 +176,6 @@ void PR2::control(const ros::TimerEvent&)
     controller_->simulate(0.001, tau, qd, dqd, ddqd);
   }
   catch(ahl_utils::Exception& e)
-  {
-    ROS_ERROR_STREAM(e.what());
-  }
-  catch(ahl_ctrl::Exception& e)
   {
     ROS_ERROR_STREAM(e.what());
   }

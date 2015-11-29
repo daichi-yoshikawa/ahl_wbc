@@ -19,11 +19,6 @@ int main(int argc, char** argv)
     ROS_ERROR_STREAM(e.what());
     return -1;
   }
-  catch(ahl_ctrl::Exception& e)
-  {
-    ROS_ERROR_STREAM(e.what());
-    return -1;
-  }
   catch(ahl_gazebo_if::Exception& e)
   {
     ROS_ERROR_STREAM(e.what());

@@ -42,7 +42,7 @@
 #include <ahl_gazebo_interface/gazebo_interface.hpp>
 #include <ahl_gazebo_interface/exception.hpp>
 #include <ahl_robot/ahl_robot.hpp>
-#include <ahl_robot_controller/exception.hpp>
+#include <ahl_utils/exception.hpp>
 #include <ahl_robot_controller/robot_controller.hpp>
 #include <ahl_robot_controller/tasks.hpp>
 
@@ -78,7 +78,7 @@ void updateModel(const ros::TimerEvent&)
       tf_pub->publish(robot);
     }
   }
-  catch(ahl_ctrl::Exception& e)
+  catch(ahl_utils::Exception& e)
   {
     ROS_ERROR_STREAM(e.what());
   }
@@ -179,7 +179,7 @@ void control(const ros::TimerEvent&)
     }
 
   }
-  catch(ahl_ctrl::Exception& e)
+  catch(ahl_utils::Exception& e)
   {
     ROS_ERROR_STREAM(e.what());
   }
