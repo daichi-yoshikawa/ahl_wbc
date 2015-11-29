@@ -39,7 +39,7 @@
 #include <ros/ros.h>
 #include "ahl_utils/exception.hpp"
 #include "ahl_robot/robot/parser.hpp"
-#include "ahl_robot/tf/tf_publisher.hpp"
+#include "ahl_robot/robot/tf_publisher.hpp"
 
 using namespace ahl_robot;
 

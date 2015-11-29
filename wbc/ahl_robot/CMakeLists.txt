@@ -58,7 +58,7 @@ add_library(
     src/robot/manipulator.cpp
     src/robot/transformation.cpp
     src/robot/parser.cpp
-    src/tf/tf_publisher.cpp
+    src/robot/tf_publisher.cpp
     src/utils/math.cpp
 )
 
