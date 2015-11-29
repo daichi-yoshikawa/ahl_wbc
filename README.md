@@ -16,7 +16,8 @@ Reference : [The operational space framework](http://cs.stanford.edu/group/manip
 Contents
 =========
 ### Packages
-* wbc/ahl_robot : Implement kinematics including transformation, computation of Jacobian and mass matrix.
+* wbc/ahl_robot :
+  Implement kinematics including transformation, computation of Jacobian and mass matrix.
 * wbc/ahl_robot_controller : Provide joint space control and task space control
 * samples/ahl_youbot_description : Contain urdf description of YouBot
 * samples/ahl_pr2_description : Contain urdf description of PR2
