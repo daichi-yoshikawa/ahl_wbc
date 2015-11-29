@@ -36,44 +36,59 @@
  *
  *********************************************************************/
 
-#ifndef __AHL_ROBOT_SAMPLES_YOUBOT_HPP
-#define __AHL_ROBOT_SAMPLES_YOUBOT_HPP
-
-#include "ahl_robot_samples/robot_demo.hpp"
-#include "ahl_robot_samples/youbot/youbot_param.hpp"
+#include <iostream>
+#include "ahl_utils/exception.hpp"
 #include "ahl_robot_samples/mobility/mecanum_wheel.hpp"
 
-namespace ahl_sample
+using namespace ahl_sample;
+
+MecanumWheel::MecanumWheel(const Eigen::Vector4d& q, double tread_width, double wheel_base, double wheel_radius)
 {
-
-  class YouBot : public RobotDemo
+  if(tread_width <= 0.0)
   {
-  public:
-    YouBot();
+    std::stringstream msg;
+    msg << "Invalid tread width." << std::endl
+        << "  tread width : " << tread_width << std::endl;
+    throw ahl_utils::Exception("MecanumWheel::MecanumWheel", msg.str());
+  }
 
-    virtual void init();
-    virtual void run();
-  private:
-    virtual void updateModel(const ros::TimerEvent&);
-    virtual void control(const ros::TimerEvent&);
-    void updateWheels(const ros::TimerEvent&);
+  if(wheel_base <= 0.0)
+  {
+    std::stringstream msg;
+    msg << "Invalid tread wheel base." << std::endl
+        << "  wheel base : " << wheel_base << std::endl;
+    throw ahl_utils::Exception("MecanumWheel::MecanumWheel", msg.str());
+  }
 
-    YouBotParamPtr param_;
+  if(wheel_radius <= 0.0)
+  {
+    std::stringstream msg;
+    msg << "Invalid wheel radius." << std::endl
+        << "  wheel radius : " << wheel_radius << std::endl;
+    throw ahl_utils::Exception("MecanumWheel::MecanumWheel", msg.str());
+  }
 
-    TaskPtr gravity_compensation_;
-    TaskPtr joint_control_;
-    TaskPtr arm_position_control_;
-    TaskPtr arm_orientation_control_;
-    TaskPtr base_position_control_;
-    TaskPtr base_orientation_control_;
-    GazeboInterfacePtr gazebo_interface_wheel_;
+  q_ = q;
+  dq_ = Eigen::Vector4d::Zero();
 
-    ros::Timer timer_update_wheels_;
-    Eigen::VectorXd dqd_;
-    MecanumWheelPtr mecanum_;
-  };
+  double l1 = 0.5 * tread_width;
+  double l2 = 0.5 * wheel_base;
 
-  typedef boost::shared_ptr<YouBot> YouBotPtr;
+  decomposer_.resize(4, 3);
+  decomposer_ <<
+    1.0, -1.0, -(l1 + l2),
+    1.0,  1.0,   l1 + l2,
+    1.0,  1.0, -(l1 + l2),
+    1.0, -1.0,   l1 + l2;
+  decomposer_ *= (1.0 / wheel_radius);
 }
 
-#endif /* __AHL_ROBOT_SAMPLES_YOUBOT_HPP */
+void MecanumWheel::update(const Eigen::Vector3d& v_base, double period)
+{
+  dq_ = decomposer_ * v_base;
+  q_ = q_ + dq_ * period;
+  for(unsigned int i = 0; i < q_.rows(); ++i)
+  {
+    q_[i] = atan2(sin(q_[i]), cos(q_[i]));
+  }
+}

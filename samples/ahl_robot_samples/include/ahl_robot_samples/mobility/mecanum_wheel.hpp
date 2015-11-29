@@ -36,44 +36,30 @@
  *
  *********************************************************************/
 
-#ifndef __AHL_ROBOT_SAMPLES_YOUBOT_HPP
-#define __AHL_ROBOT_SAMPLES_YOUBOT_HPP
+#ifndef __AHL_ROBOT_SAMPLES_MECANUM_WHEEL_HPP
+#define __AHL_ROBOT_SAMPLES_MECANUM_WHEEL_HPP
 
-#include "ahl_robot_samples/robot_demo.hpp"
-#include "ahl_robot_samples/youbot/youbot_param.hpp"
-#include "ahl_robot_samples/mobility/mecanum_wheel.hpp"
+#include <boost/shared_ptr.hpp>
+#include <Eigen/Dense>
 
 namespace ahl_sample
 {
-
-  class YouBot : public RobotDemo
+  class MecanumWheel
   {
   public:
-    YouBot();
+    MecanumWheel(const Eigen::Vector4d& q, double tread_width, double wheel_base, double wheel_radius);
+    void update(const Eigen::Vector3d& v_base, double period);
+    const Eigen::Vector4d& getWheelAngle() const { return q_; }
+    const Eigen::Vector4d& getWheelVelocity() const { return dq_; }
 
-    virtual void init();
-    virtual void run();
   private:
-    virtual void updateModel(const ros::TimerEvent&);
-    virtual void control(const ros::TimerEvent&);
-    void updateWheels(const ros::TimerEvent&);
-
-    YouBotParamPtr param_;
-
-    TaskPtr gravity_compensation_;
-    TaskPtr joint_control_;
-    TaskPtr arm_position_control_;
-    TaskPtr arm_orientation_control_;
-    TaskPtr base_position_control_;
-    TaskPtr base_orientation_control_;
-    GazeboInterfacePtr gazebo_interface_wheel_;
-
-    ros::Timer timer_update_wheels_;
-    Eigen::VectorXd dqd_;
-    MecanumWheelPtr mecanum_;
+    Eigen::Vector4d q_;
+    Eigen::Vector4d dq_;
+    double wheel_radius_;
+    Eigen::MatrixXd decomposer_;
   };
 
-  typedef boost::shared_ptr<YouBot> YouBotPtr;
+  typedef boost::shared_ptr<MecanumWheel> MecanumWheelPtr;
 }
 
-#endif /* __AHL_ROBOT_SAMPLES_YOUBOT_HPP */
+#endif /* __AHL_ROBOT_SAMPLES_MECANUM_WHEEL_HPP */

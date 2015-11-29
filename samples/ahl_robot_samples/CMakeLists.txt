@@ -80,6 +80,7 @@ add_executable(
     src/youbot/youbot.cpp
     src/marker/marker.cpp
     src/marker/markers.cpp
+    src/mobility/mecanum_wheel.cpp
 )
 
 add_dependencies(

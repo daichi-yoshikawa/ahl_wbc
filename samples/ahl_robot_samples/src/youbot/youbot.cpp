@@ -5,7 +5,6 @@ using namespace ahl_sample;
 
 YouBot::YouBot()
 {
-
 }
 
 void YouBot::init()
@@ -21,6 +20,14 @@ void YouBot::init()
   controller_->init(robot_);
 
   param_ = YouBotParamPtr(new YouBotParam());
+
+  const double tread_width  = 0.3;
+  const double wheel_base   = 0.471;
+  const double wheel_radius = 0.05;
+  mecanum_ = MecanumWheelPtr(
+    new MecanumWheel(
+      Eigen::Vector4d::Zero(), tread_width, wheel_base, wheel_radius));
+  dqd_ = Eigen::Vector4d::Zero();
 
   ManipulatorPtr mnp = robot_->getManipulator("mnp");
 
@@ -154,8 +161,6 @@ void YouBot::control(const ros::TimerEvent&)
       Eigen::VectorXd q = gazebo_interface_->getJointStates();
       robot_->update(q);
       joint_updated_ = true;
-
-      q_base_ = q.block(0, 0, robot_->getMacroManipulatorDOF(), 1);
     }
 
     if(!model_updated_) return;
@@ -164,9 +169,8 @@ void YouBot::control(const ros::TimerEvent&)
     controller_->computeGeneralizedForce(tau);
     gazebo_interface_->applyJointEfforts(tau);
 
-    Eigen::VectorXd qd, dqd, ddqd;
-    controller_->simulate(0.001, tau, qd, dqd, ddqd);
-    tau_base_ = tau.block(0, 0, robot_->getMacroManipulatorDOF(), 1);
+    Eigen::VectorXd qd, ddqd;
+    controller_->simulate(0.001, tau, qd, dqd_, ddqd);
   }
   catch(ahl_utils::Exception& e)
   {
@@ -182,47 +186,28 @@ void YouBot::updateWheels(const ros::TimerEvent& e)
 {
   try
   {
-    if(q_base_.rows() != robot_->getMacroManipulatorDOF()) return;
-    if(tau_base_.rows() != robot_->getMacroManipulatorDOF()) return;
     if(!gazebo_interface_wheel_->subscribed()) return;
+    if(dqd_.rows() == 0) return;
 
-    Eigen::VectorXd q = gazebo_interface_wheel_->getJointStates();
-    //robot_->updateWheel(q);
+    mecanum_->update(dqd_, 0.01);
+    Eigen::Vector4d dq_wheel = mecanum_->getWheelVelocity() * 0.01;
 
-    Eigen::Vector3d base_pos;
-    base_pos << q_base_[0], q_base_[1], 0.0;
-    Eigen::Quaternion<double> base_ori;
-    base_ori.x() = 0.0;
-    base_ori.y() = 0.0;
-    base_ori.z() = sin(0.5 * q_base_[2]);
-    base_ori.w() = cos(0.5 * q_base_[2]);
+    std::vector< Eigen::Quaternion<double> > quat_wheel;
 
-    //robot_->updateBase(base_pos, base_ori);
-/*
-    Eigen::VectorXd v_base;
-    //controller_->computeBaseVelocityFromTorque(tau_base_, v_base, 3);
-
-    Eigen::VectorXd v_wheel = Eigen::VectorXd::Zero(4);
-    //controller_->computeWheelVelocityFromBaseVelocity(v_base, v_wheel);
-
-    Eigen::VectorXd q_wheel_d = robot_->getMobility()->getUpdateRate() * v_wheel;
-
-    std::vector<Eigen::Quaternion<double> > quat_d;
-    for(unsigned int i = 0; i < q_wheel_d.rows(); ++i)
+    for(unsigned int i = 0; i < dq_wheel.rows(); ++i)
     {
-      double rad = q_wheel_d[i];
+      double rad = dq_wheel[i];
 
-      Eigen::Quaternion<double> quat;
-      quat.x() = 0.0;
-      quat.y() = sin(0.5 * rad);
-      quat.z() = 0.0;
-      quat.w() = cos(0.5 * rad);
+      Eigen::Quaternion<double> q;
+      q.x() = 0.0;
+      q.y() = sin(0.5 * rad);
+      q.z() = 0.0;
+      q.w() = cos(0.5 * rad);
 
-      quat_d.push_back(quat);
+      quat_wheel.push_back(q);
     }
 
-    gazebo_interface_wheel_->rotateLink(quat_d);
-*/
+    gazebo_interface_wheel_->rotateLink(quat_wheel);
   }
   catch(ahl_utils::Exception& e)
   {

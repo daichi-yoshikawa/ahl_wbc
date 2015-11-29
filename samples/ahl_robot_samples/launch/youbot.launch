@@ -1,5 +1,7 @@
 <?xml version="1.0"?>
 <launch>
-  <node pkg="ahl_robot_samples" type="youbot_sample" name="youbot_sample" output="screen"/>
+  <node pkg="ahl_robot_samples" type="youbot_sample" name="youbot_sample" output="screen">
+    <param name="robot_config" value="$(find ahl_robot_samples)/yaml/youbot.yaml"/>
+  </node>
   <node pkg="rqt_reconfigure" type="rqt_reconfigure" name="youbot_rqt_reconfigure" output="screen"/>
 </launch>
