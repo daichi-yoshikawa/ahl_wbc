@@ -2,7 +2,6 @@ ahl_wbc
 ========
 ahl_wbc is a metapackage that contains ROS packages
 for whole body control/operational space control/task space control.
-It mainly includes kinematics, dynamics and control.
 
 What is whole body control ?
 =========================================================================
