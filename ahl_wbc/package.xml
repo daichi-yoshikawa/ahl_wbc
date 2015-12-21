@@ -7,9 +7,18 @@
   </description>
   <maintainer email="daichi.yoshikawa@gmail.com">Daichi Yoshikawa</maintainer>
   <license>BSD</license>
-  <!-- <url type="website">http://wiki.ros.org/ahl_wbc</url> -->
-  <!-- <author email="daichi.yoshikawa@gmail.com">Daichi Yoshikawa</author> -->
+  <url type="website">http://wiki.ros.org/ahl_wbc</url>
+  <author email="daichi.yoshikawa@gmail.com">Daichi Yoshikawa</author>
   <buildtool_depend>catkin</buildtool_depend>
+
+  <run_depend>ahl_common</run_depend>
+  <run_depend>ahl_filter</run_depend>
+  <run_depend>ahl_gazebo_interface</run_depend>
+  <run_depend>ahl_utils</run_depend>
+  <run_depend>ahl_robot</run_depend>
+  <run_depend>ahl_robot_controller</run_depend>
+
+
   <export>
     <metapackage/>
   </export>
