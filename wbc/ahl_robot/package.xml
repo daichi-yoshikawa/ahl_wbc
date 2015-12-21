@@ -5,8 +5,8 @@
   <description>The ahl_robot package</description>
   <maintainer email="daichi.yoshikawa@gmail.com">Daichi Yoshikawa</maintainer>
   <license>BSD</license>
-  <!-- <url type="website">http://wiki.ros.org/ahl_robot</url> -->
-  <!-- <author email="daichi.yoshikawa@gmail.com">Daichi Yoshikawa</author> -->
+  <url type="website">http://wiki.ros.org/ahl_robot</url>
+  <author email="daichi.yoshikawa@gmail.com">Daichi Yoshikawa</author>
 
   <buildtool_depend>catkin</buildtool_depend>
 
