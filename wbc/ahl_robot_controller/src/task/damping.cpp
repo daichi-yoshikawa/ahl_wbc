@@ -40,13 +40,13 @@
 
 using namespace ahl_ctrl;
 
-Damping::Damping(const ahl_robot::ManipulatorPtr& mnp)
+Damping::Damping(const ahl_robot::RobotPtr& robot)
 {
-  mnp_ = mnp;
-  N_ = Eigen::MatrixXd::Identity(mnp_->getDOF(), mnp_->getDOF());
+  robot_ = robot;
+  N_ = Eigen::MatrixXd::Identity(robot_->getDOF(), robot_->getDOF());
 }
 
 void Damping::computeGeneralizedForce(Eigen::VectorXd& tau)
 {
-  tau = tau_ = -mnp_->getMassMatrix() * param_->getKvDamp() * mnp_->dq();
+  tau = tau_ = -robot_->getMassMatrix() * param_->getKvDamp() * robot_->getJointVelocity();
 }

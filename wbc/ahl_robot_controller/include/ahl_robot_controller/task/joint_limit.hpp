@@ -53,9 +53,13 @@ namespace ahl_ctrl
     virtual bool haveNullSpace() { return true; }
 
   private:
+    bool moveAwayFromMax(double q, double max);
+    bool moveAwayFromMin(double q, double min);
+
     Eigen::VectorXd q_max_;
     Eigen::VectorXd q_min_;
 
+    std::vector<bool> lock_;
     double threshold_;
   };
 

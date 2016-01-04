@@ -26,8 +26,8 @@ void PR2::init()
   ManipulatorPtr mnp_r = robot_->getManipulator("right_mnp");
 
   gravity_compensation_     = TaskPtr(new GravityCompensation(robot_));
-  joint_limit_l_            = TaskPtr(new JointLimit(mnp_l, 0.087));
-  joint_limit_r_            = TaskPtr(new JointLimit(mnp_r, 0.087));
+  //joint_limit_l_            = TaskPtr(new JointLimit(mnp_l, 0.087));
+  //joint_limit_r_            = TaskPtr(new JointLimit(mnp_r, 0.087));
   joint_control_l_          = TaskPtr(new JointControl(mnp_l));
   joint_control_r_          = TaskPtr(new JointControl(mnp_r));
   position_control_l_       = TaskPtr(new PositionControl(mnp_l, "gripper_l_link", 0.001));

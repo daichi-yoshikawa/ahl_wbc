@@ -44,14 +44,18 @@ JointLimit::JointLimit(const ahl_robot::ManipulatorPtr& mnp, double threshold)
   : threshold_(threshold)
 {
   mnp_ = mnp;
+  tau_ = Eigen::VectorXd::Zero(mnp_->getLinkNum());
 
-  q_max_.resize(mnp_->getLinkNum());
-  q_min_.resize(mnp_->getLinkNum());
+  q_max_ = Eigen::VectorXd::Zero(mnp_->getLinkNum());
+  q_min_ = Eigen::VectorXd::Zero(mnp_->getLinkNum());
 
-  for(unsigned int i = 0; i < mnp_->getLinkNum(); ++i)
+  lock_.resize(mnp_->getLinkNum());
+
+  for(unsigned int i = mnp_->getMacroManipulatorDOF(); i < mnp_->getLinkNum(); ++i)
   {
-    q_max_.coeffRef(i) = mnp_->getLink(i)->q_max;
-    q_min_.coeffRef(i) = mnp_->getLink(i)->q_min;
+    q_max_[i] = mnp_->getLink(i)->q_max;
+    q_min_[i] = mnp_->getLink(i)->q_min;
+    lock_[i]  = false;
   }
 
   N_ = Eigen::MatrixXd::Identity(mnp_->getDOF(), mnp_->getDOF());
@@ -60,44 +64,65 @@ JointLimit::JointLimit(const ahl_robot::ManipulatorPtr& mnp, double threshold)
 void JointLimit::computeGeneralizedForce(Eigen::VectorXd& tau)
 {
   tau = Eigen::VectorXd::Zero(mnp_->getDOF());
+  N_  = Eigen::MatrixXd::Identity(mnp_->getDOF(), mnp_->getDOF());
 
-  N_ = Eigen::MatrixXd::Identity(mnp_->getDOF(), mnp_->getDOF());
-
-  for(unsigned int i = 0; i < mnp_->q().rows(); ++i)
+  for(unsigned int i = mnp_->getMacroManipulatorDOF(); i < mnp_->q().rows(); ++i)
   {
-    double q_max_diff = q_max_.coeff(i) - mnp_->q().coeff(i);
-    double q_min_diff = q_min_.coeff(i) - mnp_->q().coeff(i);
+    if(q_min_[i] == q_max_[i]) continue;
 
-    if(q_max_diff < 0.0)
+    double q = mnp_->q()[i];
+    double max = q_max_[i];
+    double min = q_min_[i];
+
+    Eigen::VectorXd tau_damp = Eigen::VectorXd::Zero(mnp_->getDOF());
+    tau_damp = -mnp_->getMassMatrix() * param_->getKvDamp().coeff(0, 0) * mnp_->dq();
+
+    if(lock_[i])
     {
-      std::cout << i << " : max : " << mnp_->q().coeff(i) << std::endl;
-
-      q_max_diff = threshold_;
-      tau.coeffRef(i) += -param_->getKpLimit().coeff(i, i) * q_max_diff - param_->getKvLimit().coeff(i, i) * mnp_->dq().coeff(i);
-      N_.coeffRef(i, i) = 0;
-
+      if(moveAwayFromMax(mnp_->q()[i], q_max_[i]) &&
+         moveAwayFromMin(mnp_->q()[i], q_min_[i]))
+      {
+        lock_[i] = false;
+        N_.coeffRef(i, i) = 1.0;
+      }
     }
-    else if(q_max_diff < threshold_)
-    {
-      std::cout << i << " : max : " << mnp_->q().coeff(i) << std::endl;
 
-      tau.coeffRef(i) += -param_->getKpLimit().coeff(i, i) * q_max_diff - param_->getKvLimit().coeff(i, i) * mnp_->dq().coeff(i);
-      N_.coeffRef(i, i) = 0;
+    if(max - threshold_ < q && q < max)
+    {
+      //std::cout << i << " locked" << std::endl;
+      tau[i] = -param_->getKpLimit().coeff(i, i) * (max - q) + tau_damp[i];
+      N_.coeffRef(i, i) = 0.0;
+      lock_[i] = true;
     }
-
-    if(q_min_diff > 0.0)
+    else if(max <= q)
     {
-      std::cout << i << " : min : " << mnp_->q().coeff(i) << std::endl;
-
-      q_min_diff = -threshold_;
-      tau.coeffRef(i) += -param_->getKpLimit().coeff(i, i) * q_min_diff - param_->getKvLimit().coeff(i, i) * mnp_->dq().coeff(i);
-      N_.coeffRef(i, i) = 0;
+      tau[i] = -param_->getKpLimit().coeff(i, i) * threshold_ + tau_damp[i];
+      N_.coeffRef(i, i) = 0.0;
+      lock_[i] = true;
     }
-    else if(-q_min_diff < threshold_)
+    else if(min < q < min + threshold_)
     {
-      std::cout << i << " : min : " << mnp_->q().coeff(i) << std::endl;
-      tau.coeffRef(i) += -param_->getKpLimit().coeff(i, i) * q_min_diff - param_->getKvLimit().coeff(i, i) * mnp_->dq().coeff(i);
-      N_.coeffRef(i, i) = 0;
+      tau[i] = -param_->getKpLimit().coeff(i, i) * (min - q) + tau_damp[i];
+      N_.coeffRef(i, i) = 0.0;
+      lock_[i] = true;
+    }
+    else if(q <= min)
+    {
+      tau[i] = param_->getKpLimit().coeff(i, i) * threshold_ + tau_damp[i];
+      N_.coeffRef(i, i) = 0.0;
+      lock_[i] = true;
     }
   }
+}
+
+bool JointLimit::moveAwayFromMax(double q, double max)
+{
+  if(q < max - 2.0 * threshold_) return true;
+  return false;
+}
+
+bool JointLimit::moveAwayFromMin(double q, double min)
+{
+  if(q > min + 2.0 * threshold_) return true;
+  return false;
 }

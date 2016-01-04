@@ -94,6 +94,12 @@ void PositionControl::computeGeneralizedForce(Eigen::VectorXd& tau)
 
   Eigen::Vector3d x = mnp_->getTransformAbs(idx_).block(0, 3, 3, 1);
   Eigen::Vector3d error = xd_ - x;
+
+/*  if(error.norm() > param_->getPosErrorMax())
+  {
+    error = param_->getPosErrorMax() / error.norm() * error;
+  }
+*/
   Eigen::Matrix3d Kpv = param_->getKpTask().block(0, 0, 3, 3);
 
   for(unsigned int i = 0; i < Kpv.rows(); ++i)

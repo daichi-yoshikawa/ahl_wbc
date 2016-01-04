@@ -114,6 +114,10 @@ namespace ahl_robot
     {
       return dof_;
     }
+    unsigned int getMacroManipulatorDOF()
+    {
+      return macro_dof_;
+    }
     const Eigen::VectorXd& q() const
     {
       return q_;
