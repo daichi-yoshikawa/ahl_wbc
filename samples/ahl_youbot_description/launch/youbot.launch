@@ -1,26 +1,19 @@
 <?xml version="1.0"?>
 <launch>
-
   <arg name="world" default="empty_world"/>
   <arg name="use_sim_time" default="true"/>
   <arg name="init_pos_x" default="0.0"/>
   <arg name="init_pos_y" default="0.0"/>
   <arg name="init_pos_z" default="0.0"/>
-  <arg name="gui" default="true"/>
-  <arg name="headless" default="false"/>
+  <arg name="gui" default="false"/>
+  <arg name="headless" default="true"/>
   <arg name="debug" default="false"/>
-
-<!--
-  <include file="$(find youbot_gazebo_worlds)/launch/$(arg world).launch">
-    <arg name="use_sim_time" value="$(arg use_sim_time)"/>
-  </include>
--->
 
   <include file="$(find gazebo_ros)/launch/empty_world.launch">
     <arg name="paused" value="false"/>
     <arg name="use_sim_time" value="true"/>
-    <arg name="gui" value="true"/>
-    <arg name="headless" value="false"/>
+    <arg name="gui" value="false"/>
+    <arg name="headless" value="true"/>
     <arg name="debug" value="false"/>
     <arg name="world_name" value="worlds/empty.world"/>
   </include>
@@ -37,9 +30,6 @@
   </node>
 
   <include file="$(find ahl_youbot_description)/launch/joint_state_controller.launch"/>
-<!--
-  <include file="$(find ahl_youbot_description)/launch/arm_controller.launch"/>
--->
   <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher">
     <param name="publish_frequency" type="double" value="100.0" />
   </node>

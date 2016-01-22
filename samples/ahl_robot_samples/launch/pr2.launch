@@ -5,4 +5,6 @@
   </node>
   <node pkg="rqt_reconfigure" type="rqt_reconfigure" name="pr2_rqt_reconfigure" output="screen"/>
   <node pkg="dynamic_reconfigure" type="dynparam" name="pr2_dynparam" output="screen" args="load /pr2_sample $(find ahl_robot_samples)/yaml/pr2_ctrl.yaml"/>
+
+  <node pkg="rviz" type="rviz" name="rviz" args="-d $(find ahl_robot_samples)/rviz/pr2.rviz"/>
 </launch>

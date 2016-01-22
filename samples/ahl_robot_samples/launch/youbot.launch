@@ -4,4 +4,6 @@
     <param name="robot_config" value="$(find ahl_robot_samples)/yaml/youbot.yaml"/>
   </node>
   <node pkg="rqt_reconfigure" type="rqt_reconfigure" name="youbot_rqt_reconfigure" output="screen"/>
+
+  <node pkg="rviz" type="rviz" name="rviz" args="-d $(find ahl_robot_samples)/rviz/youbot.rviz"/>
 </launch>
