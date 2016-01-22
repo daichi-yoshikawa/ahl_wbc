@@ -12,6 +12,13 @@ If you use this package,
 
 Reference : [The operational space framework](http://cs.stanford.edu/group/manips/publications/pdfs/Khatib_1993_JSME.pdf)
 
+Prerequisites
+=============
+sudo apt-get install ros-<ros-version>-ros-control ros-<ros-version>-ros-controllers
+
+eg.)
+sudo apt-get install ros-jade-ros-control ros-jade-ros-controllers
+
 Contents
 =========
 ### Packages
