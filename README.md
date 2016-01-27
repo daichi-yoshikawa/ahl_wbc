@@ -3,21 +3,14 @@ ahl_wbc
 ahl_wbc is a metapackage that contains ROS packages
 for whole body control/operational space control/task space control.
 
-What is whole body control ?
-=========================================================================
+What is Whole Body Control ?
+============================
 If you use this package,
 * you don't need inverse kinematics
 * you can easily control robots with many joints
 * you can add force control with the same framework
 
 Reference : [The operational space framework](http://cs.stanford.edu/group/manips/publications/pdfs/Khatib_1993_JSME.pdf)
-
-Prerequisites
-=============
-sudo apt-get install ros-<ros-version>-ros-control ros-<ros-version>-ros-controllers
-
-eg.)
-sudo apt-get install ros-jade-ros-control ros-jade-ros-controllers
 
 Contents
 =========
@@ -43,5 +36,91 @@ How does it work ?
 * Task space control of 11 DOF manipulator.   
 [![](http://img.youtube.com/vi/oKqCsFAzx4k/0.jpg)](https://www.youtube.com/watch?v=oKqCsFAzx4k)
 
+Prerequisites
+=============
+* Ubuntu 14.04 LTS
+* ROS Indigo, Jade (Jade is preferable)
+* Gazebo 5.0 or later
+* ros-control and ros-controllers (for gazebo simulation)
 
+Installation
+=============
+### Install Ubuntu 14.04 LTS
+[Official documentation](http://www.ubuntu.com/download/desktop/install-ubuntu-desktop)
 
+### Install ROS Jade
+ROS is an open source middle ware for robot developers.<br>
+It serves vast amount of useful features and packages.<br>
+If you have enough strage, install ros-jade-desktop-full.<br>
+[Official documentation](http://wiki.ros.org/jade/Installation/Ubuntu)
+
+### Create Catkin Workspace
+Catkin is a cmake-based build system supported by ROS.<br>
+In catkin workspace, we edit codes and build software.<br>
+[Official documentation](http://wiki.ros.org/catkin/Tutorials/create_a_workspace)
+
+### Install Gazebo 5.0
+Gazebo is a robotic simulator, which provides visualization,
+physics and collision avoidance and so on in virtual environment.
+```
+sudo apt-get install gazebo5
+```
+
+### Install ros-control and ros-controllers
+In order to fully make use of gazebo with ROS, we need these controllers.
+```
+sudo apt-get install ros-jade-ros-control ros-jade-ros-controllers
+```
+
+### Install ROS Packages for Whole Body Control.
+In your catkin_ws/src/ahl_ros_packages, execute the follows.
+```
+git clone https://github.com/daichi-yoshikawa/ahl_common.git
+git clone https://github.com/daichi-yoshikawa/ahl_wbc.git
+```
+
+Get Started with Gazebo Simulation
+==================================
+You need two terminals.
+
+Firstly, you have to launch ros node which provides virtual robot model.<br>
+In this phase, no window will pop up, because gazebo GUI is off by default.<br>
+
+If you'd like to simulate KUKA youBot,
+```
+roslaunch ahl_youbot_description youbot.launch
+```
+Or if you'd like to simulate PR2,
+```
+roslaunch ahl_pr2_description pr2.launch
+```
+
+And then, launch the whole body controller.<br>
+If you make success, rviz will pop up and you can see robot model in it.<br>
+If you launched youbot.launch at the previous step,
+```
+roslaunch ahl_robot_samples youbot.launch
+```
+Or if you launched pr2.launch at the previous step,
+```
+roslaunch ahl_robot_samples pr2.launch
+```
+
+Usage
+=====
+ahl_robot_samples is a good reference to know how to use APIs.<br>
+You have two ways to control physical robots.
+
+1. Based on input of desired torques at joints (Torque sensors and solid torque control is MUST.)
+2. Based on input of desired angles at joints (Works without torque sensors but cannot control a force)
+
+ahl_ctrl::RobotController::computeGeneralizedForce derives desired torques.<br>
+ahl_ctrl::RobotController::simulate computes desired joint angles based on torques derived by ahl_ctrl::RobotController::computeGeneralizedForce.
+
+Most robots don't have torque sensor on it. Therefore ahl_ctrl::RobotController::simulate will help you.
+
+### Gazebo Simulation
+ahl_youbot_description and ahl_pr2_description are good references to setup robot model for simulation.<br>
+
+### Physical Robot (***Editing***)
+Be careful ! Torque control is pretty difficult !!
