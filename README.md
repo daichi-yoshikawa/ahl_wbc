@@ -6,9 +6,9 @@ for whole body control/operational space control/task space control.
 What is Whole Body Control ?
 ============================
 If you use this package,
-* you don't need inverse kinematics
-* you can easily control robots with many joints
+* you can easily control robots with many joints (See video clips below!)
 * you can add force control with the same framework
+* you don't need inverse kinematics
 
 Reference : [The operational space framework](http://cs.stanford.edu/group/manips/publications/pdfs/Khatib_1993_JSME.pdf)
 
@@ -38,10 +38,10 @@ How does it work ?
 
 Prerequisites
 =============
-* Ubuntu 14.04 LTS
-* ROS Indigo, Jade (Jade is preferable)
-* Gazebo 5.0 or later
-* ros-control and ros-controllers (for gazebo simulation)
+* [Ubuntu 14.04 LTS](http://www.ubuntu.com/download)
+* [ROS Indigo](http://wiki.ros.org/), Jade (Jade is preferable)
+* [Gazebo 5.0](http://gazebosim.org/) or later
+* [ros-control](http://wiki.ros.org/ros_control) and [ros-controllers](http://wiki.ros.org/ros_controllers) (for gazebo simulation)
 
 Installation
 =============
@@ -61,7 +61,7 @@ In catkin workspace, we edit codes and build software.<br>
 
 ### Install Gazebo 5.0
 Gazebo is a robotic simulator, which provides visualization,
-physics and collision avoidance and so on in virtual environment.
+physics and collision detection in virtual environment.
 ```
 sudo apt-get install gazebo5
 ```
