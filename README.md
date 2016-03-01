@@ -75,6 +75,7 @@ sudo apt-get install ros-jade-ros-control ros-jade-ros-controllers
 ### Install ROS Packages for Whole Body Control.
 In your catkin_ws/src/ahl_ros_packages, execute the follows.
 ```
+git clone https://github.com/daichi-yoshikawa/existing_packages.git
 git clone https://github.com/daichi-yoshikawa/ahl_common.git
 git clone https://github.com/daichi-yoshikawa/ahl_wbc.git
 ```
@@ -104,6 +105,28 @@ roslaunch ahl_robot_samples youbot.launch
 Or if you launched pr2.launch at the previous step,
 ```
 roslaunch ahl_robot_samples pr2.launch
+```
+
+Note : You have to tune parameters in order to make it fine. See the following section "Tuning parameters".
+
+Tuning parameters
+=================
+Actually, default control gains are very low, so the robot is not properly controlled.
+It is because simulator would get unstable, if gains were set to high values from the beginning.
+
+Therefore, you need to increase gains after you launch simulator.
+It can be done with window named "rqt_reconfigure__Param - rqt".
+
+Case youbot simulation : Select youbot_sample->ahl_robot_controller in the window and set parameters as the follows.
+```
+kp_joint = 50.0
+kv_joint = 5.0
+kp_task_pos = 70.0
+ki_task_pos = 0.0
+kv_task_pos = 5.0
+kp_task_ori = 200.0
+ki_task_ori = 0.0
+kv_task_ori = 5.0 
 ```
 
 Usage
