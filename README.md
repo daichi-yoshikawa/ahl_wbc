@@ -146,4 +146,4 @@ Most robots don't have torque sensor on it. Therefore ahl_ctrl::RobotController:
 ahl_youbot_description and ahl_pr2_description are good references to setup robot model for simulation.<br>
 
 ### Physical Robot (***Editing***)
-Be careful ! Torque control is pretty difficult !!
+Be careful ! Torque control is difficult !!

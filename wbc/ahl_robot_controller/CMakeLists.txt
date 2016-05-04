@@ -52,7 +52,6 @@ catkin_package(
     gazebo_msgs
     roscpp
     rospy
-  DEPENDS Eigen3
 )
 
 add_library(ahl_robot_controller

@@ -53,9 +53,7 @@ catkin_package(
     roscpp
     tf2
     tf2_ros
-  DEPENDS
-    Eigen3
-    yaml-cpp
+  DEPENDS yaml-cpp
 )
 
 add_library(ahl_robot

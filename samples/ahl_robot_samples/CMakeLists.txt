@@ -12,16 +12,32 @@ else()
   message(FATAL_ERROR "The compiler ${CMAKE_CXX_COMPILER} has no C++11 support. Please use a different C++ compiler.")
 endif()
 
-find_package(
-  catkin REQUIRED COMPONENTS
+find_package(catkin REQUIRED
+  COMPONENTS
     ahl_gazebo_interface
     ahl_robot
     ahl_robot_controller
+    cmake_modules
     dynamic_reconfigure
     gazebo_msgs
     roscpp
     rospy
     visualization_msgs
+)
+
+find_package(Eigen3)
+if(NOT EIGEN3_FOUND)
+  find_package(Eigen REQUIRED)
+  set(EIGEN3_INCLUDE_DIRS ${EIGEN_INCLUDE_DIRS})
+  set(EIGEN3_LIBRARIES ${EIGEN_LIBRARIES})
+else()
+  set(EIGEN3_INCLUDE_DIRS ${EIGEN3_INCLUDE_DIR})
+endif()
+
+include_directories(
+  include
+  ${catkin_INCLUDE_DIRS}
+  ${EIGEN3_INCLUDE_DIRS}
 )
 
 generate_dynamic_reconfigure_options(
@@ -34,75 +50,35 @@ catkin_package(
     ahl_gazebo_interface
     ahl_robot
     ahl_robot_controller
+    cmake_modules
     dynamic_reconfigure
     gazebo_msgs
     roscpp
     rospy
     visualization_msgs
-  DEPENDS
-    Eigen3
 )
 
-find_package(Eigen3)
-if(NOT EIGEN3_FOUND)
-  # Fallback to cmake_modules
-  find_package(cmake_modules REQUIRED)
-  find_package(Eigen REQUIRED)
-  set(EIGEN3_INCLUDE_DIRS ${EIGEN_INCLUDE_DIRS})
-  set(EIGEN3_LIBRARIES ${EIGEN_LIBRARIES})  # Not strictly necessary as Eigen is head only
-  # Possibly map additional variables to the EIGEN3_ prefix.
-else()
-  set(EIGEN3_INCLUDE_DIRS ${EIGEN3_INCLUDE_DIR})
-endif()
-
-link_directories(
-  ${catkin_LIBRARY_DIRS}
-  ${Boost_LIBRARY_DIRS}
-  ${EIGEN3_LIBRARY_DIRS}
+add_executable(pr2_sample
+  src/pr2/main.cpp
+  src/pr2/pr2.cpp
+  src/marker/marker.cpp
+  src/marker/markers.cpp
 )
-
-include_directories(
-  include
-  ${catkin_INCLUDE_DIRS}
-  ${Boost_INCLUDE_DIRS}
-  ${EIGEN3_INCLUDE_DIRS}
+add_dependencies(pr2_sample
+  gazebo_msgs_gencpp
+  ahl_robot_samples_gencfg
 )
+target_link_libraries(pr2_sample ${catkin_LIBRARIES})
 
-add_executable(
-  pr2_sample
-    src/pr2/main.cpp
-    src/pr2/pr2.cpp
-    src/marker/marker.cpp
-    src/marker/markers.cpp
+add_executable(youbot_sample
+  src/youbot/main.cpp
+  src/youbot/youbot.cpp
+  src/marker/marker.cpp
+  src/marker/markers.cpp
+  src/mobility/mecanum_wheel.cpp
 )
-
-add_dependencies(
-  pr2_sample
-    gazebo_msgs_gencpp
-    ahl_robot_samples_gencfg
+add_dependencies(youbot_sample
+  gazebo_msgs_gencpp
+  ahl_robot_samples_gencfg
 )
-
-target_link_libraries(
-  pr2_sample
-    ${catkin_LIBRARIES}
-)
-
-add_executable(
-  youbot_sample
-    src/youbot/main.cpp
-    src/youbot/youbot.cpp
-    src/marker/marker.cpp
-    src/marker/markers.cpp
-    src/mobility/mecanum_wheel.cpp
-)
-
-add_dependencies(
-  youbot_sample
-    gazebo_msgs_gencpp
-    ahl_robot_samples_gencfg
-)
-
-target_link_libraries(
-  youbot_sample
-    ${catkin_LIBRARIES}
-)
+target_link_libraries(youbot_sample ${catkin_LIBRARIES})
