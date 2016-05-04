@@ -12,6 +12,7 @@
   <build_depend>ahl_digital_filter</build_depend>
   <build_depend>ahl_robot</build_depend>
   <build_depend>ahl_utils</build_depend>
+  <build_depend>cmake_modules</build_depend>
   <build_depend>dynamic_reconfigure</build_depend>
   <build_depend>gazebo_msgs</build_depend>
   <build_depend>roscpp</build_depend>
@@ -20,6 +21,7 @@
   <run_depend>ahl_digital_filter</run_depend>
   <run_depend>ahl_robot</run_depend>
   <run_depend>ahl_utils</run_depend>
+  <run_depend>cmake_modules</run_depend>
   <run_depend>dynamic_reconfigure</run_depend>
   <run_depend>gazebo_msgs</run_depend>
   <run_depend>roscpp</run_depend>
