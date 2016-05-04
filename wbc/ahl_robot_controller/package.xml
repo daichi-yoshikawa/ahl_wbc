@@ -1,13 +1,12 @@
 <?xml version="1.0"?>
 <package>
   <name>ahl_robot_controller</name>
-  <version>0.0.0</version>
+  <version>1.0.0</version>
   <description>The ahl_robot_controller package</description>
   <maintainer email="daichi.yoshikawa@gmail.com">Daichi Yoshikawa</maintainer>
   <license>BSD</license>
   <url type="website">http://wiki.ros.org/ahl_robot_controller</url>
   <author email="daichi.yoshikawa@gmail.com">Daichi Yoshikawa</author>
-
   <buildtool_depend>catkin</buildtool_depend>
 
   <build_depend>ahl_digital_filter</build_depend>

@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package>
   <name>ahl_wbc</name>
-  <version>0.0.0</version>
+  <version>1.0.0</version>
   <description>
     <p>Metapackage that contains ROS packages for whole body control/operational space control/task space control</p>
   </description>
@@ -17,7 +17,6 @@
   <run_depend>ahl_utils</run_depend>
   <run_depend>ahl_robot</run_depend>
   <run_depend>ahl_robot_controller</run_depend>
-
 
   <export>
     <metapackage/>

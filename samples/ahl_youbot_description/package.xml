@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package>
   <name>ahl_youbot_description</name>
-  <version>0.0.0</version>
+  <version>1.0.0</version>
   <description>The ahl_youbot_description package</description>
   <maintainer email="daichi.yoshikawa@gmail.com">Daichi Yoshikawa</maintainer>
   <license>BSD</license>

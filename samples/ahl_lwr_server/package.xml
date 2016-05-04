@@ -1,17 +1,18 @@
 <?xml version="1.0"?>
 <package>
   <name>ahl_lwr_server</name>
-  <version>0.0.0</version>
+  <version>1.0.0</version>
   <description>The ahl_lwr_server package</description>
   <maintainer email="daichi.yoshikawa@gmail.com">daichi</maintainer>
   <license>BSD</license>
   <!-- <url type="website">http://wiki.ros.org/ahl_lwr_server</url> -->
   <author email="daichi.yoshikawa@gmail.com">Daichi Yoshikawa</author>
-
   <buildtool_depend>catkin</buildtool_depend>
+
   <build_depend>ahl_gazebo_interface</build_depend>
   <build_depend>ahl_robot</build_depend>
   <build_depend>ahl_robot_controller</build_depend>
+  <build_depend>cmake_modules</build_depend>
   <build_depend>gazebo_msgs</build_depend>
   <build_depend>geometry_msgs</build_depend>
   <build_depend>roscpp</build_depend>
@@ -20,6 +21,7 @@
   <run_depend>ahl_gazebo_interface</run_depend>
   <run_depend>ahl_robot</run_depend>
   <run_depend>ahl_robot_controller</run_depend>
+  <run_depend>cmake_modules</run_depend>
   <run_depend>gazebo_msgs</run_depend>
   <run_depend>geometry_msgs</run_depend>
   <run_depend>roscpp</run_depend>
