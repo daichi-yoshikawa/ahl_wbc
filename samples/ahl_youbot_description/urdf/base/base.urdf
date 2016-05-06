@@ -3,29 +3,11 @@
        xmlns:controller="http://playerstage.sourceforge.net/gazebo/xmlschema/#controller"
        xmlns:interface="http://playerstage.sourceforge.net/gazebo/xmlschema/#interface"
        xmlns:xacro="http://ros.org/wiki/xacro">
- 
+
+  <xacro:include filename="$(find ahl_youbot_description)/urdf/base/base.property.xacro"/>
   <xacro:include filename="$(find ahl_youbot_description)/urdf/base/base.gazebo.xacro"/>
   <xacro:include filename="$(find ahl_youbot_description)/urdf/base/base.transmission.xacro"/>
-
-  <!-- simplified box collision geometry for base -->
-
-  <property name="M_PI" value="3.14159265358979323846"/>
-  <property name="base_mass" value="28.761"/>
-
-  <property name="wheel_offset_x" value="0.228"/>
-  <property name="wheel_offset_y" value="0.158"/>
-  <property name="wheel_offset_z" value="-0.05"/>
-
-  <property name="wheel_mass" value="1.40"/>
-  <property name="wheel_radius" value="0.05"/>
-  <property name="wheel_length" value="0.005"/>
-
-  <property name="wheel_joint_damping" value="0.4"/>
-  <property name="wheel_joint_friction" value="0"/>
-  <property name="wheel_joint_effort" value="10000"/>
-  <property name="wheel_joint_velocity" value="10000"/>
-  <property name="wheel_joint_safety_k_velocity" value="10"/>
-
+ 
   <xacro:macro name="youbot_base" params="name">
 
     <link name="world"/>

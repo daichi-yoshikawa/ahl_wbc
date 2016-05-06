@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+  <xacro:property name="M_PI" value="3.14159265358979323846"/>
+  <xacro:property name="base_mass" value="28.761"/>
+
+  <xacro:property name="wheel_offset_x" value="0.228"/>
+  <xacro:property name="wheel_offset_y" value="0.158"/>
+  <xacro:property name="wheel_offset_z" value="-0.05"/>
+
+  <xacro:property name="wheel_mass" value="1.40"/>
+  <xacro:property name="wheel_radius" value="0.05"/>
+  <xacro:property name="wheel_length" value="0.005"/>
+
+  <xacro:property name="wheel_joint_damping" value="0.4"/>
+  <xacro:property name="wheel_joint_friction" value="0"/>
+  <xacro:property name="wheel_joint_effort" value="10000"/>
+  <xacro:property name="wheel_joint_velocity" value="10000"/>
+  <xacro:property name="wheel_joint_safety_k_velocity" value="10"/>
+</robot>

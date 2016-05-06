@@ -4,9 +4,9 @@
         xmlns:interface="http://playerstage.sourceforge.net/gazebo/xmlschema/#interface"
         xmlns:xacro="http://ros.org/wiki/xacro">
 
+  <xacro:include filename="$(find ahl_youbot_description)/urdf/arm/arm.property.xacro"/>
   <xacro:include filename="$(find ahl_youbot_description)/urdf/arm/arm.gazebo.xacro"/>
   <xacro:include filename="$(find ahl_youbot_description)/urdf/arm/arm.transmission.xacro"/>
-  <xacro:include filename="$(find ahl_youbot_description)/urdf/arm/limits.urdf"/>
 
   <xacro:macro name="youbot_arm" params="name">
 

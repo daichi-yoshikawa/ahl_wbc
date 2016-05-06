@@ -18,7 +18,7 @@
     <arg name="world_name" value="worlds/empty.world"/>
   </include>
 
-  <param name="robot_description" command="$(find xacro)/xacro.py $(find ahl_youbot_description)/urdf/youbot.urdf"/>
+  <param name="robot_description" command="$(find xacro)/xacro --inorder $(find ahl_youbot_description)/urdf/youbot.urdf"/>
 
   <node pkg="gazebo_ros" type="spawn_model" name="spawn_robot" respawn="false" output="screen"
     args="-param robot_description

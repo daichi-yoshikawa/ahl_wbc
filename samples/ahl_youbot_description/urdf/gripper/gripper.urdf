@@ -4,9 +4,9 @@
        xmlns:interface="http://playerstage.sourceforge.net/gazebo/xmlschema/#interface"
        xmlns:xacro="http://ros.org/wiki/xacro">
 
+  <xacro:include filename="$(find ahl_youbot_description)/urdf/gripper/gripper.property.xacro"/>
   <xacro:include filename="$(find ahl_youbot_description)/urdf/gripper/gripper.gazebo.xacro"/>
   <xacro:include filename="$(find ahl_youbot_description)/urdf/gripper/gripper.transmission.xacro"/>
-  <xacro:include filename="$(find ahl_youbot_description)/urdf/gripper/limits.urdf"/>
 
   <xacro:macro name="youbot_gripper" params="name">
 
