@@ -7,12 +7,12 @@ void Markers::add(const MarkerPtr& marker)
   marker_[marker->getName()] = marker;
 }
 
-void Markers::setColor(const std::string& name, int r, int g, int b, double a)
+void Markers::setColor(const std::string& name, int8_t r, int8_t g, int8_t b, double a)
 {
   marker_[name]->setColor(r, g, b, a);
 }
 
-void Markers::setColor(int r, int g, int b, double a)
+void Markers::setColor(int8_t r, int8_t g, int8_t b, double a)
 {
   std::map<std::string, MarkerPtr>::iterator it;
   for(it = marker_.begin(); it != marker_.end(); ++it)

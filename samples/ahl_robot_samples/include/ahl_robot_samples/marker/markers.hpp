@@ -49,8 +49,8 @@ namespace ahl_sample
   {
   public:
     void add(const MarkerPtr& marker);
-    void setColor(const std::string& name, int r, int g, int b, double a);
-    void setColor(int r, int g, int b, double a);
+    void setColor(const std::string& name, int8_t r, int8_t g, int8_t b, double a);
+    void setColor(int8_t r, int8_t g, int8_t b, double a);
     void setPosition(const std::string& name, double x, double y, double z);
     void setScale(const std::string& name, double scale);
     void setScale(double scale);

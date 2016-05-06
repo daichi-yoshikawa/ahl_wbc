@@ -50,22 +50,22 @@ GravityCompensation::GravityCompensation(const ahl_robot::RobotPtr& robot)
 void GravityCompensation::computeGeneralizedForce(Eigen::VectorXd& tau)
 {
   tau = Eigen::VectorXd::Zero(robot_->getDOF());
-  unsigned int macro_dof = robot_->getMacroManipulatorDOF();
+  uint32_t macro_dof = robot_->getMacroManipulatorDOF();
 
   mnp_ = robot_->getManipulator().begin()->second;
-  for(unsigned int i = 0; i < macro_dof; ++i)
+  for(uint32_t i = 0; i < macro_dof; ++i)
   {
     tau.block(0, 0, macro_dof, 1) -= mnp_->getLink(i)->m * mnp_->getJacobian()[i].block(0, 0, 3, macro_dof).transpose() * param_->getG();
   }
 
-  unsigned int offset = 0;
+  uint32_t offset = 0;
 
-  for(unsigned int i = 0; i < mnp_name_.size(); ++i)
+  for(uint32_t i = 0; i < mnp_name_.size(); ++i)
   {
     mnp_ = robot_->getManipulator(mnp_name_[i]);
-    unsigned int mini_dof = mnp_->getDOF() - macro_dof;
+    uint32_t mini_dof = mnp_->getDOF() - macro_dof;
 
-    for(unsigned int j = 0; j < mini_dof; ++j)
+    for(uint32_t j = 0; j < mini_dof; ++j)
     {
       tau.block(macro_dof + offset, 0, mini_dof, 1) -= mnp_->getLink(j + macro_dof)->m * mnp_->getJacobian()[j + macro_dof].block(0, macro_dof, 3, mini_dof).transpose() * param_->getG();
     }

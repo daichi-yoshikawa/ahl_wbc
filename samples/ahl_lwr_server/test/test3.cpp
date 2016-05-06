@@ -113,7 +113,7 @@ void control(const ros::TimerEvent&)
         qd = sin_val * qd;
         joint_control->setGoal(qd);
 
-        static int reached = 0;
+        static int32_t reached = 0;
         if(robot->reached("mnp", qd, 2.2))
         {
           ++reached;

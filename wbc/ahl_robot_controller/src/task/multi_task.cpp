@@ -48,7 +48,7 @@ MultiTask::MultiTask(const ahl_robot::RobotPtr& robot)
 
   std::vector<std::string> name = robot->getManipulatorName();
 
-  for(unsigned int i = 0; i < name.size(); ++i)
+  for(uint32_t i = 0; i < name.size(); ++i)
   {
     name_to_mini_dof_[name[i]] = robot->getDOF(name[i]) - macro_dof_;
 
@@ -66,13 +66,13 @@ MultiTask::MultiTask(const ahl_robot::RobotPtr& robot)
   name_to_offset_[robot->getName()] = 0;
 }
 
-void MultiTask::addTask(const TaskPtr& task, int priority)
+void MultiTask::addTask(const TaskPtr& task, int32_t priority)
 {
   if(multi_task_.find(priority) != multi_task_.end())
   {
     if(task->haveNullSpace())
     {
-      for(unsigned int i = 0; i < multi_task_[priority].size(); ++i)
+      for(uint32_t i = 0; i < multi_task_[priority].size(); ++i)
       {
         if(multi_task_[priority][i]->haveNullSpace())
         {
@@ -100,10 +100,10 @@ void MultiTask::clear()
 
 void MultiTask::updateModel()
 {
-  std::map<int, std::vector<TaskPtr> >::iterator it;
+  std::map<int32_t, std::vector<TaskPtr> >::iterator it;
   for(it = multi_task_.begin(); it != multi_task_.end(); ++it)
   {
-    for(unsigned int i = 0; i < it->second.size(); ++i)
+    for(uint32_t i = 0; i < it->second.size(); ++i)
     {
       it->second[i]->updateModel();
     }
@@ -115,14 +115,14 @@ void MultiTask::computeGeneralizedForce(Eigen::VectorXd& tau)
   tau = Eigen::VectorXd::Zero(dof_);
   Eigen::VectorXd tmp = Eigen::VectorXd::Zero(dof_);
 
-  std::map<int, std::vector<TaskPtr> >::iterator it = multi_task_.begin();
+  std::map<int32_t, std::vector<TaskPtr> >::iterator it = multi_task_.begin();
   for(it = multi_task_.begin(); it != multi_task_.end(); ++it)
   {
     N_ = Eigen::MatrixXd::Identity(dof_, dof_);
 
     Eigen::VectorXd tau_sum = Eigen::VectorXd::Zero(dof_);
 
-    for(unsigned int i = 0; i < it->second.size(); ++i)
+    for(uint32_t i = 0; i < it->second.size(); ++i)
     {
       Eigen::VectorXd tau_task;
       it->second[i]->computeGeneralizedForce(tau_task);
@@ -158,8 +158,8 @@ void MultiTask::assignTorque(const Eigen::VectorXd& src, Eigen::VectorXd& dst, c
 
 void MultiTask::assignNullSpace(const Eigen::MatrixXd& src, Eigen::MatrixXd& dst, const std::string& name)
 {
-  unsigned int offset   = macro_dof_ + name_to_offset_[name];
-  unsigned int mini_dof = name_to_mini_dof_[name];
+  uint32_t offset   = macro_dof_ + name_to_offset_[name];
+  uint32_t mini_dof = name_to_mini_dof_[name];
 
   dst.block(0, 0, macro_dof_, macro_dof_) = src.block(0, 0, macro_dof_, macro_dof_);
   dst.block(offset, 0, mini_dof, macro_dof_) = src.block(macro_dof_, 0, mini_dof, macro_dof_);

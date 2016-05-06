@@ -180,8 +180,8 @@ namespace ahl_ctrl
     ParamConfigServerPtr server_;
     dynamic_reconfigure::Server<ahl_robot_controller::ParamConfig>::CallbackType f_;
 
-    unsigned int dof_;
-    unsigned int macro_dof_;
+    uint32_t dof_;
+    uint32_t macro_dof_;
 
     Eigen::MatrixXd Kp_joint_;
     Eigen::MatrixXd Kv_joint_;

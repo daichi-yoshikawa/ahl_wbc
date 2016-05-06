@@ -51,7 +51,7 @@ JointLimit::JointLimit(const ahl_robot::ManipulatorPtr& mnp, double threshold)
 
   lock_.resize(mnp_->getLinkNum());
 
-  for(unsigned int i = mnp_->getMacroManipulatorDOF(); i < mnp_->getLinkNum(); ++i)
+  for(uint32_t i = mnp_->getMacroManipulatorDOF(); i < mnp_->getLinkNum(); ++i)
   {
     q_max_[i] = mnp_->getLink(i)->q_max;
     q_min_[i] = mnp_->getLink(i)->q_min;
@@ -66,7 +66,7 @@ void JointLimit::computeGeneralizedForce(Eigen::VectorXd& tau)
   tau = Eigen::VectorXd::Zero(mnp_->getDOF());
   N_  = Eigen::MatrixXd::Identity(mnp_->getDOF(), mnp_->getDOF());
 
-  for(unsigned int i = mnp_->getMacroManipulatorDOF(); i < mnp_->q().rows(); ++i)
+  for(uint32_t i = mnp_->getMacroManipulatorDOF(); i < mnp_->q().rows(); ++i)
   {
     if(q_min_[i] == q_max_[i]) continue;
 

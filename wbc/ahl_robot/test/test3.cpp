@@ -91,7 +91,7 @@ int main(int argc, char** argv)
 
       double goal = sin(2.0 * M_PI * 0.2 * cnt * 0.1);
       ++cnt;
-      for(unsigned int i = 0; i < q.rows(); ++i)
+      for(uint32_t i = 0; i < q.rows(); ++i)
       {
         q.coeffRef(i) = M_PI / 4.0 * goal;
       }

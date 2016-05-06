@@ -53,7 +53,7 @@ namespace ahl_sample
   public:
     explicit Marker(const std::string& name, const std::string& frame, uint32_t shape = visualization_msgs::Marker::SPHERE);
 
-    void setColor(int r, int g, int b, double a);
+    void setColor(int8_t r, int8_t g, int8_t b, double a);
     void setPosition(double x, double y, double z);
     void setScale(double scale);
     void publish();

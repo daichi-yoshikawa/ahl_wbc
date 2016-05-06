@@ -107,7 +107,7 @@ void Parser::loadRobotInfo(const RobotPtr& robot)
 
   if(node_[yaml_tag::MACRO_MANIPULATOR_DOF])
   {
-    unsigned int dof = node_[yaml_tag::MACRO_MANIPULATOR_DOF].as<double>();
+    uint32_t dof = node_[yaml_tag::MACRO_MANIPULATOR_DOF].as<double>();
     robot->setMacroManipulatorDOF(dof);
   }
 }
@@ -126,7 +126,7 @@ void Parser::loadManipulator(const RobotPtr& robot)
 
   this->checkTag(node_, yaml_tag::MANIPULATORS, func);
 
-  for(unsigned int i = 0; i < node_[yaml_tag::MANIPULATORS].size(); ++i)
+  for(uint32_t i = 0; i < node_[yaml_tag::MANIPULATORS].size(); ++i)
   {
     ManipulatorPtr mnp = std::make_shared<Manipulator>();
 
@@ -153,7 +153,7 @@ void Parser::loadLinks(const YAML::Node& node, const ManipulatorPtr& mnp)
   std::map<std::string, LinkPtr> link_map;
   std::map<std::string, double> init_q;
 
-  for(unsigned int i = 0; i < node.size(); ++i)
+  for(uint32_t i = 0; i < node.size(); ++i)
   {
     LinkPtr link = std::make_shared<Link>();
 
@@ -266,7 +266,7 @@ void Parser::loadLinks(const YAML::Node& node, const ManipulatorPtr& mnp)
     link_map[parent]->child = link->name;
   }
 
-  unsigned int op_num = 0;
+  uint32_t op_num = 0;
   std::string end_effector_name = "";
   for(it = link_map.begin(); it != link_map.end(); ++it)
   {
@@ -326,7 +326,7 @@ void Parser::loadVector3d(const YAML::Node& node, const std::string& tag, Eigen:
     throw ahl_utils::Exception("Parser::loadVector3d", msg.str());
   }
 
-  for(unsigned int i = 0; i < node[tag].size(); ++i)
+  for(uint32_t i = 0; i < node[tag].size(); ++i)
   {
     v.coeffRef(i) = node[tag][i].as<double>();
   }
@@ -342,7 +342,7 @@ void Parser::loadMatrix3d(const YAML::Node& node, const std::string& tag, Eigen:
     throw ahl_utils::Exception("Parser::loadVector3d", msg.str());
   }
 
-  for(unsigned int i = 0; i < 3; ++i)
+  for(uint32_t i = 0; i < 3; ++i)
   {
     m.coeffRef(i, 0) = node[tag][3 * i].as<double>();
     m.coeffRef(i, 1) = node[tag][3 * i + 1].as<double>();
@@ -352,11 +352,11 @@ void Parser::loadMatrix3d(const YAML::Node& node, const std::string& tag, Eigen:
 
 void Parser::setLinkToManipulator(const std::map<std::string, double>& init_q, const ManipulatorPtr& mnp)
 {
-  unsigned int dof = 0;
+  uint32_t dof = 0;
   mnp->reverseLink();
 
   // Push back link and count dof
-  for(unsigned int i = 0; i < mnp->getLinkNum(); ++i)
+  for(uint32_t i = 0; i < mnp->getLinkNum(); ++i)
   {
     if(mnp->getLink(i)->joint_type == joint::REVOLUTE_X  ||
        mnp->getLink(i)->joint_type == joint::REVOLUTE_Y  ||
@@ -385,8 +385,8 @@ void Parser::setLinkToManipulator(const std::map<std::string, double>& init_q, c
   // Initialize q, dq, T, x, xr,
   Eigen::VectorXd q = Eigen::VectorXd::Zero(dof);
 
-  int idx = 0;
-  for(unsigned int i = 0; i < mnp->getLinkNum(); ++i)
+  int32_t idx = 0;
+  for(uint32_t i = 0; i < mnp->getLinkNum(); ++i)
   {
     if(init_q.find(mnp->getLink(i)->name) == init_q.end())
       continue;
@@ -401,8 +401,8 @@ void Parser::setLinkToManipulator(const std::map<std::string, double>& init_q, c
 
 void Parser::computeTotalDOF(const RobotPtr& robot)
 {
-  unsigned int macro_dof = robot->getMacroManipulatorDOF();
-  unsigned int dof = macro_dof;
+  uint32_t macro_dof = robot->getMacroManipulatorDOF();
+  uint32_t dof = macro_dof;
 
   MapManipulatorPtr::iterator it;
   MapManipulatorPtr mnp = robot->getManipulator();

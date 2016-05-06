@@ -52,7 +52,7 @@ void RobotController::init(const ahl_robot::RobotPtr& robot)
   robot_ = robot;
   param_ = std::make_shared<Param>(robot_);
 
-  for(unsigned int i = 0; i < robot->getManipulatorName().size(); ++i)
+  for(uint32_t i = 0; i < robot->getManipulatorName().size(); ++i)
   {
     mnp_.push_back(robot->getManipulator(robot->getManipulatorName()[i]));
   }
@@ -66,7 +66,7 @@ void RobotController::init(const ahl_robot::RobotPtr& robot, const ParamBasePtr&
   robot_ = robot;
   param_ = param;
 
-  for(unsigned int i = 0; i < robot->getManipulatorName().size(); ++i)
+  for(uint32_t i = 0; i < robot->getManipulatorName().size(); ++i)
   {
     mnp_.push_back(robot->getManipulator(robot->getManipulatorName()[i]));
   }
@@ -75,7 +75,7 @@ void RobotController::init(const ahl_robot::RobotPtr& robot, const ParamBasePtr&
   multi_task_ = std::make_shared<MultiTask>(robot_);
 }
 
-void RobotController::addTask(const TaskPtr& task, int priority)
+void RobotController::addTask(const TaskPtr& task, int32_t priority)
 {
   task->setParam(param_);
   multi_task_->addTask(task, priority);
@@ -94,7 +94,7 @@ void RobotController::updateModel()
 void RobotController::simulate(double period, const Eigen::VectorXd& tau, Eigen::VectorXd& qd, Eigen::VectorXd& dqd, Eigen::VectorXd& ddqd)
 {
   Eigen::MatrixXd M_inv = robot_->getMassMatrixInv();
-  unsigned int macro_dof = robot_->getMacroManipulatorDOF();
+  uint32_t macro_dof = robot_->getMacroManipulatorDOF();
 
   Eigen::VectorXd g = Eigen::VectorXd::Zero(robot_->getDOF());
   if(multi_task_->haveGravityCompensation())
@@ -111,9 +111,9 @@ void RobotController::computeGeneralizedForce(Eigen::VectorXd& tau)
 {
   multi_task_->computeGeneralizedForce(tau);
 
-  unsigned int macro_dof = robot_->getMacroManipulatorDOF();
+  uint32_t macro_dof = robot_->getMacroManipulatorDOF();
 
-  for(unsigned int i = 0; i < macro_dof; ++i)
+  for(uint32_t i = 0; i < macro_dof; ++i)
   {
     if(tau[i] > (*mnp_.begin())->getLink(i)->tau_max)
     {
@@ -125,13 +125,13 @@ void RobotController::computeGeneralizedForce(Eigen::VectorXd& tau)
     }
   }
 
-  unsigned int idx_offset = macro_dof;
+  uint32_t idx_offset = macro_dof;
 
-  for(unsigned int i = 0; i < mnp_.size(); ++i)
+  for(uint32_t i = 0; i < mnp_.size(); ++i)
   {
-    unsigned int mini_dof = mnp_[i]->getDOF() - macro_dof;
+    uint32_t mini_dof = mnp_[i]->getDOF() - macro_dof;
 
-    for(unsigned int j = 0; j < mini_dof; ++j)
+    for(uint32_t j = 0; j < mini_dof; ++j)
     {
       if(tau[j + idx_offset] > mnp_[i]->getLink(j + macro_dof)->tau_max)
       {

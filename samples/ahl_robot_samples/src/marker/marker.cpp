@@ -31,7 +31,7 @@ Marker::Marker(const std::string& name, const std::string& frame, uint32_t shape
   marker_.action = visualization_msgs::Marker::ADD;
 }
 
-void Marker::setColor(int r, int g, int b, double a)
+void Marker::setColor(int8_t r, int8_t g, int8_t b, double a)
 {
   marker_.color.r = r;
   marker_.color.g = g;

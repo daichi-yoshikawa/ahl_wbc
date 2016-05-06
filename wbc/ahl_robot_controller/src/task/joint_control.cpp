@@ -68,7 +68,7 @@ void JointControl::computeGeneralizedForce(Eigen::VectorXd& tau)
   Eigen::VectorXd error = qd_ - mnp_->q();
   Eigen::MatrixXd Kpv = param_->getKpJoint().block(0, 0, mnp_->getDOF(), mnp_->getDOF());
 
-  for(unsigned int i = 0; i < Kpv.rows(); ++i)
+  for(uint32_t i = 0; i < Kpv.rows(); ++i)
   {
     Kpv.coeffRef(i, i) /= param_->getKvJoint().block(0, 0, mnp_->getDOF(), mnp_->getDOF()).coeff(i, i);
   }
@@ -76,7 +76,7 @@ void JointControl::computeGeneralizedForce(Eigen::VectorXd& tau)
 
   //const double dq_max = 25.0;
 
-  for(unsigned int i = 0; i < dqd.rows(); ++i)
+  for(uint32_t i = 0; i < dqd.rows(); ++i)
   {
     if(dqd[i] < -param_->getDqMax())
     {

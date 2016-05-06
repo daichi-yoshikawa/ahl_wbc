@@ -87,7 +87,7 @@ void MecanumWheel::update(const Eigen::Vector3d& v_base, double period)
 {
   dq_ = decomposer_ * v_base;
   q_ = q_ + dq_ * period;
-  for(unsigned int i = 0; i < q_.rows(); ++i)
+  for(uint32_t i = 0; i < q_.rows(); ++i)
   {
     q_[i] = atan2(sin(q_[i]), cos(q_[i]));
   }

@@ -114,7 +114,7 @@ const Eigen::MatrixXd& Robot::getJacobian(const std::string& mnp_name, const std
     throw ahl_utils::Exception("Robot::getJacobian", msg.str());
   }
 
-  int idx = mnp_[mnp_name]->getIndex(link_name);
+  int32_t idx = mnp_[mnp_name]->getIndex(link_name);
   return mnp_[mnp_name]->getJacobian()[idx];
 }
 
@@ -166,7 +166,7 @@ const Eigen::VectorXd& Robot::getJointVelocity(const std::string& mnp_name)
   return mnp_[mnp_name]->dq();
 }
 
-unsigned int Robot::getDOF(const std::string& mnp_name)
+uint32_t Robot::getDOF(const std::string& mnp_name)
 {
   if(mnp_.find(mnp_name) == mnp_.end())
   {
@@ -193,8 +193,8 @@ void Robot::update(const Eigen::VectorXd& q)
   dq_ = Eigen::VectorXd::Zero(dof_);
   dq_.block(0, 0, macro_dof_, 1) = mnp_.begin()->second->dq().block(0, 0, macro_dof_, 1);
   Eigen::VectorXd q_macro = q.block(0, 0, macro_dof_, 1);
-  int offset = macro_dof_;
-  for(unsigned int i = 0; i < mnp_name_.size(); ++i)
+  int32_t offset = macro_dof_;
+  for(uint32_t i = 0; i < mnp_name_.size(); ++i)
   {
     if(mnp_.find(mnp_name_[i]) == mnp_.end())
     {
@@ -206,7 +206,7 @@ void Robot::update(const Eigen::VectorXd& q)
     ManipulatorPtr mnp = mnp_[mnp_name_[i]];
 
     Eigen::VectorXd q_mnp = Eigen::VectorXd::Zero(mnp->getDOF());
-    unsigned int mini_dof = mnp->getDOF() - macro_dof_;
+    uint32_t mini_dof = mnp->getDOF() - macro_dof_;
 
     q_mnp.block(0, 0, macro_dof_, 1) = q_macro;
     q_mnp.block(macro_dof_, 0, mini_dof, 1) = q.block(offset, 0, mini_dof, 1);
@@ -220,7 +220,7 @@ void Robot::update(const Eigen::VectorXd& q)
 
 void Robot::computeJacobian()
 {
-  for(unsigned int i = 0; i < mnp_name_.size(); ++i)
+  for(uint32_t i = 0; i < mnp_name_.size(); ++i)
   {
     if(mnp_.find(mnp_name_[i]) == mnp_.end())
     {
@@ -235,7 +235,7 @@ void Robot::computeJacobian()
 
 void Robot::computeMassMatrix()
 {
-  for(unsigned int i = 0; i < mnp_name_.size(); ++i)
+  for(uint32_t i = 0; i < mnp_name_.size(); ++i)
   {
     if(mnp_.find(mnp_name_[i]) == mnp_.end())
     {
@@ -252,8 +252,8 @@ void Robot::computeMassMatrix()
   M_.block(0, 0, macro_dof_, macro_dof_) = mnp_.begin()->second->getMassMatrix().block(0, 0, macro_dof_, macro_dof_);
   M_inv_.block(0, 0, macro_dof_, macro_dof_) = mnp_.begin()->second->getMassMatrixInv().block(0, 0, macro_dof_, macro_dof_);
 
-  unsigned int offset = macro_dof_;
-  for(unsigned int i = 0; i < mnp_name_.size(); ++i)
+  uint32_t offset = macro_dof_;
+  for(uint32_t i = 0; i < mnp_name_.size(); ++i)
   {
     if(mnp_.find(mnp_name_[i]) == mnp_.end())
     {
@@ -263,7 +263,7 @@ void Robot::computeMassMatrix()
     }
 
     ManipulatorPtr mnp = mnp_[mnp_name_[i]];
-    unsigned int mini_dof = mnp->getDOF() - macro_dof_;
+    uint32_t mini_dof = mnp->getDOF() - macro_dof_;
 
     M_.block(offset, offset, mini_dof, mini_dof) = mnp->getMassMatrix().block(macro_dof_, macro_dof_, mini_dof, mini_dof);
     M_inv_.block(offset, offset, mini_dof, mini_dof) = mnp->getMassMatrixInv().block(macro_dof_, macro_dof_, mini_dof, mini_dof);

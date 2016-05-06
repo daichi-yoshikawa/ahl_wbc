@@ -51,13 +51,13 @@ FrictionCompensation::FrictionCompensation(const ahl_robot::RobotPtr& robot)
 void FrictionCompensation::computeGeneralizedForce(Eigen::VectorXd& tau)
 {
   tau = Eigen::VectorXd::Zero(robot_->getDOF());
-  unsigned int macro_dof = robot_->getMacroManipulatorDOF();
+  uint32_t macro_dof = robot_->getMacroManipulatorDOF();
 
-  unsigned int offset = 0;
-  for(unsigned int i = 0; i < mnp_name_.size(); ++i)
+  uint32_t offset = 0;
+  for(uint32_t i = 0; i < mnp_name_.size(); ++i)
   {
     mnp_ = robot_->getManipulator(mnp_name_[i]);
-    unsigned int mini_dof = mnp_->getDOF() - macro_dof;
+    uint32_t mini_dof = mnp_->getDOF() - macro_dof;
 
     tau.block(macro_dof + offset, 0, mini_dof, 1) = b_.block(macro_dof + offset, macro_dof + offset, mini_dof, mini_dof) * mnp_->dq().block(macro_dof, 0, mini_dof, 1);
 

@@ -61,12 +61,12 @@ namespace ahl_robot
     void add(const ManipulatorPtr& mnp);
     bool reached(const std::string& mnp_name, const Eigen::VectorXd& qd, double threshold);
 
-    void setDOF(unsigned int dof)
+    void setDOF(uint32_t dof)
     {
       dof_ = dof;
     }
 
-    void setMacroManipulatorDOF(unsigned int macro_dof)
+    void setMacroManipulatorDOF(uint32_t macro_dof)
     {
       macro_dof_ = macro_dof;
     }
@@ -136,15 +136,15 @@ namespace ahl_robot
     const Eigen::MatrixXd& getMassMatrix() { return M_; }
     const Eigen::MatrixXd& getMassMatrixInv() { return M_inv_; }
 
-    unsigned int getDOF(const std::string& mnp_name);
+    uint32_t getDOF(const std::string& mnp_name);
 
     // API for whole body control
     void update(const Eigen::VectorXd& q);
     void computeJacobian();
     void computeMassMatrix();
 
-    unsigned int getDOF() { return dof_; }
-    unsigned int getMacroManipulatorDOF() { return macro_dof_; }
+    uint32_t getDOF() { return dof_; }
+    uint32_t getMacroManipulatorDOF() { return macro_dof_; }
 
   private:
     std::string name_;
@@ -153,8 +153,8 @@ namespace ahl_robot
     MapManipulatorPtr mnp_;
     std::vector<std::string> mnp_name_;
     std::string world_;
-    unsigned int dof_;
-    unsigned int macro_dof_;
+    uint32_t dof_;
+    uint32_t macro_dof_;
 
     Eigen::VectorXd q_;
     Eigen::VectorXd dq_;

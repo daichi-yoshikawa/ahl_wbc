@@ -186,7 +186,7 @@ void YouBot::updateWheels(const ros::TimerEvent& e)
 
     std::vector< Eigen::Quaternion<double> > quat_wheel;
 
-    for(unsigned int i = 0; i < dq_wheel.rows(); ++i)
+    for(uint32_t i = 0; i < dq_wheel.rows(); ++i)
     {
       double rad = dq_wheel[i];
 

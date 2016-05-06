@@ -57,7 +57,7 @@ namespace ahl_ctrl
 
     void init(const ahl_robot::RobotPtr& robot);
     void init(const ahl_robot::RobotPtr& robot, const ParamBasePtr& param);
-    void addTask(const TaskPtr& task, int priority);
+    void addTask(const TaskPtr& task, int32_t priority);
     void clearTask();
     void updateModel();
     void simulate(double period, const Eigen::VectorXd& tau, Eigen::VectorXd& qd, Eigen::VectorXd& dqd, Eigen::VectorXd& ddqd);
@@ -68,7 +68,7 @@ namespace ahl_ctrl
     MultiTaskPtr multi_task_;
     ahl_robot::RobotPtr robot_;
     std::vector<ahl_robot::ManipulatorPtr> mnp_;
-    unsigned int dof_;
+    uint32_t dof_;
   };
 
   using RobotControllerPtr = std::shared_ptr<RobotController>;

@@ -61,7 +61,7 @@ namespace ahl_ctrl
     std::string target_link_;
     Eigen::Vector3d xd_;
 
-    int idx_;
+    int32_t idx_;
     Eigen::MatrixXd Jv_;
     Eigen::Matrix3d lambda_inv_;
     Eigen::Matrix3d lambda_;

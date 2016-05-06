@@ -51,7 +51,7 @@ namespace ahl_ctrl
   {
   public:
     explicit MultiTask(const ahl_robot::RobotPtr& robot);
-    void addTask(const TaskPtr& task, int priority);
+    void addTask(const TaskPtr& task, int32_t priority);
     void clear();
     void updateModel();
     void computeGeneralizedForce(Eigen::VectorXd& tau);
@@ -62,12 +62,12 @@ namespace ahl_ctrl
     void assignTorque(const Eigen::VectorXd& src, Eigen::VectorXd& dst, const std::string& name);
     void assignNullSpace(const Eigen::MatrixXd& src, Eigen::MatrixXd& dst, const std::string& name);
 
-    unsigned int dof_;
-    unsigned int macro_dof_;
-    std::map<std::string, unsigned int> name_to_mini_dof_;
-    std::map<std::string, unsigned int> name_to_offset_;
+    uint32_t dof_;
+    uint32_t macro_dof_;
+    std::map<std::string, uint32_t> name_to_mini_dof_;
+    std::map<std::string, uint32_t> name_to_offset_;
 
-    std::map<int, std::vector<TaskPtr> > multi_task_; // key : priority
+    std::map<int32_t, std::vector<TaskPtr> > multi_task_; // key : priority
     TaskPtr gravity_compensation_;
     Eigen::MatrixXd N_;
   };

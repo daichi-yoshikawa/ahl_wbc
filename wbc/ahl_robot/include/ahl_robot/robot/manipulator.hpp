@@ -60,7 +60,7 @@ namespace ahl_robot
   {
   public:
     explicit Manipulator();
-    void init(unsigned int dof, const Eigen::VectorXd& init_q);
+    void init(uint32_t dof, const Eigen::VectorXd& init_q);
     void update(const Eigen::VectorXd& q_msr);
     void update(const Eigen::VectorXd& q_msr, const Eigen::VectorXd& dq_msr);
     void computeJacobian();
@@ -74,11 +74,11 @@ namespace ahl_robot
     {
       name_ = name;
     }
-    void setDOF(unsigned int dof)
+    void setDOF(uint32_t dof)
     {
       dof_ = dof;
     }
-    void setMacroManipulatorDOF(unsigned int macro_dof)
+    void setMacroManipulatorDOF(uint32_t macro_dof)
     {
       macro_dof_ = macro_dof;
     }
@@ -95,27 +95,27 @@ namespace ahl_robot
     {
       return name_;
     }
-    unsigned int getLinkNum()
+    uint32_t getLinkNum()
     {
       return link_.size();
     }
-    const std::string& getLinkName(unsigned int idx) const
+    const std::string& getLinkName(uint32_t idx) const
     {
       return link_[idx]->name;
     }
-    const LinkPtr& getLink(unsigned int idx) const
+    const LinkPtr& getLink(uint32_t idx) const
     {
       return link_[idx];
     }
-    unsigned int getIndex(const std::string& name)
+    uint32_t getIndex(const std::string& name)
     {
       return name_to_idx_[name];
     }
-    unsigned int getDOF()
+    uint32_t getDOF()
     {
       return dof_;
     }
-    unsigned int getMacroManipulatorDOF()
+    uint32_t getMacroManipulatorDOF()
     {
       return macro_dof_;
     }
@@ -127,11 +127,11 @@ namespace ahl_robot
     {
       return dq_;
     }
-    const Eigen::Matrix4d& getTransform(int idx) const
+    const Eigen::Matrix4d& getTransform(int32_t idx) const
     {
       return T_[idx];
     }
-    const Eigen::Matrix4d& getTransformAbs(int idx) const
+    const Eigen::Matrix4d& getTransformAbs(int32_t idx) const
     {
       return T_abs_[idx];
     }
@@ -155,13 +155,13 @@ namespace ahl_robot
     void computeTabs(); // Should be called after updating xp
     void computeCabs(); // Should be called after updating xp
 
-    void computeJacobian(int idx, Eigen::MatrixXd& J);
+    void computeJacobian(int32_t idx, Eigen::MatrixXd& J);
     void computeVelocity();
 
     std::string name_;
-    std::map<std::string, int> name_to_idx_;
-    unsigned int dof_;
-    unsigned int macro_dof_;
+    std::map<std::string, int32_t> name_to_idx_;
+    uint32_t dof_;
+    uint32_t macro_dof_;
 
     bool updated_joint_;
     double update_rate_;

@@ -50,7 +50,7 @@ Manipulator::Manipulator()
 {
 }
 
-void Manipulator::init(unsigned int init_dof, const Eigen::VectorXd& init_q)
+void Manipulator::init(uint32_t init_dof, const Eigen::VectorXd& init_q)
 {
   if(init_dof != init_q.rows())
   {
@@ -68,23 +68,23 @@ void Manipulator::init(unsigned int init_dof, const Eigen::VectorXd& init_q)
   dq_ = Eigen::VectorXd::Zero(dof_);
 
   T_.resize(link_.size());
-  for(unsigned int i = 0; i < T_.size(); ++i)
+  for(uint32_t i = 0; i < T_.size(); ++i)
   {
     T_[i] = link_[i]->T_org;
   }
 
   T_abs_.resize(dof_ + 1);
-  for(unsigned int i = 0; i < T_abs_.size(); ++i)
+  for(uint32_t i = 0; i < T_abs_.size(); ++i)
   {
     T_abs_[i] = Eigen::Matrix4d::Identity();
   }
   C_abs_.resize(dof_ + 1);
-  for(unsigned int i = 0; i < C_abs_.size(); ++i)
+  for(uint32_t i = 0; i < C_abs_.size(); ++i)
   {
     C_abs_[i] = Eigen::Matrix4d::Identity();
   }
   Pin_.resize(dof_ + 1);
-  for(unsigned int i = 0; i < Pin_.size(); ++i)
+  for(uint32_t i = 0; i < Pin_.size(); ++i)
   {
     Pin_[i] = Eigen::Vector3d::Zero();
   }
@@ -99,7 +99,7 @@ void Manipulator::init(unsigned int init_dof, const Eigen::VectorXd& init_q)
   M_.resize(dof_, dof_);
   M_inv_.resize(dof_, dof_);
 
-  for(unsigned int i = 0; i < link_.size(); ++i)
+  for(uint32_t i = 0; i < link_.size(); ++i)
   {
     name_to_idx_[link_[i]->name] = i;
   }
@@ -159,7 +159,7 @@ void Manipulator::computeJacobian()
     throw ahl_utils::Exception("Manipulator::computeJacobian", msg.str());
   }
 
-  for(unsigned int i = 0; i < link_.size(); ++i)
+  for(uint32_t i = 0; i < link_.size(); ++i)
   {
     this->computeJacobian(i, J_[i]);
   }
@@ -169,7 +169,7 @@ void Manipulator::computeMassMatrix()
 {
   M_ = Eigen::MatrixXd::Zero(M_.rows(), M_.cols());
 
-  for(unsigned int i = 0; i < link_.size(); ++i)
+  for(uint32_t i = 0; i < link_.size(); ++i)
   {
     Eigen::MatrixXd Jv = J_[i].block(0, 0, 3, J_[i].cols());
     Eigen::MatrixXd Jw = J_[i].block(3, 0, 3, J_[i].cols());
@@ -182,7 +182,7 @@ void Manipulator::computeMassMatrix()
     // TODO : Can I really ignore this coupling !?
     Eigen::MatrixXd M_macro = Eigen::MatrixXd::Zero(macro_dof_, macro_dof_);
 
-    for(unsigned int i = 0; i < macro_dof_; ++i)
+    for(uint32_t i = 0; i < macro_dof_; ++i)
     {
       M_macro.coeffRef(i, i) = M_.coeff(i, i);
       M_inv_.coeffRef(i, i) = 1.0 / M_.coeff(i, i);
@@ -202,7 +202,7 @@ void Manipulator::computeMassMatrix()
     throw ahl_utils::Exception("Manipulator::computeMassMatrix", msg.str());
   }
 
-  unsigned int mini_dof = dof_ - macro_dof_;
+  uint32_t mini_dof = dof_ - macro_dof_;
   M_inv_.block(macro_dof_, macro_dof_, mini_dof, mini_dof) = M_.block(macro_dof_, macro_dof_, mini_dof, mini_dof).inverse();
 }
 
@@ -252,12 +252,12 @@ void Manipulator::print()
             << "q_ : " << std::endl << q_ << std::endl
             << "dq_ : " << std::endl << dq_ << std::endl;
 
-  for(unsigned int i = 0; i < T_.size(); ++i)
+  for(uint32_t i = 0; i < T_.size(); ++i)
   {
     std::cout << "T_[" << i << "] :" << std::endl << T_[i] << std::endl;
   }
 
-  for(unsigned int i = 0; i < link_.size(); ++i)
+  for(uint32_t i = 0; i < link_.size(); ++i)
   {
     link_[i]->print();
   }
@@ -265,10 +265,10 @@ void Manipulator::print()
 
 void Manipulator::computeForwardKinematics()
 {
-  int idx = 0;
+  int32_t idx = 0;
 
   // Relative transformation matrix
-  for(unsigned int i = 0; i < link_.size(); ++i)
+  for(uint32_t i = 0; i < link_.size(); ++i)
   {
     if(link_[i]->joint_type == joint::FIXED)
       continue;
@@ -308,7 +308,7 @@ void Manipulator::computeForwardKinematics()
   Eigen::MatrixXd Pbn = Eigen::MatrixXd::Constant(4, 1, 1.0);
   Pbn.block(0, 0, 3, 1) = T_abs_[T_abs_.size() - 1].block(0, 3, 3, 1);
 
-  for(unsigned int i = 0; i < Pin_.size(); ++i)
+  for(uint32_t i = 0; i < Pin_.size(); ++i)
   {
     Eigen::Matrix4d Tib;
     math::calculateInverseTransformationMatrix(T_abs_[i], Tib);
@@ -337,7 +337,7 @@ void Manipulator::computeTabs()
   }
 
   T_abs_.front() = T_.front();
-  for(unsigned int i = 1; i < T_abs_.size(); ++i)
+  for(uint32_t i = 1; i < T_abs_.size(); ++i)
   {
     T_abs_[i] = T_abs_[i - 1] * T_[i];
   }
@@ -369,7 +369,7 @@ void Manipulator::computeCabs()
     throw ahl_utils::Exception("Manipulator::computeCabs", msg.str());
   }
 
-  for(unsigned int i = 0; i < C_abs_.size(); ++i)
+  for(uint32_t i = 0; i < C_abs_.size(); ++i)
   {
     Eigen::Matrix4d Tlc = Eigen::Matrix4d::Identity();
     Tlc.block(0, 3, 3, 1) = link_[i]->C;
@@ -377,13 +377,13 @@ void Manipulator::computeCabs()
   }
 }
 
-void Manipulator::computeJacobian(int idx, Eigen::MatrixXd& J)
+void Manipulator::computeJacobian(int32_t idx, Eigen::MatrixXd& J)
 {
   J = Eigen::MatrixXd::Zero(6, dof_);
 
   if(idx < dof_) // Not required to consider end-effector
   {
-    for(unsigned int i = 0; i <= idx; ++i)
+    for(uint32_t i = 0; i <= idx; ++i)
     {
       if(link_[i]->ep) // joint_type is prismatic
       {
@@ -405,7 +405,7 @@ void Manipulator::computeJacobian(int idx, Eigen::MatrixXd& J)
   else // Required to consider the offset of end-effector
   {
     --idx;
-    for(unsigned int i = 0; i <= idx; ++i)
+    for(uint32_t i = 0; i <= idx; ++i)
     {
       if(link_[i]->ep) // joint_type is prismatic
       {

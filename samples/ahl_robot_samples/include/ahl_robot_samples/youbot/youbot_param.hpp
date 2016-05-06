@@ -53,7 +53,7 @@ namespace ahl_sample
   public:
     YouBotParam()
     {
-      const unsigned int dof = 8;
+      const uint32_t dof = 8;
 
       show_target = true;
       sin_x = false;

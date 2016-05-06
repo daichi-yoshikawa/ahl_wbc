@@ -53,8 +53,8 @@ namespace ahl_sample
   public:
     explicit Pr2Param()
     {
-      const unsigned int dof_l = 11;
-      const unsigned int dof_r = 11;
+      const uint32_t dof_l = 11;
+      const uint32_t dof_r = 11;
 
       show_target = true;
 

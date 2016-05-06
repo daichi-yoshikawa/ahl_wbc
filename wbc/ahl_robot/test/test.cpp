@@ -126,7 +126,7 @@ int main(int argc, char** argv)
       ofs1 << cnt * period << " ";
       ofs2 << cnt * period << " ";
       ofs3 << cnt * period << " ";
-      for(unsigned int i = 0; i < dq.rows() - 3; ++i)
+      for(uint32_t i = 0; i < dq.rows() - 3; ++i)
       {
         ofs1 << dq1[i + 3] << " ";
         ofs2 << dq2[i + 3] << " ";

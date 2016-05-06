@@ -60,7 +60,7 @@ void TfPublisher::publish(const RobotPtr& robot, bool publish_com)
 
 void TfPublisher::publish(const ManipulatorPtr& mnp, const ros::Time& current, bool publish_com)
 {
-  for(unsigned int i = 0; i < mnp->getLinkNum(); ++i)
+  for(uint32_t i = 0; i < mnp->getLinkNum(); ++i)
   {
     geometry_msgs::TransformStamped tf_stamped;
 

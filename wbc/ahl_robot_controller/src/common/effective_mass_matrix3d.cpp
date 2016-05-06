@@ -45,7 +45,7 @@ void EffectiveMassMatrix3d::compute(const Eigen::Matrix3d& lambda_inv, Eigen::Ma
   Eigen::JacobiSVD<Eigen::Matrix3d> svd(lambda_inv, Eigen::ComputeFullU | Eigen::ComputeFullV);
 
   Eigen::Matrix3d S = svd.singularValues().asDiagonal();
-  for(unsigned int i = 0; i < 3; ++i)
+  for(uint32_t i = 0; i < 3; ++i)
   {
     if(S.coeff(i, i) < thresh)
     {

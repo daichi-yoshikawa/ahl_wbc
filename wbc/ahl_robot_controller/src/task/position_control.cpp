@@ -102,13 +102,13 @@ void PositionControl::computeGeneralizedForce(Eigen::VectorXd& tau)
 */
   Eigen::Matrix3d Kpv = param_->getKpTask().block(0, 0, 3, 3);
 
-  for(unsigned int i = 0; i < Kpv.rows(); ++i)
+  for(uint32_t i = 0; i < Kpv.rows(); ++i)
   {
     Kpv.coeffRef(i, i) /= param_->getKvTask().block(0, 0, 3, 3).coeff(i, i);
   }
 
   error_sum_ += error;
-  for(unsigned int i = 0; i < error_sum_.rows(); ++i)
+  for(uint32_t i = 0; i < error_sum_.rows(); ++i)
   {
     if(error_sum_[i] > param_->getIClippingTaskPos()[i])
       error_sum_[i] = param_->getIClippingTaskPos()[i];
