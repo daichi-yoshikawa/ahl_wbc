@@ -5,7 +5,8 @@ for whole body control/operational space control/task space control.
 
 What is Whole Body Control ?
 ============================
-If you use this package,
+Here, whole body control means a task space control, which is a control framework proposed by Prof. Oussama Khatib.
+If you use this framework,
 * you can easily control robots with many joints (See video clips below!)
 * you can add force control with the same framework
 * you don't need inverse kinematics
