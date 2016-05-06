@@ -1,11 +1,10 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://ros.org/wiki/xacro">
+  <xacro:property name="PI" value="3.1415926535897931"/>
 
-  <property name="PI" value="3.1415926535897931"/>
-
-  <property name="shoulder_pan_x" value="0.21"/>
-  <property name="shoulder_pan_y" value="0.188"/>
-  <property name="shoulder_pan_z" value="0.195"/>
+  <xacro:property name="shoulder_pan_x" value="0.21"/>
+  <xacro:property name="shoulder_pan_y" value="0.188"/>
+  <xacro:property name="shoulder_pan_z" value="0.195"/>
   <xacro:macro name="shoulder_pan_inertial">
     <inertial>
       <mass value="25.799"/>
@@ -13,16 +12,16 @@
       <inertia ixx="0.866179" ixy="0" ixz="0" iyy="0.874217" iyz="0" izz="0.273538"/>
     </inertial>
   </xacro:macro>
-  <property name="shoulder_pan_damping" value="10.0"/>
-  <property name="shoulder_pan_friction" value="0"/>
-  <property name="shoulder_pan_effort" value="10000"/>
-  <property name="shoulder_pan_velocity" value="10000"/>
-  <property name="shoulder_pan_upper" value="2.285404"/>
-  <property name="shoulder_pan_lower" value="-0.714602"/>
+  <xacro:property name="shoulder_pan_damping" value="10.0"/>
+  <xacro:property name="shoulder_pan_friction" value="0"/>
+  <xacro:property name="shoulder_pan_effort" value="10000"/>
+  <xacro:property name="shoulder_pan_velocity" value="10000"/>
+  <xacro:property name="shoulder_pan_upper" value="2.285404"/>
+  <xacro:property name="shoulder_pan_lower" value="-0.714602"/>
 
-  <property name="shoulder_lift_x" value="0.1"/>
-  <property name="shoulder_lift_y" value="0"/>
-  <property name="shoulder_lift_z" value="-0.142"/>
+  <xacro:property name="shoulder_lift_x" value="0.1"/>
+  <xacro:property name="shoulder_lift_y" value="0"/>
+  <xacro:property name="shoulder_lift_z" value="-0.142"/>
   <xacro:macro name="shoulder_lift_inertial">
     <inertial>
       <mass value="2.750"/>
@@ -30,16 +29,16 @@
       <inertia ixx="0.021056" ixy="0" ixz="0" iyy="0.021272" iyz="0" izz="0.019758"/>
     </inertial>
   </xacro:macro>
-  <property name="shoulder_lift_damping" value="10.0"/>
-  <property name="shoulder_lift_friction" value="0"/>
-  <property name="shoulder_lift_effort" value="10000"/>
-  <property name="shoulder_lift_velocity" value="10000"/>
-  <property name="shoulder_lift_upper" value="1.396300"/>
-  <property name="shoulder_lift_lower" value="-0.523601"/>
+  <xacro:property name="shoulder_lift_damping" value="10.0"/>
+  <xacro:property name="shoulder_lift_friction" value="0"/>
+  <xacro:property name="shoulder_lift_effort" value="10000"/>
+  <xacro:property name="shoulder_lift_velocity" value="10000"/>
+  <xacro:property name="shoulder_lift_upper" value="1.396300"/>
+  <xacro:property name="shoulder_lift_lower" value="-0.523601"/>
 
-  <property name="upper_arm_x" value="0.12"/>
-  <property name="upper_arm_y" value="0"/>
-  <property name="upper_arm_z" value="0"/>
+  <xacro:property name="upper_arm_x" value="0.12"/>
+  <xacro:property name="upper_arm_y" value="0"/>
+  <xacro:property name="upper_arm_z" value="0"/>
   <xacro:macro name="upper_arm_inertial">
     <inertial>
       <mass value="6.118"/>
@@ -47,17 +46,17 @@
       <inertia ixx="0.025306" ixy="0" ixz="0" iyy="0.084737" iyz="0" izz="0.086016"/>
     </inertial>
   </xacro:macro>
-  <property name="upper_arm_damping" value="0.1"/>
-  <property name="upper_arm_friction" value="0"/>
-  <property name="upper_arm_effort" value="10000"/>
-  <property name="upper_arm_velocity" value="10000"/>
-  <property name="upper_arm_upper" value="3.900008"/>
-<!--  <property name="upper_arm_lower" value="-0.800000"/> -->
-  <property name="upper_arm_lower" value="-3.900008"/>
+  <xacro:property name="upper_arm_damping" value="0.1"/>
+  <xacro:property name="upper_arm_friction" value="0"/>
+  <xacro:property name="upper_arm_effort" value="10000"/>
+  <xacro:property name="upper_arm_velocity" value="10000"/>
+  <xacro:property name="upper_arm_upper" value="3.900008"/>
+<!--  <xacro:property name="upper_arm_lower" value="-0.800000"/> -->
+  <xacro:property name="upper_arm_lower" value="-3.900008"/>
 
-  <property name="elbow_x" value="0.28"/>
-  <property name="elbow_y" value="0"/>
-  <property name="elbow_z" value="0"/>
+  <xacro:property name="elbow_x" value="0.28"/>
+  <xacro:property name="elbow_y" value="0"/>
+  <xacro:property name="elbow_z" value="0"/>
   <xacro:macro name="elbow_inertial">
     <inertial>
       <mass value="1.903"/>
@@ -65,16 +64,16 @@
       <inertia ixx="0.003465" ixy="0" ixz="0" iyy="0.004416" iyz="0" izz="0.003592"/>
     </inertial>
   </xacro:macro>
-  <property name="elbow_damping" value="1.0"/>
-  <property name="elbow_friction" value="0"/>
-  <property name="elbow_effort" value="10000"/>
-  <property name="elbow_velocity" value="10000"/>
-  <property name="elbow_upper" value="1.0"/>
-  <property name="elbow_lower" value="-2.321305"/>
+  <xacro:property name="elbow_damping" value="1.0"/>
+  <xacro:property name="elbow_friction" value="0"/>
+  <xacro:property name="elbow_effort" value="10000"/>
+  <xacro:property name="elbow_velocity" value="10000"/>
+  <xacro:property name="elbow_upper" value="1.0"/>
+  <xacro:property name="elbow_lower" value="-2.321305"/>
 
-  <property name="forearm_x" value="0.09"/>
-  <property name="forearm_y" value="0"/>
-  <property name="forearm_z" value="0"/>
+  <xacro:property name="forearm_x" value="0.09"/>
+  <xacro:property name="forearm_y" value="0"/>
+  <xacro:property name="forearm_z" value="0"/>
   <xacro:macro name="forearm_inertial">
     <inertial>
       <mass value="2.690"/>
@@ -82,16 +81,16 @@
       <inertia ixx="0.014668" ixy="0" ixz="0" iyy="0.026279" iyz="0" izz="0.027775"/>
     </inertial>
   </xacro:macro>
-  <property name="forearm_damping" value="0.1"/>
-  <property name="forearm_friction" value="0"/>
-  <property name="forearm_effort" value="10000"/>
-  <property name="forearm_velocity" value="10000"/>
-  <property name="forearm_upper" value="10000000"/>
-  <property name="forearm_lower" value="-10000000"/>
+  <xacro:property name="forearm_damping" value="0.1"/>
+  <xacro:property name="forearm_friction" value="0"/>
+  <xacro:property name="forearm_effort" value="10000"/>
+  <xacro:property name="forearm_velocity" value="10000"/>
+  <xacro:property name="forearm_upper" value="10000000"/>
+  <xacro:property name="forearm_lower" value="-10000000"/>
 
-  <property name="wrist_flex_x" value="0.23"/>
-  <property name="wrist_flex_y" value="0"/>
-  <property name="wrist_flex_z" value="0"/>
+  <xacro:property name="wrist_flex_x" value="0.23"/>
+  <xacro:property name="wrist_flex_y" value="0"/>
+  <xacro:property name="wrist_flex_z" value="0"/>
   <xacro:macro name="wrist_flex_inertial">
     <inertial>
       <mass value="0.614"/>
@@ -99,16 +98,16 @@
       <inertia ixx="0.000652" ixy="0" ixz="0" iyy="0.000198" iyz="0" izz="0.000645"/>
     </inertial>
   </xacro:macro>
-  <property name="wrist_flex_damping" value="0.1"/>
-  <property name="wrist_flex_friction" value="0"/>
-  <property name="wrist_flex_effort" value="10000"/>
-  <property name="wrist_flex_velocity" value="10000"/>
-  <property name="wrist_flex_upper" value="1.0"/>
-  <property name="wrist_flex_lower" value="-2.180004"/>
+  <xacro:property name="wrist_flex_damping" value="0.1"/>
+  <xacro:property name="wrist_flex_friction" value="0"/>
+  <xacro:property name="wrist_flex_effort" value="10000"/>
+  <xacro:property name="wrist_flex_velocity" value="10000"/>
+  <xacro:property name="wrist_flex_upper" value="1.0"/>
+  <xacro:property name="wrist_flex_lower" value="-2.180004"/>
 
-  <property name="wrist_roll_x" value="0.03"/>
-  <property name="wrist_roll_y" value="0"/>
-  <property name="wrist_roll_z" value="0"/>
+  <xacro:property name="wrist_roll_x" value="0.03"/>
+  <xacro:property name="wrist_roll_y" value="0"/>
+  <xacro:property name="wrist_roll_z" value="0"/>
   <xacro:macro name="wrist_roll_inertial">
     <inertial>
       <mass value="0.681"/>
@@ -116,12 +115,12 @@
       <inertia ixx="0.011352" ixy="0" ixz="0" iyy="0.011677" iyz="0" izz="0.011866"/>
     </inertial>
   </xacro:macro>
-  <property name="wrist_roll_damping" value="0.1"/>
-  <property name="wrist_roll_friction" value="0"/>
-  <property name="wrist_roll_effort" value="10000"/>
-  <property name="wrist_roll_velocity" value="10000"/>
-  <property name="wrist_roll_upper" value="10000000"/>
-  <property name="wrist_roll_lower" value="-10000000"/>
+  <xacro:property name="wrist_roll_damping" value="0.1"/>
+  <xacro:property name="wrist_roll_friction" value="0"/>
+  <xacro:property name="wrist_roll_effort" value="10000"/>
+  <xacro:property name="wrist_roll_velocity" value="10000"/>
+  <xacro:property name="wrist_roll_upper" value="10000000"/>
+  <xacro:property name="wrist_roll_lower" value="-10000000"/>
 
   <xacro:macro name="gripper_joint_origin">
     <origin xyz="0.088 0 0" rpy="0 0 0"/>

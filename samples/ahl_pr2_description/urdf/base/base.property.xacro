@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://ros.org/wiki/xacro">
 
-  <property name="M_PI" value="3.1415926535897931"/>
+  <xacro:property name="M_PI" value="3.1415926535897931"/>
 
   <xacro:macro name="base_x_inertial">
     <inertial>
@@ -18,12 +18,12 @@
       </geometry>
     </visual>
   </xacro:macro>
-  <property name="base_x_damping" value="10"/>
-  <property name="base_x_friction" value="0.2"/>
-  <property name="base_x_effort" value="10000"/>
-  <property name="base_x_velocity" value="10000"/>
-  <property name="base_x_upper" value="1000000"/>
-  <property name="base_x_lower" value="-1000000"/>
+  <xacro:property name="base_x_damping" value="10"/>
+  <xacro:property name="base_x_friction" value="0.2"/>
+  <xacro:property name="base_x_effort" value="10000"/>
+  <xacro:property name="base_x_velocity" value="10000"/>
+  <xacro:property name="base_x_upper" value="1000000"/>
+  <xacro:property name="base_x_lower" value="-1000000"/>
 
   <xacro:macro name="base_y_inertial">
     <inertial>
@@ -40,12 +40,12 @@
       </geometry>
     </visual>
   </xacro:macro>
-  <property name="base_y_damping" value="10"/>
-  <property name="base_y_friction" value="0.2"/>
-  <property name="base_y_effort" value="10000"/>
-  <property name="base_y_velocity" value="10000"/>
-  <property name="base_y_upper" value="1000000"/>
-  <property name="base_y_lower" value="-1000000"/>
+  <xacro:property name="base_y_damping" value="10"/>
+  <xacro:property name="base_y_friction" value="0.2"/>
+  <xacro:property name="base_y_effort" value="10000"/>
+  <xacro:property name="base_y_velocity" value="10000"/>
+  <xacro:property name="base_y_upper" value="1000000"/>
+  <xacro:property name="base_y_lower" value="-1000000"/>
 
   <xacro:macro name="base_yaw_inertial">
     <inertial>
@@ -62,12 +62,12 @@
       </geometry>
     </visual>
   </xacro:macro>
-  <property name="base_yaw_damping" value="10"/>
-  <property name="base_yaw_friction" value="0.2"/>
-  <property name="base_yaw_effort" value="10000"/>
-  <property name="base_yaw_velocity" value="10000"/>
-  <property name="base_yaw_upper" value="1000000"/>
-  <property name="base_yaw_lower" value="-1000000"/>
+  <xacro:property name="base_yaw_damping" value="10"/>
+  <xacro:property name="base_yaw_friction" value="0.2"/>
+  <xacro:property name="base_yaw_effort" value="10000"/>
+  <xacro:property name="base_yaw_velocity" value="10000"/>
+  <xacro:property name="base_yaw_upper" value="1000000"/>
+  <xacro:property name="base_yaw_lower" value="-1000000"/>
 
   <xacro:macro name="base_link_inertial">
     <inertial>
@@ -77,9 +77,9 @@
     </inertial>
   </xacro:macro>
 
-  <property name="caster_x" value="0.218"/>
-  <property name="caster_y" value="0.218"/>
-  <property name="caster_z" value="0.2"/>
+  <xacro:property name="caster_x" value="0.218"/>
+  <xacro:property name="caster_y" value="0.218"/>
+  <xacro:property name="caster_z" value="0.2"/>
   <xacro:macro name="caster_inertial">
     <inertial>
       <mass value="3.47"/>
@@ -98,14 +98,14 @@
       </material>
     </visual>
   </xacro:macro>
-  <property name="caster_damping" value="0.7"/>
-  <property name="caster_friction" value="0.2"/>
-  <property name="caster_effort" value="10000"/>
-  <property name="caster_velocity" value="10000"/>
-  <property name="caster_upper" value="1000000"/>
-  <property name="caster_lower" value="-1000000"/>
+  <xacro:property name="caster_damping" value="0.7"/>
+  <xacro:property name="caster_friction" value="0.2"/>
+  <xacro:property name="caster_effort" value="10000"/>
+  <xacro:property name="caster_velocity" value="10000"/>
+  <xacro:property name="caster_upper" value="1000000"/>
+  <xacro:property name="caster_lower" value="-1000000"/>
 
-  <property name="wheel_z" value="-0.17"/>
+  <xacro:property name="wheel_z" value="-0.17"/>
   <xacro:macro name="wheel_inertial">
     <inertial>
       <mass value="0.880"/>
@@ -113,18 +113,18 @@
       <inertia ixx="0.012412" ixy="0" ixz="0" iyy="0.015218" iyz="0" izz="0.011764"/>
     </inertial>
   </xacro:macro>
-  <property name="wheel_radius" value="0.075"/>
-  <property name="wheel_length" value="0.10"/>
-  <property name="wheel_damping" value="0.7"/>
-  <property name="wheel_friction" value="0.2"/>
-  <property name="wheel_effort" value="10000"/>
-  <property name="wheel_velocity" value="10000"/>
-  <property name="wheel_upper" value="1000000"/>
-  <property name="wheel_lower" value="-1000000"/>
+  <xacro:property name="wheel_radius" value="0.075"/>
+  <xacro:property name="wheel_length" value="0.10"/>
+  <xacro:property name="wheel_damping" value="0.7"/>
+  <xacro:property name="wheel_friction" value="0.2"/>
+  <xacro:property name="wheel_effort" value="10000"/>
+  <xacro:property name="wheel_velocity" value="10000"/>
+  <xacro:property name="wheel_upper" value="1000000"/>
+  <xacro:property name="wheel_lower" value="-1000000"/>
 
-  <property name="torso_x" value="-0.255"/>
-  <property name="torso_y" value="0"/>
-  <property name="torso_z" value="0.66"/>
+  <xacro:property name="torso_x" value="-0.255"/>
+  <xacro:property name="torso_y" value="0"/>
+  <xacro:property name="torso_z" value="0.66"/>
   <xacro:macro name="torso_inertial">
     <inertial>
       <mass value="36.449"/>
@@ -132,10 +132,10 @@
       <inertia ixx="2.792330" ixy="0" ixz="0" iyy="2.521060" iyz="0" izz="0.536551"/>
     </inertial>
   </xacro:macro>
-  <property name="torso_damping" value="30.0"/>
-  <property name="torso_friction" value="0.1"/>
-  <property name="torso_effort" value="10000"/>
-  <property name="torso_velocity" value="4.0"/>
-  <property name="torso_upper" value="0.33"/>
-  <property name="torso_lower" value="0"/>
+  <xacro:property name="torso_damping" value="30.0"/>
+  <xacro:property name="torso_friction" value="0.1"/>
+  <xacro:property name="torso_effort" value="10000"/>
+  <xacro:property name="torso_velocity" value="4.0"/>
+  <xacro:property name="torso_upper" value="0.33"/>
+  <xacro:property name="torso_lower" value="0"/>
 </robot>
