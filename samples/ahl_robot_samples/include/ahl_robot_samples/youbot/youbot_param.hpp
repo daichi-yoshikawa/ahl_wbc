@@ -39,7 +39,7 @@
 #ifndef __AHL_ROBOT_SAMPLES_YOUBOT_PARAM_HPP
 #define __AHL_ROBOT_SAMPLES_YOUBOT_PARAM_HPP
 
-#include <boost/shared_ptr.hpp>
+#include <memory>
 #include <Eigen/Dense>
 #include <ros/ros.h>
 #include <dynamic_reconfigure/server.h>
@@ -67,7 +67,7 @@ namespace ahl_sample
 
       ros::NodeHandle local_nh("~/youbot/");
       f_ = boost::bind(&YouBotParam::update, this, _1, _2);
-      server_ = YouBotParamConfigServerPtr(new YouBotParamConfigServer(local_nh));
+      server_ = std::make_shared<YouBotParamConfigServer>(local_nh);
       server_->setCallback(f_);
     }
 
@@ -115,14 +115,15 @@ namespace ahl_sample
       q[7] = config.q5;
     }
 
-    typedef dynamic_reconfigure::Server<ahl_robot_samples::YouBotParamConfig> YouBotParamConfigServer;
-    typedef boost::shared_ptr<YouBotParamConfigServer> YouBotParamConfigServerPtr;
+    using YouBotParamConfigServer = dynamic_reconfigure::Server<ahl_robot_samples::YouBotParamConfig>;
+    using YouBotParamConfigServerPtr = std::shared_ptr<YouBotParamConfigServer>;
 
     YouBotParamConfigServerPtr server_;
     dynamic_reconfigure::Server<ahl_robot_samples::YouBotParamConfig>::CallbackType f_;
   };
 
-  typedef boost::shared_ptr<YouBotParam> YouBotParamPtr;
-}
+  using YouBotParamPtr = std::shared_ptr<YouBotParam>;
 
-#endif /* __AHL_ROBOT_SAMPLES_YOUBOT_PARAM_HPP */
+} // namespace ahl_sample
+
+#endif // __AHL_ROBOT_SAMPLES_YOUBOT_PARAM_HPP

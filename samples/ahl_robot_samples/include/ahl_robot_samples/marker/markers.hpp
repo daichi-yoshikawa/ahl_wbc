@@ -62,7 +62,8 @@ namespace ahl_sample
     std::map<std::string, MarkerPtr> marker_;
   };
 
-  typedef boost::shared_ptr<Markers> MarkersPtr;
-}
+  using MarkersPtr = std::shared_ptr<Markers>;
 
-#endif /* __AHL_ROBOT_SAMPLES_MARKERS_HPP */
+} // namespace ahl_sample
+
+#endif // __AHL_ROBOT_SAMPLES_MARKERS_HPP

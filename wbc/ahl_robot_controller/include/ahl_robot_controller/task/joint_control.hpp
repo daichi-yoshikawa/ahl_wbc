@@ -48,15 +48,15 @@ namespace ahl_ctrl
   class JointControl : public Task
   {
   public:
-    JointControl(const ahl_robot::ManipulatorPtr& mnp);
-    virtual const std::string& getName() const { return task::JOINT_CONTROL; }
-    virtual void setGoal(const Eigen::MatrixXd& qd);
-    virtual void computeGeneralizedForce(Eigen::VectorXd& tau);
+    explicit JointControl(const ahl_robot::ManipulatorPtr& mnp);
+    virtual const std::string& getName() const override { return task::JOINT_CONTROL; }
+    virtual void setGoal(const Eigen::MatrixXd& qd) override;
+    virtual void computeGeneralizedForce(Eigen::VectorXd& tau) override;
 
   private:
     Eigen::VectorXd qd_;
   };
 
-}
+} // namespace ahl_ctrl
 
-#endif /* __AHL_ROBOT_CONTROLLER_JOINT_CONTROL_HPP */
+#endif // __AHL_ROBOT_CONTROLLER_JOINT_CONTROL_HPP

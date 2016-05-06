@@ -41,6 +41,7 @@
 
 #include <map>
 #include <vector>
+#include <memory>
 #include <Eigen/StdVector>
 #include <ahl_digital_filter/differentiator.hpp>
 #include "ahl_robot/definition.hpp"
@@ -48,17 +49,17 @@
 
 namespace ahl_robot
 {
-  typedef std::vector< LinkPtr, Eigen::aligned_allocator<LinkPtr> > VectorLinkPtr;
-  typedef std::vector< Eigen::Matrix4d, Eigen::aligned_allocator<Eigen::Matrix4d> > VectorMatrix4d;
-  typedef std::vector<Eigen::Matrix3d> VectorMatrix3d;
-  typedef std::vector<Eigen::MatrixXd> VectorMatrixXd;
-  typedef std::vector<Eigen::Vector3d> VectorVector3d;
-  typedef std::map<std::string, Eigen::MatrixXd, std::less<std::string>, Eigen::aligned_allocator<std::pair<const std::string, Eigen::MatrixXd> > > MapMatrixXd;
+  using VectorLinkPtr = std::vector< LinkPtr, Eigen::aligned_allocator<LinkPtr> >;
+  using VectorMatrix4d = std::vector< Eigen::Matrix4d, Eigen::aligned_allocator<Eigen::Matrix4d> >;
+  using VectorMatrix3d = std::vector<Eigen::Matrix3d>;
+  using VectorMatrixXd = std::vector<Eigen::MatrixXd>;
+  using VectorVector3d = std::vector<Eigen::Vector3d>;
+  using MapMatrixXd = std::map<std::string, Eigen::MatrixXd, std::less<std::string>, Eigen::aligned_allocator<std::pair<const std::string, Eigen::MatrixXd> > >;
 
   class Manipulator
   {
   public:
-    Manipulator();
+    explicit Manipulator();
     void init(unsigned int dof, const Eigen::VectorXd& init_q);
     void update(const Eigen::VectorXd& q_msr);
     void update(const Eigen::VectorXd& q_msr, const Eigen::VectorXd& dq_msr);
@@ -185,7 +186,8 @@ namespace ahl_robot
     double cutoff_frequency_;
   };
 
-  typedef boost::shared_ptr<Manipulator> ManipulatorPtr;
-}
+  using ManipulatorPtr = std::shared_ptr<Manipulator>;
 
-#endif /* __AHL_ROBOT_MANIPULATOR_HPP */
+} // namespace ahl_robot
+
+#endif // __AHL_ROBOT_MANIPULATOR_HPP

@@ -41,7 +41,7 @@
 
 #include <map>
 #include <list>
-#include <boost/shared_ptr.hpp>
+#include <memory>
 #include <ahl_robot/ahl_robot.hpp>
 #include "ahl_robot_controller/param_base.hpp"
 #include "ahl_robot_controller/task/task.hpp"
@@ -53,7 +53,7 @@ namespace ahl_ctrl
   class RobotController
   {
   public:
-    RobotController();
+    explicit RobotController();
 
     void init(const ahl_robot::RobotPtr& robot);
     void init(const ahl_robot::RobotPtr& robot, const ParamBasePtr& param);
@@ -71,7 +71,8 @@ namespace ahl_ctrl
     unsigned int dof_;
   };
 
-  typedef boost::shared_ptr<RobotController> RobotControllerPtr;
-}
+  using RobotControllerPtr = std::shared_ptr<RobotController>;
 
-#endif /* __AHL_ROBOT_CONTROLLER_ROBOT_CONTROLLER_HPP */
+} // namespace ahl_ctrl
+
+#endif // __AHL_ROBOT_CONTROLLER_ROBOT_CONTROLLER_HPP

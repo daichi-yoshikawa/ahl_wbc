@@ -48,12 +48,12 @@ namespace ahl_ctrl
   class PositionControl : public Task
   {
   public:
-    PositionControl(const ahl_robot::ManipulatorPtr& mnp, const std::string& target_link, double eigen_thresh = 0.001);
-    virtual const std::string& getName() const { return task::POSITION_CONTROL; }
-    virtual void setGoal(const Eigen::MatrixXd& xd);
-    virtual void updateModel();
-    virtual void computeGeneralizedForce(Eigen::VectorXd& tau);
-    virtual bool haveNullSpace() { return true; }
+    explicit PositionControl(const ahl_robot::ManipulatorPtr& mnp, const std::string& target_link, double eigen_thresh = 0.001);
+    virtual const std::string& getName() const override { return task::POSITION_CONTROL; }
+    virtual void setGoal(const Eigen::MatrixXd& xd) override;
+    virtual void updateModel() override;
+    virtual void computeGeneralizedForce(Eigen::VectorXd& tau) override;
+    virtual bool haveNullSpace() override { return true; }
 
   private:
     bool updated_;
@@ -75,6 +75,6 @@ namespace ahl_ctrl
     double dt_;
   };
 
-}
+} // namespace ahl_ctrl
 
-#endif /* __AHL_ROBOT_CONTROLLER_POSITION_CONTROL_HPP */
+#endif // __AHL_ROBOT_CONTROLLER_POSITION_CONTROL_HPP

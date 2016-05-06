@@ -17,6 +17,7 @@ find_package(catkin REQUIRED
     ahl_gazebo_interface
     ahl_robot
     ahl_robot_controller
+    ahl_utils
     cmake_modules
     dynamic_reconfigure
     gazebo_msgs
@@ -50,6 +51,7 @@ catkin_package(
     ahl_gazebo_interface
     ahl_robot
     ahl_robot_controller
+    ahl_utils
     cmake_modules
     dynamic_reconfigure
     gazebo_msgs

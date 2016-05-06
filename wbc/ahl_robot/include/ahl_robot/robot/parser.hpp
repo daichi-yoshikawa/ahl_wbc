@@ -41,7 +41,7 @@
 
 #include <fstream>
 #include <string>
-#include <boost/shared_ptr.hpp>
+#include <memory>
 #include <yaml-cpp/yaml.h>
 #include "ahl_robot/robot/robot.hpp"
 
@@ -81,12 +81,12 @@ namespace ahl_robot
     static const std::string DIFFERENTIATOR_CUTOFF_FREQUENCY = "cutoff_frequency";
 
     static const std::string MACRO_MANIPULATOR_DOF = "macro_manipulator_dof";
-  }
+  } // namespace yaml_tag
 
   class Parser
   {
   public:
-    Parser() {}
+    explicit Parser() {}
     void load(const std::string& path, const RobotPtr& robot);
 
   private:
@@ -105,7 +105,8 @@ namespace ahl_robot
     YAML::Node node_;
   };
 
-  typedef boost::shared_ptr<Parser> ParserPtr;
-}
+  using ParserPtr = std::shared_ptr<Parser>;
 
-#endif /* __AHL_ROBOT_PARSER_HPP */
+} // namespace ahl_robot
+
+#endif // __AHL_ROBOT_PARSER_HPP

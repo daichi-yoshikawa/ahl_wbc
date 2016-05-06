@@ -36,20 +36,21 @@
  *
  *********************************************************************/
 
-#include <boost/thread.hpp>
+#include <mutex>
 #include <Eigen/Dense>
 #include <ros/ros.h>
 #include <ahl_gazebo_interface/gazebo_interface.hpp>
 #include <ahl_gazebo_interface/exception.hpp>
 #include <ahl_robot/ahl_robot.hpp>
 #include <ahl_utils/exception.hpp>
+#include <ahl_utils/scoped_lock.hpp>
 #include <ahl_robot_controller/robot_controller.hpp>
 #include <ahl_robot_controller/tasks.hpp>
 
 using namespace ahl_robot;
 using namespace ahl_ctrl;
 
-boost::mutex mutex;
+std::mutex mutex;
 RobotPtr robot;
 RobotControllerPtr controller;
 bool updated = false;
@@ -68,7 +69,7 @@ void updateModel(const ros::TimerEvent&)
 {
   try
   {
-    boost::mutex::scoped_lock lock(mutex);
+    ahl_utils::ScopedLock lock(mutex);
     if(joint_updated)
     {
       robot->computeJacobian("mnp");
@@ -92,7 +93,7 @@ void control(const ros::TimerEvent&)
 {
   try
   {
-    boost::mutex::scoped_lock lock(mutex);
+    ahl_utils::ScopedLock lock(mutex);
 
     if(gazebo_interface->subscribed())
     {
@@ -187,17 +188,17 @@ int main(int argc, char** argv)
   ros::Timer timer_update_model = nh.createTimer(ros::Duration(0.01), updateModel);
   ros::Timer timer_control = nh.createTimer(ros::Duration(0.001), control);
 
-  robot = RobotPtr(new Robot("lwr"));
-  ParserPtr parser = ParserPtr(new Parser());
+  robot = std::make_shared<Robot>("lwr");
+  ParserPtr parser = std::make_shared<Parser>();
 
   std::string path = "/home/daichi/Work/catkin_ws/src/ahl_ros_pkg/ahl_robot/ahl_robot/yaml/lwr.yaml";
   parser->load(path, robot);
 
-  controller = RobotControllerPtr(new RobotController());
+  controller = std::make_shared<RobotController>();
   controller->init(robot);
 
   using namespace ahl_gazebo_if;
-  gazebo_interface = GazeboInterfacePtr(new GazeboInterface());
+  gazebo_interface = std::make_shared<GazeboInterface>();
   gazebo_interface->addJoint("lwr::joint1");
   gazebo_interface->addJoint("lwr::joint2");
   gazebo_interface->addJoint("lwr::joint3");
@@ -207,16 +208,16 @@ int main(int argc, char** argv)
   gazebo_interface->addJoint("lwr::joint7");
   gazebo_interface->connect();
 
-  tf_pub = TfPublisherPtr(new TfPublisher());
+  tf_pub = std::make_shared<TfPublisher>();
 
   ManipulatorPtr mnp = robot->getManipulator("mnp");
 
-  gravity_compensation = TaskPtr(new GravityCompensation(robot));
-  damping = TaskPtr(new Damping(robot));
-  joint_control = TaskPtr(new JointControl(mnp));
-  joint_limit = TaskPtr(new JointLimit(mnp, 0.087));
-  position_control = TaskPtr(new PositionControl(mnp, "gripper", 0.001));
-  orientation_control = TaskPtr(new OrientationControl(mnp, "gripper", 0.001));
+  gravity_compensation = std::make_shared<GravityCompensation>(robot);
+  damping = std::make_shared<Damping>(robot);
+  joint_control = std::make_shared<JointControl>(mnp);
+  joint_limit = std::make_shared<JointLimit>(mnp, 0.087);
+  position_control = std::make_shared<PositionControl>(mnp, "gripper", 0.001);
+  orientation_control = std::make_shared<OrientationControl>(mnp, "gripper", 0.001);
 
   controller->addTask(gravity_compensation, 0);
   controller->addTask(damping, 0);

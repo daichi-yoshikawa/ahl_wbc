@@ -62,13 +62,13 @@ Param::Param(const ahl_robot::RobotPtr& robot)
   b_ = Eigen::MatrixXd::Zero(dof_, dof_);
   ros::NodeHandle local_nh("~/ahl_robot_controller");
   f_ = boost::bind(&Param::update, this, _1, _2);
-  server_ = ParamConfigServerPtr(new ParamConfigServer(local_nh));
+  server_ = std::make_shared<ParamConfigServer>(local_nh);
   server_->setCallback(f_);
 }
 
 void Param::update(ahl_robot_controller::ParamConfig& config, uint32_t level)
 {
-  boost::mutex::scoped_lock lock(mutex_);
+  ahl_utils::ScopedLock lock(mutex_);
 
   Eigen::VectorXd Kp_joint = Eigen::VectorXd::Constant(dof_, config.kp_joint);
   Eigen::VectorXd Kv_joint = Eigen::VectorXd::Constant(dof_, config.kv_joint);

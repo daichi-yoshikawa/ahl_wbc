@@ -45,7 +45,7 @@
 #ifndef __AHL_ROBOT_TF_PUBLISHER_HPP
 #define __AHL_ROBOT_TF_PUBLISHER_HPP
 
-#include <boost/shared_ptr.hpp>
+#include <memory>
 #include <geometry_msgs/TransformStamped.h>
 #include <tf2/LinearMath/Quaternion.h>
 #include <tf2_ros/transform_broadcaster.h>
@@ -59,7 +59,7 @@ namespace ahl_robot
   {
   public:
     /// Constructor
-    TfPublisher();
+    explicit TfPublisher();
 
     /// Publish tf
     /// \param robot Shared pointer of robot of which you'd like to see the frames
@@ -76,7 +76,8 @@ namespace ahl_robot
     tf2_ros::TransformBroadcaster& transformBroadcaster();
   };
 
-  typedef boost::shared_ptr<TfPublisher> TfPublisherPtr;
-}
+  using TfPublisherPtr = std::shared_ptr<TfPublisher>;
 
-#endif /* __AHL_ROBOT_TF_PUBLISHER_HPP */
+} // namespace ahl_robot
+
+#endif // __AHL_ROBOT_TF_PUBLISHER_HPP

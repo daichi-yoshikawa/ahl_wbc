@@ -10,7 +10,7 @@ int main(int argc, char** argv)
 
   try
   {
-    YouBotPtr youbot = YouBotPtr(new YouBot());
+    YouBotPtr youbot = std::make_shared<YouBot>();
     youbot->init();
     youbot->run();
   }

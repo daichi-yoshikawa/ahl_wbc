@@ -48,13 +48,13 @@ namespace ahl_sample
   class PR2 : public RobotDemo
   {
   public:
-    PR2();
+    explicit PR2();
 
-    virtual void init();
-    virtual void run();
+    virtual void init() override;
+    virtual void run() override;
   private:
-    virtual void updateModel(const ros::TimerEvent&);
-    virtual void control(const ros::TimerEvent&);
+    virtual void updateModel(const ros::TimerEvent&) override;
+    virtual void control(const ros::TimerEvent&) override;
 
     Pr2ParamPtr param_;
 
@@ -69,7 +69,8 @@ namespace ahl_sample
     TaskPtr orientation_control_r_;
   };
 
-  typedef boost::shared_ptr<PR2> PR2Ptr;
-}
+  using PR2Ptr = std::shared_ptr<PR2>;
 
-#endif /* __AHL_ROBOT_SAMPLES_PR2_HPP */
+} // namespace ahl_sample
+
+#endif // __AHL_ROBOT_SAMPLES_PR2_HPP

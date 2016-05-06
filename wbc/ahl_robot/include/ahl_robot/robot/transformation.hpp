@@ -39,7 +39,7 @@
 #ifndef __AHL_ROBOT_TRANSFORMATION_HPP
 #define __AHL_ROBOT_TRANSFORMATION_HPP
 
-#include <boost/shared_ptr.hpp>
+#include <memory>
 #include <Eigen/Dense>
 
 namespace ahl_robot
@@ -48,7 +48,7 @@ namespace ahl_robot
   class Transformation
   {
   public:
-    Transformation();
+    explicit Transformation();
     virtual ~Transformation() {}
     virtual const Eigen::Matrix4d& T(double q) = 0;
     virtual void transform(double q, const Eigen::Matrix4d& T_org, Eigen::Matrix4d& T) = 0;
@@ -60,16 +60,16 @@ namespace ahl_robot
     Eigen::Matrix4d T_;
     Eigen::Vector3d axis_;
   };
-  typedef boost::shared_ptr<Transformation> TransformationPtr;
+  using TransformationPtr = std::shared_ptr<Transformation>;
 
   class Fixed : public Transformation
   {
   public:
-    virtual const Eigen::Matrix4d& T(double q)
+    virtual const Eigen::Matrix4d& T(double q) override
     {
       return T_;
     }
-    virtual void transform(double q, const Eigen::Matrix4d& T_org, Eigen::Matrix4d& T)
+    virtual void transform(double q, const Eigen::Matrix4d& T_org, Eigen::Matrix4d& T) override
     {
     }
   };
@@ -78,8 +78,8 @@ namespace ahl_robot
   {
   public:
     RevoluteX();
-    virtual const Eigen::Matrix4d& T(double q);
-    virtual void transform(double q, const Eigen::Matrix4d& T_org, Eigen::Matrix4d& T);
+    virtual const Eigen::Matrix4d& T(double q) override;
+    virtual void transform(double q, const Eigen::Matrix4d& T_org, Eigen::Matrix4d& T) override;
   private:
     Eigen::Matrix3d R_;
   };
@@ -88,8 +88,8 @@ namespace ahl_robot
   {
   public:
     RevoluteY();
-    virtual const Eigen::Matrix4d& T(double q);
-    virtual void transform(double q, const Eigen::Matrix4d& T_org, Eigen::Matrix4d& T);
+    virtual const Eigen::Matrix4d& T(double q) override;
+    virtual void transform(double q, const Eigen::Matrix4d& T_org, Eigen::Matrix4d& T) override;
   private:
     Eigen::Matrix3d R_;
   };
@@ -98,8 +98,8 @@ namespace ahl_robot
   {
   public:
     RevoluteZ();
-    virtual const Eigen::Matrix4d& T(double q);
-    virtual void transform(double q, const Eigen::Matrix4d& T_org, Eigen::Matrix4d& T);
+    virtual const Eigen::Matrix4d& T(double q) override;
+    virtual void transform(double q, const Eigen::Matrix4d& T_org, Eigen::Matrix4d& T) override;
   private:
     Eigen::Matrix3d R_;
   };
@@ -108,26 +108,26 @@ namespace ahl_robot
   {
   public:
     PrismaticX();
-    virtual const Eigen::Matrix4d& T(double q);
-    virtual void transform(double q, const Eigen::Matrix4d& T_org, Eigen::Matrix4d& T);
+    virtual const Eigen::Matrix4d& T(double q) override;
+    virtual void transform(double q, const Eigen::Matrix4d& T_org, Eigen::Matrix4d& T) override;
   };
 
   class PrismaticY : public Transformation
   {
   public:
     PrismaticY();
-    virtual const Eigen::Matrix4d& T(double q);
-    virtual void transform(double q, const Eigen::Matrix4d& T_org, Eigen::Matrix4d& T);
+    virtual const Eigen::Matrix4d& T(double q) override;
+    virtual void transform(double q, const Eigen::Matrix4d& T_org, Eigen::Matrix4d& T) override;
   };
 
   class PrismaticZ : public Transformation
   {
   public:
     PrismaticZ();
-    virtual const Eigen::Matrix4d& T(double q);
-    virtual void transform(double q, const Eigen::Matrix4d& T_org, Eigen::Matrix4d& T);
+    virtual const Eigen::Matrix4d& T(double q) override;
+    virtual void transform(double q, const Eigen::Matrix4d& T_org, Eigen::Matrix4d& T) override;
   };
 
-}
+} // namespace ahl_robot
 
-#endif /* __AHL_ROBOT_TRANSFORMATION_HPP */
+#endif // __AHL_ROBOT_TRANSFORMATION_HPP

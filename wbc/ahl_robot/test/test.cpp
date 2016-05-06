@@ -53,22 +53,22 @@ int main(int argc, char** argv)
   try
   {
     std::string name = "youbot";
-    RobotPtr robot = RobotPtr(new Robot(name));
+    RobotPtr robot = std::make_shared<Robot>(name);
 
-    ParserPtr parser = ParserPtr(new Parser());
+    ParserPtr parser = std::make_shared<Parser>();
     std::string path = "/home/daichi/Work/catkin_ws/src/ahl_ros_pkg/ahl_robot/ahl_robot/yaml/youbot.yaml";
     parser->load(path, robot);
 
     ros::MultiThreadedSpinner spinner;
 
-    TfPublisherPtr tf_publisher = TfPublisherPtr(new TfPublisher());
+    TfPublisherPtr tf_publisher = std::make_shared<TfPublisher>();
 
     const std::string mnp_name = "mnp";
     unsigned long cnt = 0;
     const double period = 0.001;
     ros::Rate r(1 / period);
 
-    ahl_filter::DifferentiatorPtr differentiator = ahl_filter::DifferentiatorPtr(new ahl_filter::PseudoDifferentiator(period, 1.0));
+    ahl_filter::DifferentiatorPtr differentiator = std::make_shared<ahl_filter::PseudoDifferentiator>(period, 1.0);
 
     Eigen::VectorXd q = Eigen::VectorXd::Constant(robot->getDOF(mnp_name), 0.0);
     Eigen::VectorXd dq = Eigen::VectorXd::Constant(robot->getDOF(mnp_name), 0.0);

@@ -47,10 +47,10 @@ namespace ahl_ctrl
   class JointLimit : public Task
   {
   public:
-    JointLimit(const ahl_robot::ManipulatorPtr& mnp, double threshold);
-    virtual const std::string& getName() const { return task::JOINT_LIMIT; }
-    virtual void computeGeneralizedForce(Eigen::VectorXd& tau);
-    virtual bool haveNullSpace() { return true; }
+    explicit JointLimit(const ahl_robot::ManipulatorPtr& mnp, double threshold);
+    virtual const std::string& getName() const override { return task::JOINT_LIMIT; }
+    virtual void computeGeneralizedForce(Eigen::VectorXd& tau) override;
+    virtual bool haveNullSpace() override { return true; }
 
   private:
     bool moveAwayFromMax(double q, double max);
@@ -63,6 +63,6 @@ namespace ahl_ctrl
     double threshold_;
   };
 
-}
+} // namespace ahl_ctrl
 
-#endif /* __AHL_ROBOT_CONTROLLER_JOINT_LIMIT_HPP */
+#endif // __AHL_ROBOT_CONTROLLER_JOINT_LIMIT_HPP

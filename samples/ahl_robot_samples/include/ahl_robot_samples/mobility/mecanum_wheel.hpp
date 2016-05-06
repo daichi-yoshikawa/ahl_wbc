@@ -39,7 +39,7 @@
 #ifndef __AHL_ROBOT_SAMPLES_MECANUM_WHEEL_HPP
 #define __AHL_ROBOT_SAMPLES_MECANUM_WHEEL_HPP
 
-#include <boost/shared_ptr.hpp>
+#include <memory>
 #include <Eigen/Dense>
 
 namespace ahl_sample
@@ -47,7 +47,7 @@ namespace ahl_sample
   class MecanumWheel
   {
   public:
-    MecanumWheel(const Eigen::Vector4d& q, double tread_width, double wheel_base, double wheel_radius);
+    explicit MecanumWheel(const Eigen::Vector4d& q, double tread_width, double wheel_base, double wheel_radius);
     void update(const Eigen::Vector3d& v_base, double period);
     const Eigen::Vector4d& getWheelAngle() const { return q_; }
     const Eigen::Vector4d& getWheelVelocity() const { return dq_; }
@@ -59,7 +59,8 @@ namespace ahl_sample
     Eigen::MatrixXd decomposer_;
   };
 
-  typedef boost::shared_ptr<MecanumWheel> MecanumWheelPtr;
-}
+  using MecanumWheelPtr = std::shared_ptr<MecanumWheel>;
 
-#endif /* __AHL_ROBOT_SAMPLES_MECANUM_WHEEL_HPP */
+} // namespace ahl_sample
+
+#endif // __AHL_ROBOT_SAMPLES_MECANUM_WHEEL_HPP

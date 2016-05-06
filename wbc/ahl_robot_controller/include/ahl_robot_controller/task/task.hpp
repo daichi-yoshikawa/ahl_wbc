@@ -39,7 +39,7 @@
 #ifndef __AHL_ROBOT_CONTROLLER_TASK_HPP
 #define __AHL_ROBOT_CONTROLLER_TASK_HPP
 
-#include <boost/shared_ptr.hpp>
+#include <memory>
 #include <Eigen/Dense>
 #include <ahl_robot/ahl_robot.hpp>
 #include "ahl_robot_controller/param_base.hpp"
@@ -62,7 +62,8 @@ namespace ahl_ctrl
   class Task
   {
   public:
-    virtual ~Task() {}
+    explicit Task() = default;
+    virtual ~Task() = default;
     virtual const std::string& getName() const { return task::UNDEFINED; }
     virtual void setParam(const ParamBasePtr& param) { param_ = param; }
     virtual void setGoal(const Eigen::MatrixXd& dst) {}
@@ -83,7 +84,8 @@ namespace ahl_ctrl
     ParamBasePtr param_;
   };
 
-  typedef boost::shared_ptr<Task> TaskPtr;
-}
+  using TaskPtr = std::shared_ptr<Task>;
 
-#endif /* __AHL_ROBOT_CONTROLLER_TASK_HPP */
+} // namespace ahl_ctrl
+
+#endif // __AHL_ROBOT_CONTROLLER_TASK_HPP

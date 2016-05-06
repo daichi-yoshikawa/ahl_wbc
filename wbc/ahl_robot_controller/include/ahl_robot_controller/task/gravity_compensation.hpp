@@ -47,17 +47,16 @@ namespace ahl_ctrl
   class GravityCompensation : public Task
   {
   public:
-    GravityCompensation(const ahl_robot::RobotPtr& robot);
-    virtual const std::string& getName() const { return task::GRAVITY_COMPENSATION; }
-    virtual void computeGeneralizedForce(Eigen::VectorXd& tau);
-    virtual const std::string& getTargetName() { return robot_->getName(); }
+    explicit GravityCompensation(const ahl_robot::RobotPtr& robot);
+    virtual const std::string& getName() const override { return task::GRAVITY_COMPENSATION; }
+    virtual void computeGeneralizedForce(Eigen::VectorXd& tau) override;
+    virtual const std::string& getTargetName() const override { return robot_->getName(); }
 
   private:
     ahl_robot::RobotPtr robot_;
     std::vector<std::string> mnp_name_;
   };
 
-  typedef boost::shared_ptr<GravityCompensation> GravityCompensationPtr;
-}
+} // namespace ahl_ctrl
 
-#endif /* __AHL_ROBOT_CONTROLLER_GRAVITY_COMPENSATION_HPP */
+#endif // __AHL_ROBOT_CONTROLLER_GRAVITY_COMPENSATION_HPP

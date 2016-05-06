@@ -128,7 +128,7 @@ void Parser::loadManipulator(const RobotPtr& robot)
 
   for(unsigned int i = 0; i < node_[yaml_tag::MANIPULATORS].size(); ++i)
   {
-    ManipulatorPtr mnp = ManipulatorPtr(new Manipulator());
+    ManipulatorPtr mnp = std::make_shared<Manipulator>();
 
     mnp->setDifferentiatorUpdateRate(update_rate);
     mnp->setDifferentiatorCutoffFrequency(cutoff_frequency);
@@ -155,7 +155,7 @@ void Parser::loadLinks(const YAML::Node& node, const ManipulatorPtr& mnp)
 
   for(unsigned int i = 0; i < node.size(); ++i)
   {
-    LinkPtr link = LinkPtr(new Link());
+    LinkPtr link = std::make_shared<Link>();
 
     // name
     this->checkTag(node[i], yaml_tag::LINK_NAME, func);
@@ -215,21 +215,21 @@ void Parser::loadLinks(const YAML::Node& node, const ManipulatorPtr& mnp)
       init_q[link->name] = node[i][yaml_tag::INIT_Q].as<double>();
 
       if(link->joint_type == joint::REVOLUTE_X)
-        link->tf = TransformationPtr(new RevoluteX());
+        link->tf = std::make_shared<RevoluteX>();
       else if(link->joint_type == joint::REVOLUTE_Y)
-        link->tf = TransformationPtr(new RevoluteY());
+        link->tf = std::make_shared<RevoluteY>();
       else if(link->joint_type == joint::REVOLUTE_Z)
-        link->tf = TransformationPtr(new RevoluteZ());
+        link->tf = std::make_shared<RevoluteZ>();
       else if(link->joint_type == joint::PRISMATIC_X)
-        link->tf = TransformationPtr(new PrismaticX());
+        link->tf = std::make_shared<PrismaticX>();
       else if(link->joint_type == joint::PRISMATIC_Y)
-        link->tf = TransformationPtr(new PrismaticY());
+        link->tf = std::make_shared<PrismaticY>();
       else if(link->joint_type == joint::PRISMATIC_Z)
-        link->tf = TransformationPtr(new PrismaticZ());
+        link->tf = std::make_shared<PrismaticZ>();
     }
     else if(link->joint_type == joint::FIXED)
     {
-      link->tf = TransformationPtr(new Fixed());
+      link->tf = std::make_shared<Fixed>();
     }
     else
     {

@@ -39,8 +39,8 @@
 #ifndef __AHL_ROBOT_SAMPLES_ROBOT_DEMO_HPP
 #define __AHL_ROBOT_SAMPLES_ROBOT_DEMO_HPP
 
-#include <boost/shared_ptr.hpp>
-#include <boost/thread.hpp>
+#include <memory>
+#include <mutex>
 #include <Eigen/Dense>
 #include <ros/ros.h>
 
@@ -63,23 +63,23 @@ namespace ahl_sample
   class RobotDemo
   {
   public:
-    RobotDemo() : joint_updated_(false), model_updated_(false) {}
-    virtual ~RobotDemo() {}
+    explicit RobotDemo() : joint_updated_(false), model_updated_(false) {}
+    virtual ~RobotDemo() = default;
     virtual void init() = 0;
     virtual void run()  = 0;
 
   protected:
     virtual void initRobot(const std::string& name, const std::string& yaml)
     {
-      robot_ = RobotPtr(new Robot(name));
-      ParserPtr parser = ParserPtr(new Parser());
+      robot_ = std::make_shared<Robot>(name);
+      ParserPtr parser = std::make_shared<Parser>();
       parser->load(yaml, robot_);
     }
 
     virtual void updateModel(const ros::TimerEvent&) = 0;
     virtual void control(const ros::TimerEvent&) = 0;
 
-    boost::mutex mutex_;
+    std::mutex mutex_;
     RobotPtr robot_;
     RobotControllerPtr controller_;
     bool joint_updated_;
@@ -91,6 +91,6 @@ namespace ahl_sample
     MarkersPtr markers_;
   };
 
-}
+} // namespace ahl_sample
 
-#endif /* __AHL_ROBOT_SAMPLES_ROBOT_DEMO_HPP */
+#endif // __AHL_ROBOT_SAMPLES_ROBOT_DEMO_HPP

@@ -50,4 +50,4 @@
 #include "ahl_robot/robot/parser.hpp"
 #include "ahl_robot/robot/tf_publisher.hpp"
 
-#endif /* __AHL_ROBOT_AHL_ROBOT_HPP */
+#endif // __AHL_ROBOT_AHL_ROBOT_HPP

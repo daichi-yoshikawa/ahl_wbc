@@ -10,7 +10,7 @@ int main(int argc, char** argv)
 
   try
   {
-    PR2Ptr pr2 = PR2Ptr(new PR2());
+    PR2Ptr pr2 = std::make_shared<PR2>();
     pr2->init();
     pr2->run();
   }

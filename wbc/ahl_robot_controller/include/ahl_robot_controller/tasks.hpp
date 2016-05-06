@@ -48,4 +48,4 @@
 #include "ahl_robot_controller/task/orientation_control.hpp"
 #include "ahl_robot_controller/task/position_control.hpp"
 
-#endif /* __AHL_ROBOT_CONTROLLER_TASKS_HPP */
+#endif // __AHL_ROBOT_CONTROLLER_TASKS_HPP

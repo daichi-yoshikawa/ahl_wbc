@@ -40,19 +40,19 @@
 #define __AHL_ROBOT_LINK_HPP
 
 #include <iostream>
-#include <boost/shared_ptr.hpp>
+#include <memory>
 #include <Eigen/Dense>
 #include "ahl_robot/robot/transformation.hpp"
 
 namespace ahl_robot
 {
   class Link;
-  typedef boost::shared_ptr<Link> LinkPtr;
+  using LinkPtr = std::shared_ptr<Link>;
 
   class Link
   {
   public:
-    Link ()
+    explicit Link ()
       : name(""), joint_type(""), parent(""), child(""), ep(false),
         m(0.0), q_min(0.0), q_max(0.0), dq_max(0.0), tau(0.0), tau_max(0.0)
     {
@@ -100,6 +100,6 @@ namespace ahl_robot
     double tau_max;
   };
 
-}
+} // namespace ahl_robot
 
-#endif /* __AHL_ROBOT_LINK_HPP */
+#endif // __AHL_ROBOT_LINK_HPP

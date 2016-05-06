@@ -39,12 +39,13 @@
 #ifndef __AHL_ROBOT_CONTROLLER_PARAM_HPP
 #define __AHL_ROBOT_CONTROLLER_PARAM_HPP
 
-#include <boost/shared_ptr.hpp>
-#include <boost/thread.hpp>
+#include <memory>
+#include <mutex>
 #include <Eigen/Dense>
 #include <dynamic_reconfigure/server.h>
-#include "ahl_robot_controller/param_base.hpp"
 #include <ahl_robot/robot/robot.hpp>
+#include <ahl_utils/scoped_lock.hpp>
+#include "ahl_robot_controller/param_base.hpp"
 #include "ahl_robot_controller/ParamConfig.h"
 
 namespace ahl_ctrl
@@ -53,128 +54,128 @@ namespace ahl_ctrl
   class Param : public ParamBase
   {
   public:
-    Param(const ahl_robot::RobotPtr& robot);
+    explicit Param(const ahl_robot::RobotPtr& robot);
 
-    virtual const Eigen::MatrixXd& getKpJoint()
+    virtual const Eigen::MatrixXd& getKpJoint() override
     {
-      boost::mutex::scoped_lock lock(mutex_);
+      ahl_utils::ScopedLock lock(mutex_);
       return Kp_joint_;
     }
 
-    virtual const Eigen::MatrixXd& getKvJoint()
+    virtual const Eigen::MatrixXd& getKvJoint() override
     {
-      boost::mutex::scoped_lock lock(mutex_);
+      ahl_utils::ScopedLock lock(mutex_);
       return Kv_joint_;
     }
 
-    virtual const Eigen::MatrixXd& getKpTask()
+    virtual const Eigen::MatrixXd& getKpTask() override
     {
-      boost::mutex::scoped_lock lock(mutex_);
+      ahl_utils::ScopedLock lock(mutex_);
       return Kp_task_;
     }
 
-    virtual const Eigen::MatrixXd& getKiTask()
+    virtual const Eigen::MatrixXd& getKiTask() override
     {
-      boost::mutex::scoped_lock lock(mutex_);
+      ahl_utils::ScopedLock lock(mutex_);
       return Ki_task_;
     }
 
-    virtual const Eigen::MatrixXd& getKvTask()
+    virtual const Eigen::MatrixXd& getKvTask() override
     {
-      boost::mutex::scoped_lock lock(mutex_);
+      ahl_utils::ScopedLock lock(mutex_);
       return Kv_task_;
     }
 
-    virtual const Eigen::Vector3d& getIClippingTaskPos()
+    virtual const Eigen::Vector3d& getIClippingTaskPos() override
     {
-      boost::mutex::scoped_lock lock(mutex_);
+      ahl_utils::ScopedLock lock(mutex_);
       return i_clipping_task_pos_;
     }
 
-    virtual const Eigen::Vector3d& getIClippingTaskOri()
+    virtual const Eigen::Vector3d& getIClippingTaskOri() override
     {
-      boost::mutex::scoped_lock lock(mutex_);
+      ahl_utils::ScopedLock lock(mutex_);
       return i_clipping_task_ori_;
     }
 
-    virtual const Eigen::MatrixXd& getKvDamp()
+    virtual const Eigen::MatrixXd& getKvDamp() override
     {
-      boost::mutex::scoped_lock lock(mutex_);
+      ahl_utils::ScopedLock lock(mutex_);
       return Kv_damp_;
     }
 
-    virtual const Eigen::MatrixXd& getKpLimit()
+    virtual const Eigen::MatrixXd& getKpLimit() override
     {
-      boost::mutex::scoped_lock lock(mutex_);
+      ahl_utils::ScopedLock lock(mutex_);
       return Kp_limit_;
     }
 
-    virtual const Eigen::MatrixXd& getKvLimit()
+    virtual const Eigen::MatrixXd& getKvLimit() override
     {
-      boost::mutex::scoped_lock lock(mutex_);
+      ahl_utils::ScopedLock lock(mutex_);
       return Kv_limit_;
     }
 
-    virtual double getJointErrorMax()
+    virtual double getJointErrorMax() override
     {
-      boost::mutex::scoped_lock lock(mutex_);
+      ahl_utils::ScopedLock lock(mutex_);
       return joint_error_max_;
     }
 
-    virtual double getPosErrorMax()
+    virtual double getPosErrorMax() override
     {
-      boost::mutex::scoped_lock lock(mutex_);
+      ahl_utils::ScopedLock lock(mutex_);
       return pos_error_max_;
     }
 
-    virtual double getOriErrorMax()
+    virtual double getOriErrorMax() override
     {
-      boost::mutex::scoped_lock lock(mutex_);
+      ahl_utils::ScopedLock lock(mutex_);
       return ori_error_max_;
     }
 
-    virtual double getDqMax()
+    virtual double getDqMax() override
     {
-      boost::mutex::scoped_lock lock(mutex_);
+      ahl_utils::ScopedLock lock(mutex_);
       return dq_max_;
     }
 
-    virtual double getVxMax()
+    virtual double getVxMax() override
     {
-      boost::mutex::scoped_lock lock(mutex_);
+      ahl_utils::ScopedLock lock(mutex_);
       return vx_max_;
     }
 
-    virtual const Eigen::Vector3d& getG()
+    virtual const Eigen::Vector3d& getG() override
     {
-      boost::mutex::scoped_lock lock(mutex_);
+      ahl_utils::ScopedLock lock(mutex_);
       return g_;
     }
 
-    virtual const Eigen::MatrixXd& getB()
+    virtual const Eigen::MatrixXd& getB() override
     {
-      boost::mutex::scoped_lock lock(mutex_);
+      ahl_utils::ScopedLock lock(mutex_);
       return b_;
     }
 
-    virtual double getKpWheel()
+    virtual double getKpWheel() override
     {
-      boost::mutex::scoped_lock lock(mutex_);
+      ahl_utils::ScopedLock lock(mutex_);
       return kp_wheel_;
     }
 
-    virtual double getKvWheel()
+    virtual double getKvWheel() override
     {
-      boost::mutex::scoped_lock lock(mutex_);
+      ahl_utils::ScopedLock lock(mutex_);
       return kv_wheel_;
     }
 
   private:
     void update(ahl_robot_controller::ParamConfig& config, uint32_t level);
-    typedef dynamic_reconfigure::Server<ahl_robot_controller::ParamConfig> ParamConfigServer;
-    typedef boost::shared_ptr<ParamConfigServer> ParamConfigServerPtr;
+    using ParamConfigServer = dynamic_reconfigure::Server<ahl_robot_controller::ParamConfig>;
+    using ParamConfigServerPtr = std::shared_ptr<ParamConfigServer>;
 
-    boost::mutex mutex_;
+    std::mutex mutex_;
 
     ParamConfigServerPtr server_;
     dynamic_reconfigure::Server<ahl_robot_controller::ParamConfig>::CallbackType f_;
@@ -203,7 +204,8 @@ namespace ahl_ctrl
     Eigen::MatrixXd b_;
   };
 
-  typedef boost::shared_ptr<Param> ParamPtr;
-}
+  using ParamPtr = std::shared_ptr<Param>;
 
-#endif /* __AHL_ROBOT_CONTROLLER_PARAM_HPP */
+} // namespace ahl_ctrl
+
+#endif // __AHL_ROBOT_CONTROLLER_PARAM_HPP

@@ -49,13 +49,13 @@ namespace ahl_sample
   class YouBot : public RobotDemo
   {
   public:
-    YouBot();
+    explicit YouBot();
 
-    virtual void init();
-    virtual void run();
+    virtual void init() override;
+    virtual void run() override;
   private:
-    virtual void updateModel(const ros::TimerEvent&);
-    virtual void control(const ros::TimerEvent&);
+    virtual void updateModel(const ros::TimerEvent&) override;
+    virtual void control(const ros::TimerEvent&) override;
     void updateWheels(const ros::TimerEvent&);
 
     YouBotParamPtr param_;
@@ -73,7 +73,8 @@ namespace ahl_sample
     MecanumWheelPtr mecanum_;
   };
 
-  typedef boost::shared_ptr<YouBot> YouBotPtr;
+  using YouBotPtr = std::shared_ptr<YouBot>;
+
 }
 
-#endif /* __AHL_ROBOT_SAMPLES_YOUBOT_HPP */
+#endif // __AHL_ROBOT_SAMPLES_YOUBOT_HPP

@@ -47,10 +47,10 @@ namespace ahl_ctrl
   class FrictionCompensation : public Task
   {
   public:
-    FrictionCompensation(const ahl_robot::RobotPtr& robot);
-    virtual const std::string& getName() const { return task::FRICTION_COMPENSATION; }
-    virtual void computeGeneralizedForce(Eigen::VectorXd& tau);
-    virtual const std::string& getTargetName() { return robot_->getName(); }
+    explicit FrictionCompensation(const ahl_robot::RobotPtr& robot);
+    virtual const std::string& getName() const override { return task::FRICTION_COMPENSATION; }
+    virtual void computeGeneralizedForce(Eigen::VectorXd& tau) override;
+    virtual const std::string& getTargetName() const override { return robot_->getName(); }
 
   private:
     ahl_robot::RobotPtr robot_;
@@ -58,6 +58,6 @@ namespace ahl_ctrl
     std::vector<std::string> mnp_name_;
   };
 
-}
+} // namespace ahl_ctrl
 
-#endif /* __AHL_ROBOT_CONTROLLER_FRICTION_COMPENSATION_HPP */
+#endif // __AHL_ROBOT_CONTROLLER_FRICTION_COMPENSATION_HPP

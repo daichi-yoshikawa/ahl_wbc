@@ -73,15 +73,15 @@ int main(int argc, char** argv)
   try
   {
     std::string name = "personal_robot";
-    RobotPtr robot = RobotPtr(new Robot(name));
+    RobotPtr robot = std::make_shared<Robot>(name);
 
-    ParserPtr parser = ParserPtr(new Parser());
+    ParserPtr parser = std::make_shared<Parser>();
     std::string path = "/home/daichi/Work/catkin_ws/src/ahl_ros_pkg/ahl_robot/ahl_robot/yaml/pr2.yaml";
     parser->load(path, robot);
 
     ros::MultiThreadedSpinner spinner;
 
-    TfPublisherPtr tf_publisher = TfPublisherPtr(new TfPublisher());
+    TfPublisherPtr tf_publisher = std::make_shared<TfPublisher>();
 
     const std::string mnp_name1 = "left_mnp";
     const std::string mnp_name2 = "right_mnp";

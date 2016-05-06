@@ -40,7 +40,7 @@
 #define __AHL_ROBOT_SAMPLES_MARKER_HPP
 
 #include <string>
-#include <boost/shared_ptr.hpp>
+#include <memory>
 #include <Eigen/Dense>
 #include <ros/ros.h>
 #include <visualization_msgs/Marker.h>
@@ -66,10 +66,10 @@ namespace ahl_sample
   private:
     ros::Publisher pub_;
     visualization_msgs::Marker marker_;
-
   };
 
-  typedef boost::shared_ptr<Marker> MarkerPtr;
-}
+  using MarkerPtr = std::shared_ptr<Marker>;
 
-#endif /* __AHL_ROBOT_SAMPLES_MARKER_HPP */
+} // namespace ahl_sample
+
+#endif // __AHL_ROBOT_SAMPLES_MARKER_HPP

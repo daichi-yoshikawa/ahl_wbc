@@ -1,3 +1,4 @@
+#include "ahl_utils/scoped_lock.hpp"
 #include "ahl_utils/exception.hpp"
 #include "ahl_robot_samples/pr2/pr2.hpp"
 
@@ -17,23 +18,23 @@ void PR2::init()
 
   initRobot("pr2", yaml);
 
-  controller_ = RobotControllerPtr(new RobotController());
+  controller_ = std::make_shared<RobotController>();
   controller_->init(robot_);
 
-  param_ = Pr2ParamPtr(new Pr2Param());
+  param_ = std::make_shared<Pr2Param>();
 
   ManipulatorPtr mnp_l = robot_->getManipulator("left_mnp");
   ManipulatorPtr mnp_r = robot_->getManipulator("right_mnp");
 
-  gravity_compensation_     = TaskPtr(new GravityCompensation(robot_));
-  //joint_limit_l_            = TaskPtr(new JointLimit(mnp_l, 0.087));
-  //joint_limit_r_            = TaskPtr(new JointLimit(mnp_r, 0.087));
-  joint_control_l_          = TaskPtr(new JointControl(mnp_l));
-  joint_control_r_          = TaskPtr(new JointControl(mnp_r));
-  position_control_l_       = TaskPtr(new PositionControl(mnp_l, "gripper_l_link", 0.001));
-  position_control_r_       = TaskPtr(new PositionControl(mnp_r, "gripper_r_link", 0.001));
-  orientation_control_l_    = TaskPtr(new OrientationControl(mnp_l, "gripper_l_link", 0.001));
-  orientation_control_r_    = TaskPtr(new OrientationControl(mnp_r, "gripper_r_link", 0.001));
+  gravity_compensation_     = std::make_shared<GravityCompensation>(robot_);
+  //joint_limit_l_            = std::make_shared<JointLimit>(mnp_l, 0.087);
+  //joint_limit_r_            = std::make_shared<JointLimit>(mnp_r, 0.087);
+  joint_control_l_          = std::make_shared<JointControl>(mnp_l);
+  joint_control_r_          = std::make_shared<JointControl>(mnp_r);
+  position_control_l_       = std::make_shared<PositionControl>(mnp_l, "gripper_l_link", 0.001);
+  position_control_r_       = std::make_shared<PositionControl>(mnp_r, "gripper_r_link", 0.001);
+  orientation_control_l_    = std::make_shared<OrientationControl>(mnp_l, "gripper_l_link", 0.001);
+  orientation_control_r_    = std::make_shared<OrientationControl>(mnp_r, "gripper_r_link", 0.001);
 
   joint_control_l_->setGoal(param_->q_l);
   joint_control_r_->setGoal(param_->q_r);
@@ -52,7 +53,7 @@ void PR2::init()
   //controller_->addTask(joint_limit_l_, 50);
   //controller_->addTask(joint_limit_r_, 51);
 
-  gazebo_interface_ = GazeboInterfacePtr(new GazeboInterface());
+  gazebo_interface_ = std::make_shared<GazeboInterface>();
   const double effort_time = 0.010;
   gazebo_interface_->addJoint("pr2::base_x_joint", effort_time);
   gazebo_interface_->addJoint("pr2::base_y_joint", effort_time);
@@ -75,11 +76,11 @@ void PR2::init()
 
   gazebo_interface_->connect();
 
-  tf_pub_ = TfPublisherPtr(new TfPublisher());
+  tf_pub_ = std::make_shared<TfPublisher>();
 
-  markers_ = MarkersPtr(new Markers());
-  markers_->add(MarkerPtr(new Marker("left_target", "world")));
-  markers_->add(MarkerPtr(new Marker("right_target", "world")));
+  markers_ = std::make_shared<Markers>();
+  markers_->add(std::make_shared<Marker>("left_target", "world"));
+  markers_->add(std::make_shared<Marker>("right_target", "world"));
   markers_->setColor(0, 1, 0, 0.5);
   markers_->setScale(0.1);
 }
@@ -99,7 +100,7 @@ void PR2::updateModel(const ros::TimerEvent&)
 {
   try
   {
-    boost::mutex::scoped_lock lock(mutex_);
+    ahl_utils::ScopedLock lock(mutex_);
     if(!joint_updated_) return;
 
     joint_control_l_->setGoal(param_->q_l);
@@ -157,7 +158,7 @@ void PR2::control(const ros::TimerEvent&)
 {
   try
   {
-    boost::mutex::scoped_lock lock(mutex_);
+    ahl_utils::ScopedLock lock(mutex_);
 
     if(gazebo_interface_->subscribed())
     {

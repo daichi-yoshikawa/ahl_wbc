@@ -52,6 +52,7 @@ namespace ahl_robot
 {
   namespace math
   {
+
     /// Compute matrix which convert from quaternion to 3 dimensional vector
     /// \param q Quaternion
     /// \param Er Conversion matrix
@@ -61,7 +62,8 @@ namespace ahl_robot
     void rpyToRotationMatrix(const Eigen::Vector3d& rpy, Eigen::Matrix3d& mat);
     void rpyToQuaternion(const Eigen::Vector3d& rpy, Eigen::Quaternion<double>& q);
     void xyzrpyToTransformationMatrix(const Eigen::Vector3d& xyz, const Eigen::Vector3d& rpy, Eigen::Matrix4d& T);
-  }
-}
 
-#endif /* __AHL_ROBOT_MATH_HPP */
+  } // namespace math
+} // namespace ahl_robot
+
+#endif // __AHL_ROBOT_MATH_HPP

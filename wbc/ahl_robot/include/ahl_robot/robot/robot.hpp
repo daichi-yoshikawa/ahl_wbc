@@ -39,18 +39,19 @@
 #ifndef __AHL_ROBOT_ROBOT_HPP
 #define __AHL_ROBOT_ROBOT_HPP
 
+#include <memory>
 #include <map>
 #include "ahl_robot/definition.hpp"
 #include "ahl_robot/robot/manipulator.hpp"
 
 namespace ahl_robot
 {
-  typedef std::map<std::string, ManipulatorPtr, std::less<std::string>, Eigen::aligned_allocator<std::pair<const std::string, ManipulatorPtr> > > MapManipulatorPtr;
+  using MapManipulatorPtr = std::map<std::string, ManipulatorPtr, std::less<std::string>, Eigen::aligned_allocator<std::pair<const std::string, ManipulatorPtr> > >;
 
   class Robot
   {
   public:
-    Robot(const std::string& robot_name)
+    explicit Robot(const std::string& robot_name)
       : name_(robot_name), world_(frame::WORLD), dof_(0), macro_dof_(0)
     {
     }
@@ -161,7 +162,8 @@ namespace ahl_robot
     Eigen::MatrixXd M_inv_;
   };
 
-  typedef boost::shared_ptr<Robot> RobotPtr;
-}
+  using RobotPtr = std::shared_ptr<Robot>;
 
-#endif /* __AHL_ROBOT_ROBOT_HPP */
+} // namespace ahl_robot
+
+#endif // __AHL_ROBOT_ROBOT_HPP

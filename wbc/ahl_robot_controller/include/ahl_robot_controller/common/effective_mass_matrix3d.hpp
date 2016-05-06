@@ -50,6 +50,6 @@ namespace ahl_ctrl
     static void compute(const Eigen::Matrix3d& lambda_inv, Eigen::Matrix3d& lambda, double thresh = 0.0);
   };
 
-}
+} // namespace ahl_ctrl
 
-#endif /* __AHL_ROBOT_CONTROLLER_EFFECTIVE_MASS_MATRIX3D_HPP */
+#endif // __AHL_ROBOT_CONTROLLER_EFFECTIVE_MASS_MATRIX3D_HPP

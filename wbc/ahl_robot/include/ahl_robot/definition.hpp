@@ -65,13 +65,13 @@ namespace ahl_robot
     static const std::string PRISMATIC_Z = "prismatic_z";
     //! Tag for fixed joint
     static const std::string FIXED       = "fixed";
-  }
+  } // namespace joint
 
   namespace frame
   {
     //! Name of global frame
     static const std::string WORLD = "map";
-  }
+  } // namespace frame
 
   namespace mobility
   {
@@ -91,7 +91,7 @@ namespace ahl_robot
       //! Tag for mecanum wheel
       static const std::string MECANUM_WHEEL = "mecanum_wheel";
     }
-  }
-}
+  } // namespace mobility
+} // namespace ahl_robot
 
-#endif /* __AHL_ROBOT_DEFINITION_HPP */
+#endif // __AHL_ROBOT_DEFINITION_HPP

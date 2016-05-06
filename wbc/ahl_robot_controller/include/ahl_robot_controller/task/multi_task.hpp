@@ -40,7 +40,7 @@
 #define __AHL_ROBOT_CONTROLLER_MULTI_TASK_HPP
 
 #include <map>
-#include <boost/shared_ptr.hpp>
+#include <memory>
 #include "ahl_robot_controller/task/task.hpp"
 #include "ahl_robot_controller/task/gravity_compensation.hpp"
 
@@ -50,7 +50,7 @@ namespace ahl_ctrl
   class MultiTask
   {
   public:
-    MultiTask(const ahl_robot::RobotPtr& robot);
+    explicit MultiTask(const ahl_robot::RobotPtr& robot);
     void addTask(const TaskPtr& task, int priority);
     void clear();
     void updateModel();
@@ -72,7 +72,8 @@ namespace ahl_ctrl
     Eigen::MatrixXd N_;
   };
 
-  typedef boost::shared_ptr<MultiTask> MultiTaskPtr;
-}
+  using MultiTaskPtr = std::shared_ptr<MultiTask>;
 
-#endif /* __AHL_ROBOT_CONTROLLER_MULTI_TASK_HPP */
+} // namespace ahl_ctrl
+
+#endif // __AHL_ROBOT_CONTROLLER_MULTI_TASK_HPP

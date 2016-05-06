@@ -1,3 +1,4 @@
+#include "ahl_utils/scoped_lock.hpp"
 #include "ahl_utils/exception.hpp"
 #include "ahl_robot_samples/youbot/youbot.hpp"
 
@@ -16,27 +17,26 @@ void YouBot::init()
 
   initRobot("youbot", yaml);
 
-  controller_ = RobotControllerPtr(new RobotController());
+  controller_ = std::make_shared<RobotController>();
   controller_->init(robot_);
 
-  param_ = YouBotParamPtr(new YouBotParam());
+  param_ = std::make_shared<YouBotParam>();
 
   const double tread_width  = 0.3;
   const double wheel_base   = 0.471;
   const double wheel_radius = 0.05;
-  mecanum_ = MecanumWheelPtr(
-    new MecanumWheel(
-      Eigen::Vector4d::Zero(), tread_width, wheel_base, wheel_radius));
+  mecanum_ = std::make_shared<MecanumWheel>(
+      Eigen::Vector4d::Zero(), tread_width, wheel_base, wheel_radius);
   dqd_ = Eigen::Vector4d::Zero();
 
   ManipulatorPtr mnp = robot_->getManipulator("mnp");
 
-  gravity_compensation_     = TaskPtr(new GravityCompensation(robot_));
-  joint_control_            = TaskPtr(new JointControl(mnp));
-  arm_position_control_     = TaskPtr(new PositionControl(mnp, "gripper", 0.001));
-  arm_orientation_control_  = TaskPtr(new OrientationControl(mnp, "gripper", 0.001));
-  base_position_control_    = TaskPtr(new PositionControl(mnp, "base_yaw", 0.001));
-  base_orientation_control_ = TaskPtr(new OrientationControl(mnp, "base_yaw", 0.001));
+  gravity_compensation_     = std::make_shared<GravityCompensation>(robot_);
+  joint_control_            = std::make_shared<JointControl>(mnp);
+  arm_position_control_     = std::make_shared<PositionControl>(mnp, "gripper", 0.001);
+  arm_orientation_control_  = std::make_shared<OrientationControl>(mnp, "gripper", 0.001);
+  base_position_control_    = std::make_shared<PositionControl>(mnp, "base_yaw", 0.001);
+  base_orientation_control_ = std::make_shared<OrientationControl>(mnp, "base_yaw", 0.001);
 
   joint_control_->setGoal(param_->q);
   arm_position_control_->setGoal(param_->x_arm);
@@ -51,7 +51,7 @@ void YouBot::init()
   controller_->addTask(arm_position_control_, 21);
   controller_->addTask(gravity_compensation_, 21);
 
-  gazebo_interface_ = GazeboInterfacePtr(new GazeboInterface());
+  gazebo_interface_ = std::make_shared<GazeboInterface>();
   const double effort_time = 0.010;
   gazebo_interface_->addJoint("youbot::base_x_joint");
   gazebo_interface_->addJoint("youbot::base_y_joint");
@@ -63,7 +63,7 @@ void YouBot::init()
   gazebo_interface_->addJoint("youbot::joint5");
   gazebo_interface_->connect();
 
-  gazebo_interface_wheel_ = GazeboInterfacePtr(new GazeboInterface());
+  gazebo_interface_wheel_ = std::make_shared<GazeboInterface>();
   gazebo_interface_wheel_->addJoint("youbot::wheel_joint_fl");
   gazebo_interface_wheel_->addJoint("youbot::wheel_joint_fr");
   gazebo_interface_wheel_->addJoint("youbot::wheel_joint_bl");
@@ -74,11 +74,11 @@ void YouBot::init()
   gazebo_interface_wheel_->addLink("youbot", "wheel_link_br");
   gazebo_interface_wheel_->connect();
 
-  tf_pub_ = TfPublisherPtr(new TfPublisher());
+  tf_pub_ = std::make_shared<TfPublisher>();
 
-  markers_ = MarkersPtr(new Markers());
-  markers_->add(MarkerPtr(new Marker("gripper_target", "world")));
-  markers_->add(MarkerPtr(new Marker("base_target", "world")));
+  markers_ = std::make_shared<Markers>();
+  markers_->add(std::make_shared<Marker>("gripper_target", "world"));
+  markers_->add(std::make_shared<Marker>("base_target", "world"));
   markers_->setColor(0, 1, 0, 0.5);
   markers_->setScale(0.1);
 }
@@ -99,7 +99,7 @@ void YouBot::updateModel(const ros::TimerEvent&)
 {
   try
   {
-    boost::mutex::scoped_lock lock(mutex_);
+    ahl_utils::ScopedLock lock(mutex_);
     if(!joint_updated_) return;
 
     joint_control_->setGoal(param_->q);
@@ -150,7 +150,7 @@ void YouBot::control(const ros::TimerEvent&)
 {
   try
   {
-    boost::mutex::scoped_lock lock(mutex_);
+    ahl_utils::ScopedLock lock(mutex_);
 
     if(gazebo_interface_->subscribed())
     {

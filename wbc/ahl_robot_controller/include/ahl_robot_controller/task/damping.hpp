@@ -48,14 +48,14 @@ namespace ahl_ctrl
   class Damping : public Task
   {
   public:
-    Damping(const ahl_robot::RobotPtr& robot);
-    virtual const std::string& getName() const { return task::DAMPING; }
-    virtual void computeGeneralizedForce(Eigen::VectorXd& tau);
+    explicit Damping(const ahl_robot::RobotPtr& robot);
+    virtual const std::string& getName() const override { return task::DAMPING; }
+    virtual void computeGeneralizedForce(Eigen::VectorXd& tau) override;
 
   private:
     ahl_robot::RobotPtr robot_;
   };
 
-}
+} // namespace ahl_ctrl
 
-#endif /* __AHL_ROBOT_CONTROLLER_DAMPING_HPP */
+#endif // __AHL_ROBOT_CONTROLLER_DAMPING_HPP

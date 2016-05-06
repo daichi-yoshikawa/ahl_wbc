@@ -39,7 +39,7 @@
 #ifndef __AHL_ROBOT_CONTROLLER_PARAM_BASE_HPP
 #define __AHL_ROBOT_CONTROLLER_PARAM_BASE_HPP
 
-#include <boost/shared_ptr.hpp>
+#include <memory>
 #include <Eigen/Dense>
 
 namespace ahl_ctrl
@@ -48,7 +48,8 @@ namespace ahl_ctrl
   class ParamBase
   {
   public:
-    virtual ~ParamBase() {}
+    explicit ParamBase() = default;
+    virtual ~ParamBase() = default;
 
     virtual const Eigen::MatrixXd& getKpJoint() = 0;
     virtual const Eigen::MatrixXd& getKvJoint() = 0;
@@ -71,7 +72,8 @@ namespace ahl_ctrl
     virtual const Eigen::MatrixXd& getB() = 0;
   };
 
-  typedef boost::shared_ptr<ParamBase> ParamBasePtr;
-}
+  using ParamBasePtr = std::shared_ptr<ParamBase>;
 
-#endif /* __AHL_ROBOT_CONTROLLER_PARAM_BASE_HPP */
+} // namespace ahl_ctrl
+
+#endif // __AHL_ROBOT_CONTROLLER_PARAM_BASE_HPP

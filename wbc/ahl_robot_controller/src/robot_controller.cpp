@@ -50,7 +50,7 @@ RobotController::RobotController()
 void RobotController::init(const ahl_robot::RobotPtr& robot)
 {
   robot_ = robot;
-  param_ = ParamBasePtr(new Param(robot_));
+  param_ = std::make_shared<Param>(robot_);
 
   for(unsigned int i = 0; i < robot->getManipulatorName().size(); ++i)
   {
@@ -58,7 +58,7 @@ void RobotController::init(const ahl_robot::RobotPtr& robot)
   }
 
   dof_ = robot_->getDOF();
-  multi_task_ = MultiTaskPtr(new MultiTask(robot_));
+  multi_task_ = std::make_shared<MultiTask>(robot_);
 }
 
 void RobotController::init(const ahl_robot::RobotPtr& robot, const ParamBasePtr& param)
@@ -72,7 +72,7 @@ void RobotController::init(const ahl_robot::RobotPtr& robot, const ParamBasePtr&
   }
 
   dof_ = robot_->getDOF();
-  multi_task_ = MultiTaskPtr(new MultiTask(robot_));
+  multi_task_ = std::make_shared<MultiTask>(robot_);
 }
 
 void RobotController::addTask(const TaskPtr& task, int priority)
