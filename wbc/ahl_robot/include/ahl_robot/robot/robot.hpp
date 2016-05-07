@@ -46,105 +46,53 @@
 
 namespace ahl_robot
 {
-  using MapManipulatorPtr = std::map<std::string, ManipulatorPtr, std::less<std::string>, Eigen::aligned_allocator<std::pair<const std::string, ManipulatorPtr> > >;
+  using MapManipulatorPtr = std::map<
+    std::string, ManipulatorPtr, std::less<std::string>,
+    Eigen::aligned_allocator<std::pair<const std::string, ManipulatorPtr>>>;
 
   class Robot
   {
   public:
     explicit Robot(const std::string& robot_name)
-      : name_(robot_name), world_(frame::WORLD), dof_(0), macro_dof_(0)
-    {
-    }
+      : name_(robot_name), world_(frame::WORLD), dof_(0), macro_dof_(0) {}
 
+    void computeJacobian();
     void computeJacobian(const std::string& mnp_name);
+    void computeMassMatrix();
     void computeMassMatrix(const std::string& mnp_name);
+    void update(const Eigen::VectorXd& q);
+
     void add(const ManipulatorPtr& mnp);
     bool reached(const std::string& mnp_name, const Eigen::VectorXd& qd, double threshold);
 
-    void setDOF(uint32_t dof)
-    {
-      dof_ = dof;
-    }
+    void setDOF(uint32_t dof) { dof_ = dof; }
+    void setMacroManipulatorDOF(uint32_t macro_dof) { macro_dof_ = macro_dof; }
+    void setPosition(const Eigen::Vector3d& p) { pos_ = p; }
+    void setOrientation(const Eigen::Quaternion<double>& q) { ori_ = q; }
+    void setWorldFrame(const std::string& world) { world_ = world; }
 
-    void setMacroManipulatorDOF(uint32_t macro_dof)
-    {
-      macro_dof_ = macro_dof;
-    }
+    // Accessors
+    const std::string& getName() const { return name_; }
+    const Eigen::Vector3d& getPosition() const { return pos_; }
+    const Eigen::Quaternion<double>& getOrientation() const { return ori_; }
+    const std::string& getWorldFrame() const { return world_; }
+    const ManipulatorPtr& getManipulator(const std::string& name) { return mnp_[name]; }
+    const MapManipulatorPtr& getManipulator() const { return mnp_; }
+    const std::vector<std::string>& getManipulatorName() const { return mnp_name_; }
 
-    void setPosition(const Eigen::Vector3d& p)
-    {
-      pos_ = p;
-    }
-
-    void setOrientation(const Eigen::Quaternion<double>& q)
-    {
-      ori_ = q;
-    }
-
-    void setWorldFrame(const std::string& world)
-    {
-      world_ = world;
-    }
-
-    const std::string& getName() const
-    {
-      return name_;
-    }
-
-    const Eigen::Vector3d& getPosition() const
-    {
-      return pos_;
-    }
-
-    const Eigen::Quaternion<double>& getOrientation() const
-    {
-      return ori_;
-    }
-
-    const std::string& getWorldFrame() const
-    {
-      return world_;
-    }
-
-    const ManipulatorPtr& getManipulator(const std::string& name)
-    {
-      return mnp_[name];
-    }
-
-    const MapManipulatorPtr& getManipulator()
-    {
-      return mnp_;
-    }
-
-    const std::vector<std::string>& getManipulatorName() const
-    {
-      return mnp_name_;
-    }
-
+    const Eigen::VectorXd& getJointPosition() const { return q_; }
+    const Eigen::VectorXd& getJointPosition(const std::string& mnp_name);
+    const Eigen::VectorXd& getJointVelocity() const { return dq_; }
+    const Eigen::VectorXd& getJointVelocity(const std::string& mnp_name);
     const Eigen::MatrixXd& getJacobian(const std::string& mnp_name);
     const Eigen::MatrixXd& getJacobian(const std::string& mnp_name, const std::string& link_name);
-
-    const Eigen::VectorXd& getJointPosition(const std::string& mnp_name);
-    const Eigen::VectorXd& getJointVelocity(const std::string& mnp_name);
-
-    const Eigen::VectorXd& getJointPosition() { return q_; }
-    const Eigen::VectorXd& getJointVelocity() { return dq_; }
-
+    const Eigen::MatrixXd& getMassMatrix() const { return M_; }
     const Eigen::MatrixXd& getMassMatrix(const std::string& mnp_name);
+    const Eigen::MatrixXd& getMassMatrixInv() const { return M_inv_; }
     const Eigen::MatrixXd& getMassMatrixInv(const std::string& mnp_name);
-
-    const Eigen::MatrixXd& getMassMatrix() { return M_; }
-    const Eigen::MatrixXd& getMassMatrixInv() { return M_inv_; }
-
-    uint32_t getDOF(const std::string& mnp_name);
-
-    // API for whole body control
-    void update(const Eigen::VectorXd& q);
-    void computeJacobian();
-    void computeMassMatrix();
-
-    uint32_t getDOF() { return dof_; }
-    uint32_t getMacroManipulatorDOF() { return macro_dof_; }
+    const uint32_t getDOF() const { return dof_; }
+    const uint32_t getDOF(const std::string& mnp_name);
+    const uint32_t getMacroManipulatorDOF() const { return macro_dof_; }
 
   private:
     std::string name_;

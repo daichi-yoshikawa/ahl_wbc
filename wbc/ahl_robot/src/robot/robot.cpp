@@ -41,6 +41,21 @@
 
 using namespace ahl_robot;
 
+void Robot::computeJacobian()
+{
+  for(uint32_t i = 0; i < mnp_name_.size(); ++i)
+  {
+    if(mnp_.find(mnp_name_[i]) == mnp_.end())
+    {
+      std::stringstream msg;
+      msg << "Could not find manipulator : " << mnp_name_[i];
+      throw ahl_utils::Exception("Robot::computeJacobian", msg.str());
+    }
+
+    mnp_[mnp_name_[i]]->computeJacobian();
+  }
+}
+
 void Robot::computeJacobian(const std::string& mnp_name)
 {
   if(mnp_.find(mnp_name) == mnp_.end())
@@ -53,6 +68,38 @@ void Robot::computeJacobian(const std::string& mnp_name)
   mnp_[mnp_name]->computeJacobian();
 }
 
+void Robot::computeMassMatrix()
+{
+  for(uint32_t i = 0; i < mnp_name_.size(); ++i)
+  {
+    if(mnp_.find(mnp_name_[i]) == mnp_.end())
+    {
+      std::stringstream msg;
+      msg << "Could not find manipulator : " << mnp_name_[i];
+      throw ahl_utils::Exception("Robot::computeMassMatrix", msg.str());
+    }
+
+    mnp_[mnp_name_[i]]->computeMassMatrix();
+  }
+
+  M_ = M_inv_ = Eigen::MatrixXd::Zero(dof_, dof_);
+
+  M_.block(0, 0, macro_dof_, macro_dof_) = mnp_.begin()->second->getMassMatrix().block(0, 0, macro_dof_, macro_dof_);
+  M_inv_.block(0, 0, macro_dof_, macro_dof_) = mnp_.begin()->second->getMassMatrixInv().block(0, 0, macro_dof_, macro_dof_);
+
+  uint32_t offset = macro_dof_;
+  for(uint32_t i = 0; i < mnp_name_.size(); ++i)
+  {
+    ManipulatorPtr mnp = mnp_[mnp_name_[i]];
+    uint32_t mini_dof = mnp->getDOF() - macro_dof_;
+
+    M_.block(offset, offset, mini_dof, mini_dof) = mnp->getMassMatrix().block(macro_dof_, macro_dof_, mini_dof, mini_dof);
+    M_inv_.block(offset, offset, mini_dof, mini_dof) = mnp->getMassMatrixInv().block(macro_dof_, macro_dof_, mini_dof, mini_dof);
+
+    offset += mini_dof;
+  }
+}
+
 void Robot::computeMassMatrix(const std::string& mnp_name)
 {
   if(mnp_.find(mnp_name) == mnp_.end())
@@ -63,6 +110,46 @@ void Robot::computeMassMatrix(const std::string& mnp_name)
   }
 
   mnp_[mnp_name]->computeMassMatrix();
+}
+
+void Robot::update(const Eigen::VectorXd& q)
+{
+  if(q.rows() != dof_)
+  {
+    std::stringstream msg;
+    msg << "q.rows() != dof_" << std::endl
+        << "  q.rows : " << q.rows() << std::endl
+        << "  dof    : " << dof_;
+    throw ahl_utils::Exception("Robot::update", msg.str());
+  }
+
+  q_ = q;
+  dq_ = Eigen::VectorXd::Zero(dof_);
+  dq_.block(0, 0, macro_dof_, 1) = mnp_.begin()->second->dq().block(0, 0, macro_dof_, 1);
+  Eigen::VectorXd q_macro = q.block(0, 0, macro_dof_, 1);
+  int32_t offset = macro_dof_;
+  for(uint32_t i = 0; i < mnp_name_.size(); ++i)
+  {
+    if(mnp_.find(mnp_name_[i]) == mnp_.end())
+    {
+      std::stringstream msg;
+      msg << "Could not find manipulator : " << mnp_name_[i];
+      throw ahl_utils::Exception("Robot::update", msg.str());
+    }
+
+    ManipulatorPtr mnp = mnp_[mnp_name_[i]];
+
+    Eigen::VectorXd q_mnp = Eigen::VectorXd::Zero(mnp->getDOF());
+    uint32_t mini_dof = mnp->getDOF() - macro_dof_;
+
+    q_mnp.block(0, 0, macro_dof_, 1) = q_macro;
+    q_mnp.block(macro_dof_, 0, mini_dof, 1) = q.block(offset, 0, mini_dof, 1);
+
+    mnp->update(q_mnp);
+    dq_.block(offset, 0, mini_dof, 1) = mnp->dq().block(macro_dof_, 0, mini_dof, 1);
+
+    offset += mini_dof;
+  }
 }
 
 bool Robot::reached(const std::string& mnp_name, const Eigen::VectorXd& qd, double threshold)
@@ -166,7 +253,7 @@ const Eigen::VectorXd& Robot::getJointVelocity(const std::string& mnp_name)
   return mnp_[mnp_name]->dq();
 }
 
-uint32_t Robot::getDOF(const std::string& mnp_name)
+const uint32_t Robot::getDOF(const std::string& mnp_name)
 {
   if(mnp_.find(mnp_name) == mnp_.end())
   {
@@ -176,98 +263,4 @@ uint32_t Robot::getDOF(const std::string& mnp_name)
   }
 
   return mnp_[mnp_name]->getDOF();
-}
-
-void Robot::update(const Eigen::VectorXd& q)
-{
-  if(q.rows() != dof_)
-  {
-    std::stringstream msg;
-    msg << "q.rows() != dof_" << std::endl
-        << "  q.rows : " << q.rows() << std::endl
-        << "  dof    : " << dof_;
-    throw ahl_utils::Exception("Robot::update", msg.str());
-  }
-
-  q_ = q;
-  dq_ = Eigen::VectorXd::Zero(dof_);
-  dq_.block(0, 0, macro_dof_, 1) = mnp_.begin()->second->dq().block(0, 0, macro_dof_, 1);
-  Eigen::VectorXd q_macro = q.block(0, 0, macro_dof_, 1);
-  int32_t offset = macro_dof_;
-  for(uint32_t i = 0; i < mnp_name_.size(); ++i)
-  {
-    if(mnp_.find(mnp_name_[i]) == mnp_.end())
-    {
-      std::stringstream msg;
-      msg << "Could not find manipulator : " << mnp_name_[i];
-      throw ahl_utils::Exception("Robot::update", msg.str());
-    }
-
-    ManipulatorPtr mnp = mnp_[mnp_name_[i]];
-
-    Eigen::VectorXd q_mnp = Eigen::VectorXd::Zero(mnp->getDOF());
-    uint32_t mini_dof = mnp->getDOF() - macro_dof_;
-
-    q_mnp.block(0, 0, macro_dof_, 1) = q_macro;
-    q_mnp.block(macro_dof_, 0, mini_dof, 1) = q.block(offset, 0, mini_dof, 1);
-
-    mnp->update(q_mnp);
-    dq_.block(offset, 0, mini_dof, 1) = mnp->dq().block(macro_dof_, 0, mini_dof, 1);
-
-    offset += mini_dof;
-  }
-}
-
-void Robot::computeJacobian()
-{
-  for(uint32_t i = 0; i < mnp_name_.size(); ++i)
-  {
-    if(mnp_.find(mnp_name_[i]) == mnp_.end())
-    {
-      std::stringstream msg;
-      msg << "Could not find manipulator : " << mnp_name_[i];
-      throw ahl_utils::Exception("Robot::computeJacobian", msg.str());
-    }
-
-    mnp_[mnp_name_[i]]->computeJacobian();
-  }
-}
-
-void Robot::computeMassMatrix()
-{
-  for(uint32_t i = 0; i < mnp_name_.size(); ++i)
-  {
-    if(mnp_.find(mnp_name_[i]) == mnp_.end())
-    {
-      std::stringstream msg;
-      msg << "Could not find manipulator : " << mnp_name_[i];
-      throw ahl_utils::Exception("Robot::computeMassMatrix", msg.str());
-    }
-
-    mnp_[mnp_name_[i]]->computeMassMatrix();
-  }
-
-  M_ = M_inv_ = Eigen::MatrixXd::Zero(dof_, dof_);
-
-  M_.block(0, 0, macro_dof_, macro_dof_) = mnp_.begin()->second->getMassMatrix().block(0, 0, macro_dof_, macro_dof_);
-  M_inv_.block(0, 0, macro_dof_, macro_dof_) = mnp_.begin()->second->getMassMatrixInv().block(0, 0, macro_dof_, macro_dof_);
-
-  uint32_t offset = macro_dof_;
-  for(uint32_t i = 0; i < mnp_name_.size(); ++i)
-  {
-    if(mnp_.find(mnp_name_[i]) == mnp_.end())
-    {
-      std::stringstream msg;
-      msg << "Could not find manipulator : " << mnp_name_[i];
-      throw ahl_utils::Exception("Robot::update", msg.str());
-    }
-
-    ManipulatorPtr mnp = mnp_[mnp_name_[i]];
-    uint32_t mini_dof = mnp->getDOF() - macro_dof_;
-
-    M_.block(offset, offset, mini_dof, mini_dof) = mnp->getMassMatrix().block(macro_dof_, macro_dof_, mini_dof, mini_dof);
-    M_inv_.block(offset, offset, mini_dof, mini_dof) = mnp->getMassMatrixInv().block(macro_dof_, macro_dof_, mini_dof, mini_dof);
-
-    offset += mini_dof;
-  }
 }

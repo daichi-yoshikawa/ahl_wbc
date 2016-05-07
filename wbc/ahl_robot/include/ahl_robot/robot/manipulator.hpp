@@ -49,12 +49,16 @@
 
 namespace ahl_robot
 {
-  using VectorLinkPtr = std::vector< LinkPtr, Eigen::aligned_allocator<LinkPtr> >;
-  using VectorMatrix4d = std::vector< Eigen::Matrix4d, Eigen::aligned_allocator<Eigen::Matrix4d> >;
+  using VectorLinkPtr  = std::vector<LinkPtr, Eigen::aligned_allocator<LinkPtr>>;
+  using VectorMatrix4d = std::vector<Eigen::Matrix4d, Eigen::aligned_allocator<Eigen::Matrix4d>>;
   using VectorMatrix3d = std::vector<Eigen::Matrix3d>;
   using VectorMatrixXd = std::vector<Eigen::MatrixXd>;
   using VectorVector3d = std::vector<Eigen::Vector3d>;
-  using MapMatrixXd = std::map<std::string, Eigen::MatrixXd, std::less<std::string>, Eigen::aligned_allocator<std::pair<const std::string, Eigen::MatrixXd> > >;
+  using MapMatrixXd = std::map<
+    std::string,
+    Eigen::MatrixXd,
+    std::less<std::string>,
+    Eigen::aligned_allocator<std::pair<const std::string, Eigen::MatrixXd>>>;
 
   class Manipulator
   {
@@ -70,83 +74,26 @@ namespace ahl_robot
     void addLink(const LinkPtr& link);
     void reverseLink();
 
-    void setName(const std::string& name)
-    {
-      name_ = name;
-    }
-    void setDOF(uint32_t dof)
-    {
-      dof_ = dof;
-    }
-    void setMacroManipulatorDOF(uint32_t macro_dof)
-    {
-      macro_dof_ = macro_dof;
-    }
-    void setDifferentiatorUpdateRate(double update_rate)
-    {
-      update_rate_ = update_rate;
-    }
-    void setDifferentiatorCutoffFrequency(double cutoff_frequency)
-    {
-      cutoff_frequency_ = cutoff_frequency;
-    }
+    void setName(const std::string& name) { name_ = name; }
+    void setDOF(uint32_t dof) { dof_ = dof; }
+    void setMacroManipulatorDOF(uint32_t macro_dof) { macro_dof_ = macro_dof; }
+    void setDifferentiatorUpdateRate(double update_rate) { update_rate_ = update_rate; }
+    void setDifferentiatorCutoffFrequency(double cutoff_frequency) { cutoff_frequency_ = cutoff_frequency; }
 
-    const std::string& getName() const
-    {
-      return name_;
-    }
-    uint32_t getLinkNum()
-    {
-      return link_.size();
-    }
-    const std::string& getLinkName(uint32_t idx) const
-    {
-      return link_[idx]->name;
-    }
-    const LinkPtr& getLink(uint32_t idx) const
-    {
-      return link_[idx];
-    }
-    uint32_t getIndex(const std::string& name)
-    {
-      return name_to_idx_[name];
-    }
-    uint32_t getDOF()
-    {
-      return dof_;
-    }
-    uint32_t getMacroManipulatorDOF()
-    {
-      return macro_dof_;
-    }
-    const Eigen::VectorXd& q() const
-    {
-      return q_;
-    }
-    const Eigen::VectorXd& dq() const
-    {
-      return dq_;
-    }
-    const Eigen::Matrix4d& getTransform(int32_t idx) const
-    {
-      return T_[idx];
-    }
-    const Eigen::Matrix4d& getTransformAbs(int32_t idx) const
-    {
-      return T_abs_[idx];
-    }
-    const VectorMatrixXd& getJacobian() const
-    {
-      return J_;
-    }
-    const Eigen::MatrixXd& getMassMatrix() const
-    {
-      return M_;
-    }
-    const Eigen::MatrixXd& getMassMatrixInv() const
-    {
-      return M_inv_;
-    }
+    const std::string& getName() const { return name_; }
+    const uint32_t getLinkNum() const { return link_.size(); }
+    const std::string& getLinkName(uint32_t idx) const { return link_[idx]->name; }
+    const LinkPtr& getLink(uint32_t idx) const { return link_[idx]; }
+    const uint32_t getIndex(const std::string& name) { return name_to_idx_[name]; }
+    const uint32_t getDOF() const { return dof_; }
+    const uint32_t getMacroManipulatorDOF() const { return macro_dof_; }
+    const Eigen::VectorXd& q() const { return q_; }
+    const Eigen::VectorXd& dq() const { return dq_; }
+    const Eigen::Matrix4d& getTransform(int32_t idx) const { return T_[idx]; }
+    const Eigen::Matrix4d& getTransformAbs(int32_t idx) const { return T_abs_[idx]; }
+    const VectorMatrixXd& getJacobian() const { return J_; }
+    const Eigen::MatrixXd& getMassMatrix() const { return M_; }
+    const Eigen::MatrixXd& getMassMatrixInv() const { return M_inv_; }
 
     void print();
 
