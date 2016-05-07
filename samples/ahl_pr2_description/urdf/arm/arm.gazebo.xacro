@@ -164,16 +164,5 @@
       <selfCollide>1</selfCollide>
     </gazebo>
 
-    <gazebo reference="wrist_roll_l_joint">
-      <gravity>1</gravity>
-      <maxVel>-1</maxVel>
-      <minDepth>0</minDepth>
-      <mu1>0</mu1>
-      <mu2>0</mu2>
-      <kp>10000000000.0</kp>
-      <kd>100000000.0</kd>
-      <selfCollide>0</selfCollide>
-    </gazebo>
-
   </xacro:macro>
 </robot>
