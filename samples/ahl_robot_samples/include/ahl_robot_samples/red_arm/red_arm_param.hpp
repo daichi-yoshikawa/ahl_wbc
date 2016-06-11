@@ -36,52 +36,44 @@
  *
  *********************************************************************/
 
-#ifndef __AHL_ROBOT_SAMPLES_YOUBOT_PARAM_HPP
-#define __AHL_ROBOT_SAMPLES_YOUBOT_PARAM_HPP
+#ifndef __AHL_ROBOT_SAMPLES_RED_ARM_PARAM_HPP
+#define __AHL_ROBOT_SAMPLES_RED_ARM_PARAM_HPP
 
 #include <memory>
 #include <Eigen/Dense>
 #include <ros/ros.h>
 #include <dynamic_reconfigure/server.h>
-#include "ahl_robot_samples/YouBotParamConfig.h"
+#include "ahl_robot_samples/RedArmParamConfig.h"
 
 namespace ahl_sample
 {
 
-  class YouBotParam
+  class RedArmParam
   {
   public:
-    explicit YouBotParam()
+    explicit RedArmParam()
     {
-      const uint32_t dof = 8;
+      x = Eigen::Vector3d::Zero();
+      R = Eigen::Matrix3d::Identity();
+      q = Eigen::VectorXd::Zero(7);
 
-      show_target = true;
-      sin_x = false;
-      sin_y = false;
-      sin_z = false;
-      x_arm = Eigen::Vector3d::Zero();
-      R_arm = Eigen::Matrix3d::Zero();
-      x_base = Eigen::Vector3d::Zero();
-      R_base = Eigen::Matrix3d::Zero();
-      q = Eigen::VectorXd::Zero(dof);
-
-      ros::NodeHandle local_nh("~/youbot/");
-      f_ = boost::bind(&YouBotParam::update, this, _1, _2);
-      server_ = std::make_shared<YouBotParamConfigServer>(local_nh);
+      ros::NodeHandle local_nh("~/red_arm/");
+      f_ = boost::bind(&RedArmParam::update, this, _1, _2);
+      server_ = std::make_shared<RedArmParamConfigServer>(local_nh);
       server_->setCallback(f_);
     }
 
-    bool show_target;
-    bool sin_x;
-    bool sin_y;
-    bool sin_z;
-    Eigen::Vector3d x_arm;
-    Eigen::Matrix3d R_arm;
-    Eigen::Vector3d x_base;
-    Eigen::Matrix3d R_base;
+    bool show_target = true;
+    bool sin_x = false;
+    bool sin_y = false;
+    bool sin_z = false;
+
+    Eigen::Vector3d x;
+    Eigen::Matrix3d R;
     Eigen::VectorXd q;
+
   private:
-    void update(ahl_robot_samples::YouBotParamConfig& config, uint32_t level)
+    void update(ahl_robot_samples::RedArmParamConfig& config, uint32_t level)
     {
       show_target = config.show_target;
 
@@ -89,41 +81,24 @@ namespace ahl_sample
       sin_y = config.sin_y;
       sin_z = config.sin_z;
 
-      x_arm[0] = config.x_arm;
-      x_arm[1] = config.y_arm;
-      x_arm[2] = config.z_arm;
+      x << config.x_arm, config.y_arm, config.z_arm;
 
-      R_arm = Eigen::AngleAxisd(config.roll_arm,  Eigen::Vector3d::UnitX())
-            * Eigen::AngleAxisd(config.pitch_arm, Eigen::Vector3d::UnitY())
-            * Eigen::AngleAxisd(config.yaw_arm,   Eigen::Vector3d::UnitZ());
+      R = Eigen::AngleAxisd(config.roll_arm,  Eigen::Vector3d::UnitX())
+        * Eigen::AngleAxisd(config.pitch_arm, Eigen::Vector3d::UnitY())
+        * Eigen::AngleAxisd(config.yaw_arm,   Eigen::Vector3d::UnitZ());
 
-      x_base[0] = config.x_base;
-      x_base[1] = config.y_base;
-      x_base[2] = config.z_base;
-
-      R_base = Eigen::AngleAxisd(config.roll_base,  Eigen::Vector3d::UnitX())
-             * Eigen::AngleAxisd(config.pitch_base, Eigen::Vector3d::UnitY())
-             * Eigen::AngleAxisd(config.yaw_base,   Eigen::Vector3d::UnitZ());
-
-      q[0] = config.q_base1;
-      q[1] = config.q_base2;
-      q[2] = config.q_base3;
-      q[3] = config.q1;
-      q[4] = config.q2;
-      q[5] = config.q3;
-      q[6] = config.q4;
-      q[7] = config.q5;
+      q << config.q1, config.q2, config.q3, config.q4, config.q5, config.q6, config.q7;
     }
 
-    using YouBotParamConfigServer = dynamic_reconfigure::Server<ahl_robot_samples::YouBotParamConfig>;
-    using YouBotParamConfigServerPtr = std::shared_ptr<YouBotParamConfigServer>;
+    using RedArmParamConfigServer = dynamic_reconfigure::Server<ahl_robot_samples::RedArmParamConfig>;
+    using RedArmParamConfigServerPtr = std::shared_ptr<RedArmParamConfigServer>;
 
-    YouBotParamConfigServerPtr server_;
-    dynamic_reconfigure::Server<ahl_robot_samples::YouBotParamConfig>::CallbackType f_;
+    RedArmParamConfigServerPtr server_;
+    dynamic_reconfigure::Server<ahl_robot_samples::RedArmParamConfig>::CallbackType f_;
   };
 
-  using YouBotParamPtr = std::shared_ptr<YouBotParam>;
+  using RedArmParamPtr = std::shared_ptr<RedArmParam>;
 
 } // namespace ahl_sample
 
-#endif // __AHL_ROBOT_SAMPLES_YOUBOT_PARAM_HPP
+#endif // __AHL_ROBOT_SAMPLES_RED_ARM_PARAM_HPP

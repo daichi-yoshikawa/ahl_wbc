@@ -44,6 +44,7 @@ include_directories(
 generate_dynamic_reconfigure_options(
   cfg/Pr2Param.cfg
   cfg/YouBotParam.cfg
+  cfg/RedArmParam.cfg
 )
 
 catkin_package(
@@ -84,3 +85,16 @@ add_dependencies(youbot_sample
   ahl_robot_samples_gencfg
 )
 target_link_libraries(youbot_sample ${catkin_LIBRARIES})
+
+add_executable(red_arm_sample
+  src/red_arm/main.cpp
+  src/red_arm/red_arm.cpp
+  src/marker/marker.cpp
+  src/marker/markers.cpp
+)
+add_dependencies(red_arm_sample
+  gazebo_msgs_gencpp
+  ahl_robot_samples_gencfg
+)
+target_link_libraries(red_arm_sample ${catkin_LIBRARIES})
+

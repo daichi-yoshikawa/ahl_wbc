@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<launch>
+  <node pkg="ahl_robot_samples" type="red_arm_sample" name="red_arm_sample" output="screen">
+    <param name="robot_config" value="$(find ahl_robot_samples)/yaml/red_arm.yaml"/>
+  </node>
+  <node pkg="rqt_reconfigure" type="rqt_reconfigure" name="red_arm_rqt_reconfigure" output="screen"/>
+
+  <node pkg="rviz" type="rviz" name="rviz" args="-d $(find ahl_robot_samples)/rviz/red_arm.rviz"/>
+</launch>

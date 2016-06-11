@@ -15,7 +15,7 @@
     <arg name="world_name" value="worlds/empty.world"/>
  </include>
 
-  <param name="robot_description" command="$(find xacro)/xacro $(find ahl_red_arm_description)/urdf/red_arm.urdf"/>
+  <param name="robot_description" command="$(find xacro)/xacro --inorder $(find ahl_red_arm_description)/urdf/red_arm.urdf"/>
 
   <node pkg="gazebo_ros" type="spawn_model" name="spawn_robot" respawn="false" output="screen"
     args="-param robot_description
@@ -23,7 +23,7 @@
           -x $(arg init_pos_x)
           -y $(arg init_pos_y)
           -z $(arg init_pos_z)
-          -model pr2">
+          -model red_arm">
   </node>
 
   <include file="$(find ahl_red_arm_description)/launch/joint_state_controller.launch"/>
