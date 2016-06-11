@@ -14,8 +14,7 @@ void Markers::setColor(const std::string& name, int8_t r, int8_t g, int8_t b, do
 
 void Markers::setColor(int8_t r, int8_t g, int8_t b, double a)
 {
-  std::map<std::string, MarkerPtr>::iterator it;
-  for(it = marker_.begin(); it != marker_.end(); ++it)
+  for(auto it = std::begin(marker_); it != std::begin(marker_); ++it)
   {
     it->second->setColor(r, g, b, a);
   }
@@ -33,8 +32,7 @@ void Markers::setScale(const std::string& name, double scale)
 
 void Markers::setScale(double scale)
 {
-  std::map<std::string, MarkerPtr>::iterator it;
-  for(it = marker_.begin(); it != marker_.end(); ++it)
+  for(auto it = std::begin(marker_); it != std::end(marker_); ++it)
   {
     it->second->setScale(scale);
   }
@@ -42,8 +40,7 @@ void Markers::setScale(double scale)
 
 void Markers::publish()
 {
-  std::map<std::string, MarkerPtr>::iterator it;
-  for(it = marker_.begin(); it != marker_.end(); ++it)
+  for(auto it = std::begin(marker_); it != std::end(marker_); ++it)
   {
     it->second->publish();
   }
@@ -56,8 +53,7 @@ void Markers::remove(const std::string& name)
 
 void Markers::remove()
 {
-  std::map<std::string, MarkerPtr>::iterator it;
-  for(it = marker_.begin(); it != marker_.end(); ++it)
+  for(auto it = std::begin(marker_); it != std::end(marker_); ++it)
   {
     it->second->remove();
   }

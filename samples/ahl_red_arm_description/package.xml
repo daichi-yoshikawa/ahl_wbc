@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<package>
+  <name>ahl_red_arm_description</name>
+  <version>0.0.0</version>
+  <description>The ahl_red_arm_description package</description>
+  <maintainer email="daichi.yoshikawa@gmail.com">Daichi Yoshikawa</maintainer>
+  <license>BSD</license>
+  <!-- <url type="website">http://wiki.ros.org/ahl_red_arm_description</url> -->
+  <!-- <author email="jane.doe@example.com">Jane Doe</author> -->
+  <buildtool_depend>catkin</buildtool_depend>
+</package>
