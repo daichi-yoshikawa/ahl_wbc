@@ -77,7 +77,7 @@ namespace ahl_robot
   {
     /// \enum
     /// Mobility type
-    enum Type
+    enum Type : uint8_t
     {
       SENTRY_LOWER,
       FIXED,

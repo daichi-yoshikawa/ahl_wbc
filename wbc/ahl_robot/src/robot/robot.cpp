@@ -84,8 +84,8 @@ void Robot::computeMassMatrix()
 
   M_ = M_inv_ = Eigen::MatrixXd::Zero(dof_, dof_);
 
-  M_.block(0, 0, macro_dof_, macro_dof_) = mnp_.begin()->second->getMassMatrix().block(0, 0, macro_dof_, macro_dof_);
-  M_inv_.block(0, 0, macro_dof_, macro_dof_) = mnp_.begin()->second->getMassMatrixInv().block(0, 0, macro_dof_, macro_dof_);
+  M_.block(0, 0, macro_dof_, macro_dof_) = std::begin(mnp_)->second->getMassMatrix().block(0, 0, macro_dof_, macro_dof_);
+  M_inv_.block(0, 0, macro_dof_, macro_dof_) = std::begin(mnp_)->second->getMassMatrixInv().block(0, 0, macro_dof_, macro_dof_);
 
   uint32_t offset = macro_dof_;
   for(uint32_t i = 0; i < mnp_name_.size(); ++i)
@@ -125,7 +125,7 @@ void Robot::update(const Eigen::VectorXd& q)
 
   q_ = q;
   dq_ = Eigen::VectorXd::Zero(dof_);
-  dq_.block(0, 0, macro_dof_, 1) = mnp_.begin()->second->dq().block(0, 0, macro_dof_, 1);
+  dq_.block(0, 0, macro_dof_, 1) = std::begin(mnp_)->second->dq().block(0, 0, macro_dof_, 1);
   Eigen::VectorXd q_macro = q.block(0, 0, macro_dof_, 1);
   int32_t offset = macro_dof_;
   for(uint32_t i = 0; i < mnp_name_.size(); ++i)

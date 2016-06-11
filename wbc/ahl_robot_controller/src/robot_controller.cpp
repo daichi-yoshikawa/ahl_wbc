@@ -115,13 +115,13 @@ void RobotController::computeGeneralizedForce(Eigen::VectorXd& tau)
 
   for(uint32_t i = 0; i < macro_dof; ++i)
   {
-    if(tau[i] > (*mnp_.begin())->getLink(i)->tau_max)
+    if(tau[i] > (*std::begin(mnp_))->getLink(i)->tau_max)
     {
-      tau[i] = (*mnp_.begin())->getLink(i)->tau_max;
+      tau[i] = (*std::begin(mnp_))->getLink(i)->tau_max;
     }
-    else if(tau[i] < -(*mnp_.begin())->getLink(i)->tau_max)
+    else if(tau[i] < -(*std::begin(mnp_))->getLink(i)->tau_max)
     {
-      tau[i] = -(*mnp_.begin())->getLink(i)->tau_max;
+      tau[i] = -(*std::begin(mnp_))->getLink(i)->tau_max;
     }
   }
 

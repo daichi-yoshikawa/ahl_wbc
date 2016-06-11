@@ -61,7 +61,6 @@ void Parser::load(const std::string& path, const RobotPtr& robot)
 
     this->loadRobotInfo(robot);
     this->loadManipulator(robot);
-
     this->computeTotalDOF(robot);
   }
   catch(YAML::Exception& e)
@@ -128,16 +127,13 @@ void Parser::loadManipulator(const RobotPtr& robot)
 
   for(uint32_t i = 0; i < node_[yaml_tag::MANIPULATORS].size(); ++i)
   {
-    ManipulatorPtr mnp = std::make_shared<Manipulator>();
+    this->checkTag(node_[yaml_tag::MANIPULATORS][i], yaml_tag::MNP_NAME, func);
+    ManipulatorPtr mnp = std::make_shared<Manipulator>(node_[yaml_tag::MANIPULATORS][i][yaml_tag::MNP_NAME].as<std::string>());
 
     mnp->setDifferentiatorUpdateRate(update_rate);
     mnp->setDifferentiatorCutoffFrequency(cutoff_frequency);
 
-    this->checkTag(node_[yaml_tag::MANIPULATORS][i], yaml_tag::MNP_NAME, func);
     this->checkTag(node_[yaml_tag::MANIPULATORS][i], yaml_tag::LINKS, func);
-
-    mnp->setName(node_[yaml_tag::MANIPULATORS][i][yaml_tag::MNP_NAME].as<std::string>());
-
     YAML::Node node = node_[yaml_tag::MANIPULATORS][i][yaml_tag::LINKS];
 
     this->loadLinks(node, mnp);
@@ -243,10 +239,7 @@ void Parser::loadLinks(const YAML::Node& node, const ManipulatorPtr& mnp)
     link_map[link->name] = link;
   }
 
-  std::string link_name = link_map.begin()->first;
-  std::map<std::string, LinkPtr>::iterator it;
-
-  for(it = link_map.begin(); it != link_map.end(); ++it)
+  for(auto it = std::begin(link_map); it != std::end(link_map); ++it)
   {
     LinkPtr link = it->second;
     std::string parent = link->parent;
@@ -258,7 +251,7 @@ void Parser::loadLinks(const YAML::Node& node, const ManipulatorPtr& mnp)
     {
       std::stringstream msg;
       msg << "Parent was not found." << std::endl
-          << "  link   : " << link_name << std::endl
+          << "  link   : " << it->first << std::endl
           << "  parent : " << parent;
       throw ahl_utils::Exception(func, msg.str());
     }
@@ -268,7 +261,7 @@ void Parser::loadLinks(const YAML::Node& node, const ManipulatorPtr& mnp)
 
   uint32_t op_num = 0;
   std::string end_effector_name = "";
-  for(it = link_map.begin(); it != link_map.end(); ++it)
+  for(auto it = std::begin(link_map); it != std::end(link_map); ++it)
   {
     if(it->second->child == std::string(""))
     {
@@ -291,7 +284,7 @@ void Parser::loadLinks(const YAML::Node& node, const ManipulatorPtr& mnp)
     throw ahl_utils::Exception(func, msg.str());
   }
 
-  link_name = end_effector_name;
+  std::string link_name = end_effector_name;
   std::set<std::string> link_set;
   while(true)
   {
@@ -404,10 +397,8 @@ void Parser::computeTotalDOF(const RobotPtr& robot)
   uint32_t macro_dof = robot->getMacroManipulatorDOF();
   uint32_t dof = macro_dof;
 
-  MapManipulatorPtr::iterator it;
   MapManipulatorPtr mnp = robot->getManipulator();
-
-  for(it = mnp.begin(); it != mnp.end(); ++it)
+  for(auto it = std::begin(mnp); it != std::end(mnp); ++it)
   {
     dof += it->second->getDOF() - macro_dof;
   }

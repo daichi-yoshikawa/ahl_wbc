@@ -50,8 +50,7 @@ void TfPublisher::publish(const RobotPtr& robot, bool publish_com)
 {
   ros::Time current = ros::Time::now();
 
-  std::vector<std::string>::const_iterator it;
-  for(it = robot->getManipulatorName().begin(); it != robot->getManipulatorName().end(); ++it)
+  for(auto it = std::begin(robot->getManipulatorName()); it != std::end(robot->getManipulatorName()); ++it)
   {
     ManipulatorPtr mnp = robot->getManipulator(*it);
     this->publish(mnp, current, publish_com);

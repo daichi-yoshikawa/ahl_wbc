@@ -54,7 +54,12 @@ namespace ahl_robot
   {
   public:
     explicit Robot(const std::string& robot_name)
-      : name_(robot_name), world_(frame::WORLD), dof_(0), macro_dof_(0) {}
+      : name_(robot_name),
+        pos_(Eigen::Vector3d::Zero()),
+        ori_(Eigen::Matrix3d::Identity()),
+        mnp_name_(0)
+    {
+    }
 
     void computeJacobian();
     void computeJacobian(const std::string& mnp_name);
@@ -95,14 +100,15 @@ namespace ahl_robot
     const uint32_t getMacroManipulatorDOF() const { return macro_dof_; }
 
   private:
-    std::string name_;
+    std::string name_   = "";
+    std::string world_  = frame::WORLD;
+    uint32_t dof_       = 0;
+    uint32_t macro_dof_ = 0;
+
     Eigen::Vector3d pos_;
     Eigen::Quaternion<double> ori_;
     MapManipulatorPtr mnp_;
     std::vector<std::string> mnp_name_;
-    std::string world_;
-    uint32_t dof_;
-    uint32_t macro_dof_;
 
     Eigen::VectorXd q_;
     Eigen::VectorXd dq_;

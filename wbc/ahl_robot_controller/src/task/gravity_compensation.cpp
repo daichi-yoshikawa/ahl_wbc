@@ -52,7 +52,7 @@ void GravityCompensation::computeGeneralizedForce(Eigen::VectorXd& tau)
   tau = Eigen::VectorXd::Zero(robot_->getDOF());
   uint32_t macro_dof = robot_->getMacroManipulatorDOF();
 
-  mnp_ = robot_->getManipulator().begin()->second;
+  mnp_ = std::begin(robot_->getManipulator())->second;
   for(uint32_t i = 0; i < macro_dof; ++i)
   {
     tau.block(0, 0, macro_dof, 1) -= mnp_->getLink(i)->m * mnp_->getJacobian()[i].block(0, 0, 3, macro_dof).transpose() * param_->getG();

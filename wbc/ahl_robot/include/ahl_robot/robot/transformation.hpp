@@ -48,7 +48,8 @@ namespace ahl_robot
   class Transformation
   {
   public:
-    explicit Transformation();
+    explicit Transformation()
+      : T_(Eigen::Matrix4d::Identity()), axis_(Eigen::Vector3d::UnitX()) {}
     virtual ~Transformation() {}
     virtual const Eigen::Matrix4d& T(double q) = 0;
     virtual void transform(double q, const Eigen::Matrix4d& T_org, Eigen::Matrix4d& T) = 0;
@@ -77,7 +78,7 @@ namespace ahl_robot
   class RevoluteX : public Transformation
   {
   public:
-    RevoluteX();
+    explicit RevoluteX();
     virtual const Eigen::Matrix4d& T(double q) override;
     virtual void transform(double q, const Eigen::Matrix4d& T_org, Eigen::Matrix4d& T) override;
   private:
@@ -87,7 +88,7 @@ namespace ahl_robot
   class RevoluteY : public Transformation
   {
   public:
-    RevoluteY();
+    explicit RevoluteY();
     virtual const Eigen::Matrix4d& T(double q) override;
     virtual void transform(double q, const Eigen::Matrix4d& T_org, Eigen::Matrix4d& T) override;
   private:
@@ -97,7 +98,7 @@ namespace ahl_robot
   class RevoluteZ : public Transformation
   {
   public:
-    RevoluteZ();
+    explicit RevoluteZ();
     virtual const Eigen::Matrix4d& T(double q) override;
     virtual void transform(double q, const Eigen::Matrix4d& T_org, Eigen::Matrix4d& T) override;
   private:
@@ -107,7 +108,7 @@ namespace ahl_robot
   class PrismaticX : public Transformation
   {
   public:
-    PrismaticX();
+    explicit PrismaticX();
     virtual const Eigen::Matrix4d& T(double q) override;
     virtual void transform(double q, const Eigen::Matrix4d& T_org, Eigen::Matrix4d& T) override;
   };
@@ -115,7 +116,7 @@ namespace ahl_robot
   class PrismaticY : public Transformation
   {
   public:
-    PrismaticY();
+    explicit PrismaticY();
     virtual const Eigen::Matrix4d& T(double q) override;
     virtual void transform(double q, const Eigen::Matrix4d& T_org, Eigen::Matrix4d& T) override;
   };
@@ -123,7 +124,7 @@ namespace ahl_robot
   class PrismaticZ : public Transformation
   {
   public:
-    PrismaticZ();
+    explicit PrismaticZ();
     virtual const Eigen::Matrix4d& T(double q) override;
     virtual void transform(double q, const Eigen::Matrix4d& T_org, Eigen::Matrix4d& T) override;
   };

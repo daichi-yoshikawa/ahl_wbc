@@ -79,14 +79,13 @@ namespace ahl_robot
     static const std::string DIFFERENTIATOR                  = "differentiator";
     static const std::string DIFFERENTIATOR_UPDATE_RATE      = "update_rate";
     static const std::string DIFFERENTIATOR_CUTOFF_FREQUENCY = "cutoff_frequency";
-
     static const std::string MACRO_MANIPULATOR_DOF = "macro_manipulator_dof";
   } // namespace yaml_tag
 
   class Parser
   {
   public:
-    explicit Parser() {}
+    explicit Parser() = default;
     void load(const std::string& path, const RobotPtr& robot);
 
   private:

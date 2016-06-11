@@ -45,11 +45,6 @@
 
 using namespace ahl_robot;
 
-Manipulator::Manipulator()
-  : name_(""), dof_(0), updated_joint_(false)
-{
-}
-
 void Manipulator::init(uint32_t init_dof, const Eigen::VectorXd& init_q)
 {
   if(init_dof != init_q.rows())
@@ -242,7 +237,7 @@ void Manipulator::addLink(const LinkPtr& link)
 
 void Manipulator::reverseLink()
 {
-  std::reverse(link_.begin(), link_.end());
+  std::reverse(std::begin(link_), std::end(link_));
 }
 
 void Manipulator::print()
@@ -265,7 +260,7 @@ void Manipulator::print()
 
 void Manipulator::computeForwardKinematics()
 {
-  int32_t idx = 0;
+  uint32_t idx = 0;
 
   // Relative transformation matrix
   for(uint32_t i = 0; i < link_.size(); ++i)

@@ -63,7 +63,11 @@ namespace ahl_robot
   class Manipulator
   {
   public:
-    explicit Manipulator();
+    explicit Manipulator(const std::string& name)
+      : name_(name), link_(0), T_(0), T_abs_(0), C_abs_(0), Pin_(0), J_(0)
+    {
+    }
+
     void init(uint32_t dof, const Eigen::VectorXd& init_q);
     void update(const Eigen::VectorXd& q_msr);
     void update(const Eigen::VectorXd& q_msr, const Eigen::VectorXd& dq_msr);
@@ -74,7 +78,6 @@ namespace ahl_robot
     void addLink(const LinkPtr& link);
     void reverseLink();
 
-    void setName(const std::string& name) { name_ = name; }
     void setDOF(uint32_t dof) { dof_ = dof; }
     void setMacroManipulatorDOF(uint32_t macro_dof) { macro_dof_ = macro_dof; }
     void setDifferentiatorUpdateRate(double update_rate) { update_rate_ = update_rate; }
@@ -105,13 +108,13 @@ namespace ahl_robot
     void computeJacobian(int32_t idx, Eigen::MatrixXd& J);
     void computeVelocity();
 
-    std::string name_;
+    std::string name_   = "";
+    uint32_t dof_       = 0;
+    uint32_t macro_dof_ = 0;
     std::map<std::string, int32_t> name_to_idx_;
-    uint32_t dof_;
-    uint32_t macro_dof_;
 
-    bool updated_joint_;
-    double update_rate_;
+    bool updated_joint_ = false;
+    double update_rate_ = 0.0;
 
     VectorLinkPtr link_;
 
@@ -129,8 +132,8 @@ namespace ahl_robot
     Eigen::MatrixXd M_; // Mass matrix
     Eigen::MatrixXd M_inv_;
 
-    ahl_filter::DifferentiatorPtr differentiator_;
-    double cutoff_frequency_;
+    ahl_filter::DifferentiatorPtr differentiator_ = nullptr;
+    double cutoff_frequency_ = 0.0;
   };
 
   using ManipulatorPtr = std::shared_ptr<Manipulator>;

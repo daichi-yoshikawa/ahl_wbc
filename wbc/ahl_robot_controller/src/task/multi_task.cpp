@@ -100,8 +100,7 @@ void MultiTask::clear()
 
 void MultiTask::updateModel()
 {
-  std::map<int32_t, std::vector<TaskPtr> >::iterator it;
-  for(it = multi_task_.begin(); it != multi_task_.end(); ++it)
+  for(auto it = std::begin(multi_task_); it != std::end(multi_task_); ++it)
   {
     for(uint32_t i = 0; i < it->second.size(); ++i)
     {
@@ -115,8 +114,7 @@ void MultiTask::computeGeneralizedForce(Eigen::VectorXd& tau)
   tau = Eigen::VectorXd::Zero(dof_);
   Eigen::VectorXd tmp = Eigen::VectorXd::Zero(dof_);
 
-  std::map<int32_t, std::vector<TaskPtr> >::iterator it = multi_task_.begin();
-  for(it = multi_task_.begin(); it != multi_task_.end(); ++it)
+  for(auto it = std::begin(multi_task_); it != std::end(multi_task_); ++it)
   {
     N_ = Eigen::MatrixXd::Identity(dof_, dof_);
 

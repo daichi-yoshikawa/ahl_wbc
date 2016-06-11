@@ -40,14 +40,9 @@
 
 using namespace ahl_robot;
 
-Transformation::Transformation()
-{
-  T_ = Eigen::Matrix4d::Identity();
-}
-
 RevoluteX::RevoluteX()
+  : R_(Eigen::Matrix3d::Identity())
 {
-  R_ = Eigen::Matrix3d::Identity();
   axis_ << 1, 0, 0;
 }
 
@@ -65,8 +60,8 @@ void RevoluteX::transform(double q, const Eigen::Matrix4d& T_org, Eigen::Matrix4
 }
 
 RevoluteY::RevoluteY()
+  : R_(Eigen::Matrix3d::Identity())
 {
-  R_ = Eigen::Matrix3d::Identity();
   axis_ << 0, 1, 0;
 }
 
@@ -84,8 +79,8 @@ void RevoluteY::transform(double q, const Eigen::Matrix4d& T_org, Eigen::Matrix4
 }
 
 RevoluteZ::RevoluteZ()
+  : R_(Eigen::Matrix3d::Identity())
 {
-  R_ = Eigen::Matrix3d::Identity();
   axis_ << 0, 0, 1;
 }
 
