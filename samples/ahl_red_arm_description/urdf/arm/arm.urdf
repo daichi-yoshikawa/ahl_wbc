@@ -1,0 +1,199 @@
+<?xml version="1.0"?>
+<robot xmlns:sensor="http://playerstage.sourceforge.net/gazebo/xmlschema/#sensor"
+       xmlns:controller="http://playerstage.sourceforge.net/gazebo/xmlschema/#controller"
+       xmlns:interface="http://playerstage.sourceforge.net/gazebo/xmlschema/#interface"
+       xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <xacro:include filename="$(find ahl_red_arm_description)/urdf/arm/arm.property.xacro"/>
+  <xacro:include filename="$(find ahl_red_arm_description)/urdf/arm/arm.gazebo.xacro"/>
+  <xacro:include filename="$(find ahl_red_arm_description)/urdf/arm/arm.transmission.xacro"/>
+
+  <xacro:macro name="arm">
+
+    <link name="world"/>
+
+    <joint name="world_joint" type="fixed">
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <parent link="world"/>
+      <child link="base"/>
+    </joint>
+
+    <link name="base">
+      <xacro:base_inertial/>
+      <visual>
+        <geometry>
+          <mesh filename="package://ahl_red_arm_description/meshes/arm/base.dae"/>
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="package://ahl_red_arm_description/meshes/arm/base.stl"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <joint name="joint1" type="revolute">
+      <origin xyz="0 0 0.1" rpy="0 0 0"/>
+      <parent link="base"/>
+      <child link="link1"/>
+      <axis xyz="0 0 1"/>
+      <limit effort="10000.0" velocity="10000.0" lower="-3.141590" upper="3.1415920"/>
+      <dynamics damping="1.0" friction="0"/>
+    </joint>
+
+    <link name="link1">
+      <xacro:link1_inertial/>
+      <visual>
+        <geometry>
+          <mesh filename="package://ahl_red_arm_description/meshes/arm/link1.dae"/>
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="package://ahl_red_arm_description/meshes/arm/link1.stl"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <joint name="joint2" type="revolute">
+      <origin xyz="0 0.02 0.2" rpy="0 0 0"/>
+      <parent link="link1"/>
+      <child link="link2"/>
+      <axis xyz="0 1 0"/>
+      <limit effort="10000.0" velocity="10000.0" lower="-3.141590" upper="3.1415920"/>
+      <dynamics damping="1.0" friction="0"/>
+    </joint>
+
+    <link name="link2">
+      <xacro:link2_inertial/>
+      <visual>
+        <geometry>
+          <mesh filename="package://ahl_red_arm_description/meshes/arm/link2.dae"/>
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="package://ahl_red_arm_description/meshes/arm/link2.stl"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <joint name="joint3" type="revolute">
+      <origin xyz="0 0 0.2" rpy="0 0 0"/>
+      <parent link="link2"/>
+      <child link="link3"/>
+      <axis xyz="0 0 1"/>
+      <limit effort="10000.0" velocity="10000.0" lower="-3.141590" upper="3.1415920"/>
+      <dynamics damping="1.0" friction="0"/>
+    </joint>
+
+    <link name="link3">
+      <xacro:link3_inertial/>
+      <visual>
+        <geometry>
+          <mesh filename="package://ahl_red_arm_description/meshes/arm/link3.dae"/>
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="package://ahl_red_arm_description/meshes/arm/link3.stl"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <joint name="joint4" type="revolute">
+      <origin xyz="0 -0.02 0.2" rpy="0 0 3.1415926535"/>
+      <parent link="link3"/>
+      <child link="link4"/>
+      <axis xyz="0 1 0"/>
+      <limit effort="10000.0" velocity="10000.0" lower="-3.141590" upper="3.1415920"/>
+      <dynamics damping="1.0" friction="0"/>
+    </joint>
+
+    <link name="link4">
+      <xacro:link4_inertial/>
+      <visual>
+        <geometry>
+          <mesh filename="package://ahl_red_arm_description/meshes/arm/link4.dae"/>
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="package://ahl_red_arm_description/meshes/arm/link4.stl"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <joint name="joint5" type="revolute">
+      <origin xyz="0 0 0.2" rpy="0 0 -3.1415926535"/>
+      <parent link="link4"/>
+      <child link="link5"/>
+      <axis xyz="0 0 1"/>
+      <limit effort="10000.0" velocity="10000.0" lower="-3.141590" upper="3.1415920"/>
+      <dynamics damping="1.0" friction="0"/>
+    </joint>
+
+    <link name="link5">
+      <xacro:link5_inertial/>
+      <visual>
+        <geometry>
+          <mesh filename="package://ahl_red_arm_description/meshes/arm/link5.dae"/>
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="package://ahl_red_arm_description/meshes/arm/link5.stl"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <joint name="joint6" type="revolute">
+      <origin xyz="0 -0.045 0.1" rpy="0 0 0"/>
+      <parent link="link5"/>
+      <child link="link6"/>
+      <axis xyz="0 1 0"/>
+      <limit effort="10000.0" velocity="10000.0" lower="-3.141590" upper="3.1415920"/>
+      <dynamics damping="1.0" friction="0"/>
+    </joint>
+
+    <link name="link6">
+      <xacro:link6_inertial/>
+      <visual>
+        <geometry>
+          <mesh filename="package://ahl_red_arm_description/meshes/arm/link6.dae"/>
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="package://ahl_red_arm_description/meshes/arm/link6.stl"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <joint name="joint7" type="revolute">
+      <origin xyz="0 0.045 0.0725" rpy="0 0 0"/>
+      <parent link="link6"/>
+      <child link="link7"/>
+      <axis xyz="0 0 1"/>
+      <limit effort="10000.0" velocity="10000.0" lower="-3.141590" upper="3.1415920"/>
+      <dynamics damping="1.0" friction="0"/>
+    </joint>
+
+    <link name="link7">
+      <xacro:link7_inertial/>
+      <visual>
+        <geometry>
+          <mesh filename="package://ahl_red_arm_description/meshes/arm/link7.dae"/>
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="package://ahl_red_arm_description/meshes/arm/link7.stl"/>
+        </geometry>
+      </collision>
+    </link>
+  
+    <xacro:arm_gazebo/>
+    <xacro:arm_transmission/>
+  </xacro:macro>
+</robot>

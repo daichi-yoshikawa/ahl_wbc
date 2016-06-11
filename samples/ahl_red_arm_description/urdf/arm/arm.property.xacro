@@ -1,0 +1,69 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+  <xacro:property name="PI" value="3.1415926535897931"/>
+
+  <xacro:macro name="base_inertial">
+    <inertial>
+      <mass value="5.0"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <inertia ixx="0.1" ixy="0" ixz="0" iyy="0.1" iyz="0" izz="0.1"/>
+    </inertial>
+  </xacro:macro>
+
+  <xacro:macro name="link1_inertial">
+    <inertial>
+      <mass value="2.5"/>
+      <origin xyz="0 0 0.1"/>
+      <inertia ixx="0.009773" ixy="0" ixz="0" iyy="0.009773" iyz="0" izz="0.002880"/>
+    </inertial>
+  </xacro:macro>
+
+  <xacro:macro name="link2_inertial">
+    <inertial>
+      <mass value="2.5"/>
+      <origin xyz="0 0.0 0.1"/>
+      <inertia ixx="0.009773" ixy="0" ixz="0" iyy="0.009773" iyz="0" izz="0.002880"/>
+    </inertial>
+  </xacro:macro>
+
+  <xacro:macro name="link3_inertial">
+    <inertial>
+      <mass value="2.5"/>
+      <origin xyz="0 0 0.1"/>
+      <inertia ixx="0.009773" ixy="0" ixz="0" iyy="0.009773" iyz="0" izz="0.002880"/>
+    </inertial>
+  </xacro:macro>
+
+  <xacro:macro name="link4_inertial">
+    <inertial>
+      <mass value="2.5"/>
+      <origin xyz="0 0 0."/>
+      <inertia ixx="0.009773" ixy="0" ixz="0" iyy="0.009773" iyz="0" izz="0.002880"/>
+    </inertial>
+  </xacro:macro>
+
+  <xacro:macro name="link5_inertial">
+    <inertial>
+      <mass value="2.0"/>
+      <origin xyz="0 -0.04 0.05"/>
+      <inertia ixx="0.003333" ixy="0" ixz="0" iyy="0.003333" iyz="0" izz="0.003333"/>
+    </inertial>
+  </xacro:macro>
+
+  <xacro:macro name="link6_inertial">
+    <inertial>
+      <mass value="1.8"/>
+      <origin xyz="0 0.045 0.015"/>
+      <inertia ixx="0.003000" ixy="0" ixz="0" iyy="0.003000" iyz="0" izz="0.003000"/>
+    </inertial>
+  </xacro:macro>
+
+  <xacro:macro name="link7_inertial">
+    <inertial>
+      <mass value="0.8"/>
+      <origin xyz="0 0 0.015"/>
+      <inertia ixx="0.00487" ixy="0" ixz="0" iyy="0.00487" iyz="0" izz="0.000922"/>
+    </inertial>
+  </xacro:macro>
+
+</robot>

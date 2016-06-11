@@ -1,0 +1,86 @@
+<?xml version="1.0"?>
+<robot xmlns:sensor="http://playerstage.sourceforge.net/gazebo/xmlschema/#sensor"
+       xmlns:controller="http://playerstage.sourceforge.net/gazebo/xmlschema/#controller"
+       xmlns:interface="http://playerstage.sourceforge.net/gazebo/xmlschema/#interface"
+       xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <xacro:macro name="arm_transmission">
+
+    <transmission name="joint1_trans">
+      <type>transmission_interface/SimpleTransmission</type>
+      <actuator name="joint1_motor">
+	<hardwareInterface>EffortJointInterface</hardwareInterface>
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+      <joint name="joint1">
+	<hardwareInterface>EffortJointInterface</hardwareInterface>
+      </joint>
+    </transmission>
+
+    <transmission name="joint2_trans">
+      <type>transmission_interface/SimpleTransmission</type>
+      <actuator name="joint2_motor">
+	<hardwareInterface>EffortJointInterface</hardwareInterface>
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+      <joint name="joint2">
+	<hardwareInterface>EffortJointInterface</hardwareInterface>
+      </joint>
+    </transmission>
+
+    <transmission name="joint3_trans">
+      <type>transmission_interface/SimpleTransmission</type>
+      <actuator name="joint3_motor">
+	<hardwareInterface>EffortJointInterface</hardwareInterface>
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+      <joint name="joint3">
+	<hardwareInterface>EffortJointInterface</hardwareInterface>
+      </joint>
+    </transmission>
+
+    <transmission name="joint4_trans">
+      <type>transmission_interface/SimpleTransmission</type>
+      <actuator name="joint4_motor">
+	<hardwareInterface>EffortJointInterface</hardwareInterface>
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+      <joint name="joint4">
+	<hardwareInterface>EffortJointInterface</hardwareInterface>
+      </joint>
+    </transmission>
+
+    <transmission name="joint5_trans">
+      <type>transmission_interface/SimpleTransmission</type>
+      <actuator name="joint5_motor">
+	<hardwareInterface>EffortJointInterface</hardwareInterface>
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+      <joint name="joint5">
+	<hardwareInterface>EffortJointInterface</hardwareInterface>
+      </joint>
+    </transmission>
+
+    <transmission name="joint6_trans">
+      <type>transmission_interface/SimpleTransmission</type>
+      <actuator name="joint6_motor">
+	<hardwareInterface>EffortJointInterface</hardwareInterface>
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+      <joint name="joint6">
+	<hardwareInterface>EffortJointInterface</hardwareInterface>
+      </joint>
+    </transmission>
+
+    <transmission name="joint7_trans">
+      <type>transmission_interface/SimpleTransmission</type>
+      <actuator name="joint7_motor">
+	<hardwareInterface>EffortJointInterface</hardwareInterface>
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+      <joint name="joint7">
+	<hardwareInterface>EffortJointInterface</hardwareInterface>
+      </joint>
+    </transmission>
+  </xacro:macro>
+</robot>
