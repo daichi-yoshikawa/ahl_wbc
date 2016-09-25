@@ -85,6 +85,7 @@ void RedArm::updateModel(const ros::TimerEvent&)
     time += 0.01;
 
     position_control_->setGoal(param_->x + dx);
+    orientation_control_->setGoal(param_->R);
 
     robot_->computeJacobian();
     robot_->computeMassMatrix();
